@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <title>Product Release Overview v4.8.0 | ChatDaddy</title>
+  <title>Product Release Overview v4.8.15 | ChatDaddy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -75,6 +75,17 @@
 
     .noir-card { background: transparent; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s ease; }
     .noir-card:hover { border-color: #ef4444; background: rgba(239,68,68,0.04); }
+    .mobile-phone-frame { width: 140px; height: 280px; border: 2px solid rgba(255,255,255,0.12); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; position: relative; }
+    .mobile-phone-frame:hover { border-color: #ef4444; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(239,68,68,0.15); }
+    .mobile-phone-frame::after { content: attr(data-label); position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); font-family: monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-align: center; }
+    .mobile-phone-frame img { filter: grayscale(0.3); transition: filter 0.3s ease; }
+    .mobile-phone-frame:hover img { filter: grayscale(0); }
+    @keyframes mobile-scroll { 0%,100% { transform: translateX(0); } 50% { transform: translateX(calc(-50% + 50vw - 80px)); } }
+    .mobile-gallery-auto { animation: mobile-scroll 20s ease-in-out infinite; }
+    .mobile-gallery:hover .mobile-gallery-inner { animation-play-state: paused; }
+    .pipeline-flow-diagram { background: rgba(255,255,255,0.01); }
+    .pipeline-box { transition: all 0.3s ease; }
+    .pipeline-box:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(239,68,68,0.1); }
 
     .stat-box { border: 1px solid rgba(255,255,255,0.2); }
 
@@ -134,30 +145,46 @@
 
           <div class="editorial-rule w-32 mx-auto my-5 reveal r3 line-reveal lr2"></div>
 
-          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Overview — v4.8.0</p>
+          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Overview — v4.8.15</p>
 
-          <div class="flex items-center justify-center gap-12 md:gap-20 mb-16 reveal r4">
-            <div class="text-center">
-              <div class="font-serif text-6xl md:text-7xl font-black text-white">7</div>
-              <div class="editorial-rule-thin w-full my-2"></div>
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Features</div>
-            </div>
-            <div class="text-center">
-              <div class="font-serif text-6xl md:text-7xl font-black text-white">6</div>
-              <div class="editorial-rule-thin w-full my-2"></div>
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Cursor to PR</div>
-            </div>
-            <div class="text-center">
-              <div class="font-serif text-6xl md:text-7xl font-black text-red-500">25<span class="text-4xl">%</span></div>
-              <div class="editorial-rule-accent w-full my-2"></div>
-              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-red-400/70">Ticket Reduction</div>
-            </div>
+          <!-- Section overview grid -->
+          <div class="grid grid-cols-3 md:grid-cols-6 gap-px bg-white/[0.06] mb-8 reveal r4" id="hero-sections">
+            <button onclick="goToSlide(2)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">6</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Cursor → PR</div>
+            </button>
+            <button onclick="goToSlide(3)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500 group-hover:text-white transition-colors">25<span class="text-xl">%</span></div>
+              <div class="editorial-rule-accent w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-red-400/50">Tickets ↓</div>
+            </button>
+            <button onclick="goToSlide(4)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">v2</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Mobile</div>
+            </button>
+            <button onclick="goToSlide(5)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">18</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">AI Workflows</div>
+            </button>
+            <button onclick="goToSlide(6)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">5</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Pipeline</div>
+            </button>
+            <button onclick="goToSlide(7)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500 group-hover:text-white transition-colors">→</div>
+              <div class="editorial-rule-accent w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-red-400/50">Closing</div>
+            </button>
           </div>
 
           <div class="reveal r5">
             <div class="flex items-center justify-center gap-3 text-white/25 font-mono text-xs tracking-wider">
               <span class="w-8 h-px bg-white/20"></span>
-              <span>ARROW KEYS TO NAVIGATE</span>
+              <span>CLICK A SECTION OR USE ARROW KEYS</span>
               <span class="w-8 h-px bg-white/20"></span>
             </div>
           </div>
@@ -229,20 +256,20 @@
           <!-- PR stats row -->
           <div class="grid grid-cols-5 gap-px bg-white/10 mb-6 reveal r2">
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">102</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">200</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Opened</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">15</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Repositories</div>
-            </div>
-            <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">41</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">51</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Merged</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">70+</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Commits</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">139</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">In Review</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">47</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Human PRs</div>
             </div>
             <div class="bg-black p-4 text-center">
               <div class="font-serif text-3xl md:text-4xl font-black text-red-500">47→20</div>
@@ -283,32 +310,59 @@
                 </div>
               </div>
 
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">PR Breakdown</p>
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">PR By Contributor</p>
               <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Frontend Dashboard</span>
-                  <span class="font-mono text-sm font-bold text-white">67</span>
+                  <span class="text-white/60 text-sm">Piyush <span class="text-white/20 text-xs">(piyushmakad)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-green-400/60">16 merged</span>
+                    <span class="font-mono text-sm font-bold text-white">45</span>
+                  </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Backend / Infra / OpenAPI</span>
-                  <span class="font-mono text-sm font-bold text-white">35</span>
+                  <span class="text-white/60 text-sm">Akil <span class="text-white/20 text-xs">(Ahay45)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-yellow-400/60">22 review</span>
+                    <span class="font-mono text-sm font-bold text-white">22</span>
+                  </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">In Review</span>
-                  <span class="font-mono text-sm font-bold text-white/50">58</span>
+                  <span class="text-white/60 text-sm">Pratiksha <span class="text-white/20 text-xs">(okarin1511)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-green-400/60">1 merged</span>
+                    <span class="font-mono text-sm font-bold text-white">17</span>
+                  </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                  <span class="text-white/50 text-sm flex-1 ml-3">6 tickets in progress</span>
+                  <span class="text-white/60 text-sm">Amrit <span class="text-white/20 text-xs">(amrit2611)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-green-400/60">5 merged</span>
+                    <span class="font-mono text-sm font-bold text-white">8</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="text-white/60 text-sm">CI/CD Bots <span class="text-white/20 text-xs">(actions + dependabot)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-white/20">auto</span>
+                    <span class="font-mono text-sm font-bold text-white/40">8</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- Right: Big changes highlights -->
-            <div class="w-full lg:w-[60%]">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Big Changes & Impact</p>
-              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4" id="ticket-highlights">
-                <!-- Generated by JS -->
+            <!-- Right: Big changes + recent PRs -->
+            <div class="w-full lg:w-[60%] flex flex-col gap-5">
+              <div>
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Big Changes & Impact</p>
+                <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4" id="ticket-highlights">
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+              <div class="reveal r5">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Recent Merged PRs <span class="text-white/15">(last 2 weeks)</span></p>
+                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[180px] overflow-y-auto" id="recent-prs" style="scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) transparent;">
+                  <!-- Generated by JS -->
+                </div>
               </div>
             </div>
           </div>
@@ -321,22 +375,65 @@
       <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
         <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
-        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full py-8">
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full py-8">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Mobile</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">ChatDaddy App Update</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Complete Redesign</span>
           </div>
-          <div class="editorial-rule-accent w-full mb-8 reveal r1 line-reveal lr1"></div>
+          <div class="editorial-rule-accent w-full mb-4 reveal r1 line-reveal lr1"></div>
 
-          <div class="flex flex-col md:flex-row gap-8 items-start">
-            <div class="w-full md:w-1/2 shrink-0 reveal r2">
-              <div class="border border-white/10 p-1">
-                <img src="https://a82b2716-367b-4156-9921-3aad6849080c-00-2kw1o39k5a5qr.kirk.replit.dev/attached_assets/CD_Mobile_1773389000413.png" alt="ChatDaddy Mobile" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
+          <!-- Tagline -->
+          <p class="text-white/40 text-sm md:text-base leading-relaxed mb-6 max-w-2xl reveal r2">The app just got a complete makeover — rebuilt from the ground up with a clean white design, modern bottom navigation, and dedicated Settings page.</p>
+
+          <!-- Phone gallery row -->
+          <div class="reveal r3 mb-6">
+            <div class="overflow-x-auto pb-3 mobile-gallery" style="scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) transparent;">
+             <div class="flex gap-3 mobile-gallery-inner mobile-gallery-auto w-max">
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Chat List" data-desc="Fresh modern interface with All/Unread/Groups filters, live connection status, and real-time unread badge" onclick="openMobileDetail(0)">
+                <img src="cursor-pr-images/mobile/chat-list.png" alt="Chat List" class="w-full h-full object-cover">
               </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Settings" data-desc="Dedicated Settings page with profile info, incognito mode toggle, team switching, and help" onclick="openMobileDetail(1)">
+                <img src="cursor-pr-images/mobile/settings.png" alt="Settings" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Switch Team" data-desc="Quick team switching — search and switch between all your teams without logging out" onclick="openMobileDetail(2)">
+                <img src="cursor-pr-images/mobile/switch-team.png" alt="Switch Team" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="New Chat" data-desc="Tap + to start a new chat instantly — enter any phone number with country code and go" onclick="openMobileDetail(3)">
+                <img src="cursor-pr-images/mobile/new-chat.png" alt="New Chat" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Channels" data-desc="Live channel status — see WhatsApp connection, test numbers, and all channels at a glance" onclick="openMobileDetail(4)">
+                <img src="cursor-pr-images/mobile/channel-status.png" alt="Channel Status" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Chat View" data-desc="WhatsApp-style chat interface with schedule message, notes, chatbot responses, and typing" onclick="openMobileDetail(5)">
+                <img src="cursor-pr-images/mobile/chat-view.png" alt="Chat View" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Contact" data-desc="Full contact info page with tags, assignees, conversation stats, and save changes" onclick="openMobileDetail(6)">
+                <img src="cursor-pr-images/mobile/contact-info.png" alt="Contact Info" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Sharing" data-desc="Contact sharing with card view — Call & Message action buttons for shared contacts" onclick="openMobileDetail(7)">
+                <img src="cursor-pr-images/mobile/contact-share.png" alt="Contact Sharing" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Reactions" data-desc="Emoji reactions on messages — long press to react with heart, laugh, surprise, and more. Delete & copy actions" onclick="openMobileDetail(8)">
+                <img src="cursor-pr-images/mobile/emoji-reactions.jpeg" alt="Emoji Reactions" class="w-full h-full object-cover">
+              </div>
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Flow Chat" data-desc="WhatsApp flow messages with automated chatbot responses, schedule message, and notes toggle" onclick="openMobileDetail(9)">
+                <img src="cursor-pr-images/mobile/chat-flow.jpeg" alt="Chat Flow" class="w-full h-full object-cover">
+              </div>
+             </div>
             </div>
-            <div class="w-full md:w-1/2">
-              <ul class="space-y-0" id="mobile-highlights"></ul>
-            </div>
+            <p class="font-mono text-[9px] text-white/15 tracking-[0.2em] uppercase text-center mt-2">Scroll to see all screens · Click to enlarge</p>
+          </div>
+
+          <!-- What's new list -->
+          <div class="reveal r4">
+            <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">What's New</p>
+            <ul class="space-y-0" id="mobile-highlights"></ul>
+          </div>
+
+          <!-- Availability -->
+          <div class="mt-4 flex items-center gap-3 reveal r5">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="font-mono text-[10px] text-white/30 tracking-[0.15em] uppercase">Available on TestFlight for iOS and Android</span>
           </div>
         </div>
       </div>
@@ -357,11 +454,11 @@
           <!-- Top stats row -->
           <div class="grid grid-cols-4 gap-px bg-white/10 mb-6 reveal r2">
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">9</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">15</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Automations</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">2</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">3</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Team Members</div>
             </div>
             <div class="bg-black p-4 text-center">
@@ -411,20 +508,37 @@
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
-          <div class="flex flex-col lg:flex-row gap-8 items-start">
-            <div class="w-full lg:w-[55%] shrink-0 reveal r2">
-              <div class="border border-white/10 p-1">
-                <img src="https://a82b2716-367b-4156-9921-3aad6849080c-00-2kw1o39k5a5qr.kirk.replit.dev/attached_assets/ChatGPT_Image_Mar_13,_2026,_03_07_20_PM_1773389499790.png" alt="Pipeline" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
+          <!-- Pipeline Visual Diagram -->
+          <div class="reveal r2 mb-6">
+            <div class="pipeline-flow-diagram border border-white/10 p-4 md:p-6 overflow-x-auto">
+              <div class="flex items-stretch gap-0 min-w-[700px]" id="pipeline-visual">
+                <!-- Generated by JS -->
               </div>
             </div>
-            <div class="w-full lg:w-[45%] flex flex-col gap-6">
-              <div class="reveal r3">
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Stages</p>
-                <div class="space-y-0 border border-white/10 divide-y divide-white/10" id="pipeline-stages"></div>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Left: Flow details -->
+            <div class="w-full lg:w-[55%] reveal r3">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Deployment Flow</p>
+              <div class="space-y-0 border border-white/10 divide-y divide-white/[0.06]" id="pipeline-flow-steps">
+                <!-- Generated by JS -->
               </div>
+            </div>
+
+            <!-- Right: Timing + Rules -->
+            <div class="w-full lg:w-[45%] flex flex-col gap-5">
               <div class="reveal r4">
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Rules</p>
-                <ul class="space-y-2" id="pipeline-rules"></ul>
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Automation Schedule</p>
+                <div class="border border-white/10 divide-y divide-white/[0.06]" id="pipeline-schedule">
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+              <div class="reveal r5">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Testing Windows</p>
+                <div class="border border-white/10 divide-y divide-white/[0.06]" id="pipeline-testing">
+                  <!-- Generated by JS -->
+                </div>
               </div>
             </div>
           </div>
@@ -451,8 +565,24 @@
           </h2>
           <div class="reveal r5">
             <div class="w-px h-8 bg-red-500 mx-auto my-6"></div>
-            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">v4.8.0 — 1 Mar – 13 Mar 2026</span>
+            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">v4.8.15 — 15 Mar – 27 Mar 2026</span>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE TOGGLE ===== -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-2">
+      <button id="toggle-menu-btn" class="w-7 h-7 border border-white/10 flex items-center justify-center text-white/30 hover:text-white hover:border-red-500 transition-all" title="Toggle sections">
+        <i data-lucide="sliders-horizontal" class="w-3.5 h-3.5"></i>
+      </button>
+      <div id="toggle-panel" class="hidden absolute top-9 right-0 border border-white/10 bg-black/95 backdrop-blur-sm p-3 min-w-[160px]">
+        <p class="font-mono text-[9px] tracking-[0.2em] uppercase text-white/30 mb-2">Sections</p>
+        <div class="flex items-center justify-between gap-3 py-1.5">
+          <span class="font-mono text-[11px] text-white/50">Features</span>
+          <button id="toggle-1" class="relative w-8 h-[18px] rounded-full bg-white/10 transition-colors cursor-pointer" onclick="toggleSlide(1)">
+            <span class="toggle-knob absolute top-[2px] left-[2px] w-[14px] h-[14px] rounded-full bg-white transition-transform"></span>
+          </button>
         </div>
       </div>
     </div>
@@ -520,38 +650,101 @@
     ];
 
     const MOBILE_HIGHLIGHTS = [
-      "More reliable real-time chat connection",
-      "Faster chat loading, search, and image/media support",
-      "Redesigned WhatsApp-style chat list for a cleaner experience",
-      "Instant delivered & read status updates",
-      "Pinned, archived chats, and improved group chat previews",
-      "New contact info page with tags, assignees, and conversation details",
-      "Enhanced filters (saved filters, pending messages, unsolved notes, tags, assignees)",
-      "Faster login with auto country code detection",
-      "Various bug fixes and performance improvements"
+      "Fresh, modern interface across every screen — clean white design",
+      "Bottom navigation bar (Chats + Settings) for quick access",
+      "Live channel status — see if WhatsApp is connected at a glance",
+      "New chat shortcut — tap + to message any number instantly",
+      "Real-time unread badge that's always accurate",
+      "Dedicated Settings with profile, team switching, incognito mode",
+      "Deleted message support with chat & preview updates",
+      "New attachment menu: Gallery, Camera, Video, Document, Location, Contact",
+      "Contact sharing with card view (Call & Message actions)",
+      "Location messages open directly in Maps",
+      "Emoji reactions, delete & copy actions in chat",
+      "Support for 15+ file formats with improved handling",
+      "Available on TestFlight for iOS and Android"
     ];
+
+    const MOBILE_SCREENS = [
+      { label: "Chat List", src: "cursor-pr-images/mobile/chat-list.png", desc: "Fresh modern interface with All/Unread/Groups filters, live connection status, and real-time unread badge" },
+      { label: "Settings", src: "cursor-pr-images/mobile/settings.png", desc: "Dedicated Settings page with profile info, incognito mode toggle, team switching, and help" },
+      { label: "Switch Team", src: "cursor-pr-images/mobile/switch-team.png", desc: "Quick team switching — search and switch between all your teams without logging out" },
+      { label: "New Chat", src: "cursor-pr-images/mobile/new-chat.png", desc: "Tap + to start a new chat instantly — enter any phone number with country code and go" },
+      { label: "Channels", src: "cursor-pr-images/mobile/channel-status.png", desc: "Live channel status — see WhatsApp connection, test numbers, and all channels at a glance" },
+      { label: "Chat View", src: "cursor-pr-images/mobile/chat-view.png", desc: "WhatsApp-style chat interface with schedule message, notes, chatbot responses" },
+      { label: "Contact", src: "cursor-pr-images/mobile/contact-info.png", desc: "Full contact info page with tags, assignees, conversation stats" },
+      { label: "Sharing", src: "cursor-pr-images/mobile/contact-share.png", desc: "Contact sharing with card view — Call & Message action buttons for shared contacts" },
+      { label: "Reactions", src: "cursor-pr-images/mobile/emoji-reactions.jpeg", desc: "Emoji reactions on messages — long press to react with heart, laugh, surprise, and more. Delete & copy actions" },
+      { label: "Flow Chat", src: "cursor-pr-images/mobile/chat-flow.jpeg", desc: "WhatsApp flow messages with automated chatbot responses, schedule message, and notes toggle" },
+    ];
+
+    function openMobileDetail(idx) {
+      const s = MOBILE_SCREENS[idx];
+      const modal = document.getElementById('modal');
+      const media = document.getElementById('modal-media');
+      media.innerHTML = `<img src="${s.src}" alt="${s.label}" class="w-full max-h-[70vh] object-contain rounded">`;
+      document.getElementById('modal-icon').innerHTML = `<i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i>`;
+      document.getElementById('modal-title').textContent = s.label;
+      document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${s.desc}</p>`;
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
 
     const PIPELINE_STAGES = [
-      { name: "DEV", label: "Feature Branch", desc: "Auto-created per branch in Amplify" },
-      { name: "BETA", label: "Master Merges", desc: "Early testing after PR merges" },
-      { name: "RC", label: "Release Candidate", desc: "Freeze — bug fixes only" },
-      { name: "STAGING", label: "Final Validation", desc: "Mirrors production config" },
-      { name: "PROD", label: "Live Production", desc: "After staging sign-off" }
+      { name: "DEV", label: "Write Code", desc: "Amplify build or localhost — any branch", size: "sm", color: "text-white/40" },
+      { name: "BETA", label: "Master / Beta", desc: "Merged PRs land here first for early testing", size: "md", color: "text-white/50" },
+      { name: "RC", label: "Release Candidate", desc: "Freeze stage — only bug fixes, no new features", size: "lg", color: "text-white/70" },
+      { name: "STAGING", label: "Staging", desc: "The airplane hanger — plane sits here until ready for takeoff", size: "lg", color: "text-white/80" },
+      { name: "PROD", label: "Production", desc: "Live — whitelabel clients notified of new release", size: "lg", color: "text-red-500" }
     ];
 
-    const PIPELINE_RULES = [
-      "Code must pass through every environment in order — no skipping",
-      "RC is a freeze stage — no new features, only bug fixes allowed",
-      "Staging should match production as closely as possible",
-      "Dev environments are temporary and auto-managed by Amplify"
+    const PIPELINE_FLOW = [
+      { step: "Claude fetches GitHub PRs", detail: "AI agent pulls PR URLs from the last 2 weeks, linking each to its release", icon: "git-pull-request" },
+      { step: "Developer writes code", detail: "Feature branches auto-deploy to Amplify preview or localhost for testing", icon: "code" },
+      { step: "PR merged → Beta", detail: "After code review, PR merges into master/beta branch for early testing", icon: "git-merge" },
+      { step: "Approved → Release Candidate", detail: "RC is a freeze stage — no new features, only bug fixes allowed", icon: "shield-check" },
+      { step: "Every 6 hours → Staging", detail: "RC auto-merges into staging. This is the airplane hanger — the plane sits until ready", icon: "clock" },
+      { step: "Every morning 5am UTC → Production", detail: "Staging deploys to prod. Whitelabel clients are notified of the new release", icon: "rocket" },
     ];
 
-    const SLIDE_LABELS = ["Hero", "Features", "Cursor → PR", "Tickets", "Mobile", "AI Workflows", "Pipeline", "Closing"];
-    const TOTAL_SLIDES = SLIDE_LABELS.length;
-    let currentSlide = 0;
+    const PIPELINE_SCHEDULE = [
+      { label: "RC → Staging", freq: "Every 6 hours", detail: "Full testing window per merge cycle" },
+      { label: "Staging → Prod", freq: "Daily 5:00 AM UTC", detail: "Whitelabel clients notified of new release" },
+      { label: "Testing windows", freq: "3 environments", detail: "Dev → RC → Staging — 3 layers to catch bugs before prod" },
+    ];
+
+    const PIPELINE_TESTING = [
+      { env: "RC", window: "~6 hours", what: "Feature-level QA, regression checks" },
+      { env: "STAGING", window: "Overnight", what: "Full integration testing, branding checks" },
+      { env: "PROD", window: "Continuous", what: "Monitoring, error tracking via Sentry" },
+    ];
+
+    const ALL_SLIDES = [
+      { id: 0, label: "Hero", hideable: false },
+      { id: 1, label: "Features", hideable: true, hidden: true },
+      { id: 2, label: "Cursor → PR", hideable: false },
+      { id: 3, label: "Tickets", hideable: false },
+      { id: 4, label: "Mobile", hideable: false },
+      { id: 5, label: "AI Workflows", hideable: false },
+      { id: 6, label: "Pipeline", hideable: false },
+      { id: 7, label: "Closing", hideable: false },
+    ];
+
+    function getActiveSlides() { return ALL_SLIDES.filter(s => !s.hidden); }
+    function getActiveIndex(slideId) { return getActiveSlides().findIndex(s => s.id === slideId); }
+    function getSlideIdFromActive(activeIdx) { const a = getActiveSlides(); return a[activeIdx]?.id ?? 0; }
+
+    let SLIDE_LABELS = getActiveSlides().map(s => s.label);
+    let TOTAL_SLIDES = SLIDE_LABELS.length;
+    let currentSlide = 0; // this is now the DOM slide id
     let isTransitioning = false;
     let touchStartX = 0;
     let lastWheelTime = 0;
+
+    function refreshSlideState() {
+      SLIDE_LABELS = getActiveSlides().map(s => s.label);
+      TOTAL_SLIDES = SLIDE_LABELS.length;
+    }
 
     // ── Build cards (Noir style) ──
     function buildCards(containerId, items) {
@@ -591,62 +784,117 @@
 
     // ── Pipeline ──
     function buildPipeline() {
-      const container = document.getElementById('pipeline-stages');
-      PIPELINE_STAGES.forEach((stage) => {
-        const div = document.createElement('div');
-        div.className = 'flex items-center gap-3 px-4 py-3';
-        div.innerHTML = `
-          <span class="font-mono text-[10px] font-bold tracking-[0.15em] text-red-500 w-16 shrink-0">${stage.name}</span>
-          <span class="text-white/70 text-sm">${stage.label}</span>
-          <span class="text-white/25 text-xs ml-auto hidden md:block">— ${stage.desc}</span>
+      // Visual diagram — growing boxes with arrows
+      const visual = document.getElementById('pipeline-visual');
+      const sizes = { sm: 'w-16 h-20', md: 'w-24 h-28', lg: 'w-32 h-36' };
+      PIPELINE_STAGES.forEach((stage, i) => {
+        const box = document.createElement('div');
+        box.className = 'flex items-center shrink-0';
+        const sizeClass = sizes[stage.size] || sizes.md;
+        const borderColor = stage.name === 'PROD' ? 'border-red-500' : 'border-white/20';
+        const bgHover = stage.name === 'PROD' ? 'bg-red-500/5' : 'bg-white/[0.02]';
+        box.innerHTML = `
+          <div class="pipeline-box ${sizeClass} ${borderColor} border-2 rounded-xl flex flex-col items-center justify-center p-2 hover:${bgHover} transition-all cursor-default group" title="${stage.desc}">
+            <span class="font-mono text-[9px] font-bold tracking-[0.15em] ${stage.color} mb-1">${stage.name}</span>
+            <span class="text-white/50 text-[10px] text-center leading-tight">${stage.label}</span>
+          </div>
+          ${i < PIPELINE_STAGES.length - 1 ? '<div class="flex items-center mx-1.5"><svg width="24" height="16" viewBox="0 0 24 16"><path d="M0 8h18M14 3l6 5-6 5" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' : ''}
         `;
-        container.appendChild(div);
+        visual.appendChild(box);
       });
 
-      const rules = document.getElementById('pipeline-rules');
-      PIPELINE_RULES.forEach((rule, i) => {
-        const li = document.createElement('li');
-        li.className = 'flex items-start gap-3';
-        li.innerHTML = `
-          <span class="font-mono text-[10px] text-red-500/50 mt-0.5 shrink-0">${String(i + 1).padStart(2, '0')}</span>
-          <span class="text-white/50 text-sm leading-relaxed">${rule}</span>
+      // Flow steps
+      const flowContainer = document.getElementById('pipeline-flow-steps');
+      PIPELINE_FLOW.forEach((f, i) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-start gap-3 px-4 py-2.5 group hover:bg-white/[0.02] transition-colors';
+        div.innerHTML = `
+          <div class="w-5 h-5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-red-500/50 transition-colors">
+            <i data-lucide="${f.icon}" class="w-3 h-3 text-white/25 group-hover:text-red-500/70 transition-colors"></i>
+          </div>
+          <div class="min-w-0">
+            <span class="text-white text-[13px] font-semibold">${f.step}</span>
+            <p class="text-white/20 text-[11px] leading-relaxed mt-0.5 hidden md:block">${f.detail}</p>
+          </div>
         `;
-        rules.appendChild(li);
+        flowContainer.appendChild(div);
+      });
+
+      // Schedule
+      const schedContainer = document.getElementById('pipeline-schedule');
+      PIPELINE_SCHEDULE.forEach(s => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center justify-between px-4 py-2.5';
+        div.innerHTML = `
+          <div>
+            <span class="text-white/60 text-sm">${s.label}</span>
+            <p class="text-white/15 text-[10px] mt-0.5 hidden md:block">${s.detail}</p>
+          </div>
+          <span class="font-mono text-[10px] text-red-500 shrink-0 ml-3">${s.freq}</span>
+        `;
+        schedContainer.appendChild(div);
+      });
+
+      // Testing windows
+      const testContainer = document.getElementById('pipeline-testing');
+      PIPELINE_TESTING.forEach(t => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 px-4 py-2.5';
+        div.innerHTML = `
+          <span class="font-mono text-[9px] font-bold tracking-[0.1em] text-red-500/60 w-14 shrink-0">${t.env}</span>
+          <span class="text-white/50 text-xs flex-1">${t.what}</span>
+          <span class="font-mono text-[9px] text-white/25 shrink-0">${t.window}</span>
+        `;
+        testContainer.appendChild(div);
       });
     }
 
     // ── Progress dots ──
     function buildDots() {
       const dots = document.getElementById('progress-dots');
-      for (let i = 0; i < TOTAL_SLIDES; i++) {
+      dots.innerHTML = '';
+      const active = getActiveSlides();
+      active.forEach((s, i) => {
         const dot = document.createElement('button');
-        dot.className = `dot ${i === 0 ? 'active' : ''}`;
-        dot.addEventListener('click', () => goToSlide(i));
+        dot.className = `dot ${s.id === currentSlide ? 'active' : ''}`;
+        dot.addEventListener('click', () => goToSlide(s.id));
         dots.appendChild(dot);
-      }
+      });
+      document.getElementById('slide-total').textContent = active.length;
     }
 
     function updateDots() {
+      const active = getActiveSlides();
+      const activeIdx = getActiveIndex(currentSlide);
       document.querySelectorAll('#progress-dots .dot').forEach((d, i) => {
-        d.className = `dot ${i === currentSlide ? 'active' : ''}`;
+        d.className = `dot ${i === activeIdx ? 'active' : ''}`;
       });
-      document.getElementById('slide-num').textContent = currentSlide + 1;
-      document.getElementById('slide-label').textContent = SLIDE_LABELS[currentSlide];
+      document.getElementById('slide-num').textContent = activeIdx + 1;
+      document.getElementById('slide-label').textContent = active[activeIdx]?.label || '';
     }
 
     // ── Slide navigation ──
-    function goToSlide(index) {
-      if (isTransitioning || index < 0 || index >= TOTAL_SLIDES || index === currentSlide) return;
+    function nextActiveSlide(forward) {
+      const active = getActiveSlides();
+      const idx = getActiveIndex(currentSlide);
+      const next = forward ? idx + 1 : idx - 1;
+      if (next < 0 || next >= active.length) return -1;
+      return active[next].id;
+    }
+
+    function goToSlide(slideId) {
+      const active = getActiveSlides();
+      const targetInActive = active.find(s => s.id === slideId);
+      if (isTransitioning || !targetInActive || slideId === currentSlide) return;
       isTransitioning = true;
-      const goingForward = index > currentSlide;
+      const goingForward = slideId > currentSlide;
       const oldSlide = document.getElementById(`slide-${currentSlide}`);
-      const newSlide = document.getElementById(`slide-${index}`);
+      const newSlide = document.getElementById(`slide-${slideId}`);
 
       newSlide.classList.remove('hidden-slide');
       oldSlide.classList.remove('enter-right', 'enter-left', 'exit-left', 'exit-right');
       newSlide.classList.remove('enter-right', 'enter-left', 'exit-left', 'exit-right');
 
-      // Re-trigger content animations
       newSlide.querySelectorAll('.reveal, .card-reveal, .line-reveal, .list-reveal').forEach(el => {
         el.style.animation = 'none';
         el.offsetHeight;
@@ -663,7 +911,7 @@
         newSlide.classList.add('active', 'enter-left');
       }
 
-      currentSlide = index;
+      currentSlide = slideId;
       updateNav();
       updateDots();
 
@@ -675,9 +923,55 @@
       }, 600);
     }
 
+    function goNext() { const n = nextActiveSlide(true); if (n >= 0) goToSlide(n); }
+    function goPrev() { const n = nextActiveSlide(false); if (n >= 0) goToSlide(n); }
+
     function updateNav() {
-      document.getElementById('btn-prev').classList.toggle('hidden', currentSlide === 0);
-      document.getElementById('btn-next').classList.toggle('hidden', currentSlide >= TOTAL_SLIDES - 1);
+      const active = getActiveSlides();
+      const idx = getActiveIndex(currentSlide);
+      document.getElementById('btn-prev').classList.toggle('hidden', idx <= 0);
+      document.getElementById('btn-next').classList.toggle('hidden', idx >= active.length - 1);
+    }
+
+    // ── Toggle hidden slides ──
+    function toggleSlide(slideId) {
+      const slide = ALL_SLIDES.find(s => s.id === slideId);
+      if (!slide || !slide.hideable) return;
+      slide.hidden = !slide.hidden;
+      refreshSlideState();
+      const el = document.getElementById(`slide-${slideId}`);
+      if (slide.hidden) {
+        el.classList.add('hidden-slide');
+        el.classList.remove('active');
+        if (currentSlide === slideId) {
+          const active = getActiveSlides();
+          currentSlide = active[0].id;
+          document.getElementById(`slide-${currentSlide}`).classList.remove('hidden-slide');
+          document.getElementById(`slide-${currentSlide}`).classList.add('active');
+        }
+      }
+      buildDots();
+      updateDots();
+      updateNav();
+      updateToggleUI();
+    }
+
+    function updateToggleUI() {
+      ALL_SLIDES.filter(s => s.hideable).forEach(s => {
+        const btn = document.getElementById(`toggle-${s.id}`);
+        if (btn) {
+          const knob = btn.querySelector('.toggle-knob');
+          if (s.hidden) {
+            btn.classList.remove('bg-red-500');
+            btn.classList.add('bg-white/10');
+            knob.style.transform = 'translateX(0)';
+          } else {
+            btn.classList.add('bg-red-500');
+            btn.classList.remove('bg-white/10');
+            knob.style.transform = 'translateX(14px)';
+          }
+        }
+      });
     }
 
     // ── Modal ──
@@ -709,8 +1003,8 @@
     }
 
     // ── Events ──
-    document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
-    document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+    document.getElementById('btn-prev').addEventListener('click', goPrev);
+    document.getElementById('btn-next').addEventListener('click', goNext);
     document.getElementById('modal-overlay').addEventListener('click', closeModal);
     document.getElementById('modal-close').addEventListener('click', closeModal);
 
@@ -719,8 +1013,8 @@
         if (e.key === 'Escape') closeModal();
         return;
       }
-      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
     });
 
     document.addEventListener('wheel', (e) => {
@@ -729,14 +1023,14 @@
       const now = Date.now();
       if (now - lastWheelTime < 800) return;
       const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (d > 30) { lastWheelTime = now; goToSlide(currentSlide + 1); }
-      else if (d < -30) { lastWheelTime = now; goToSlide(currentSlide - 1); }
+      if (d > 30) { lastWheelTime = now; goNext(); }
+      else if (d < -30) { lastWheelTime = now; goPrev(); }
     }, { passive: false });
 
     document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
     document.addEventListener('touchend', (e) => {
       const diff = touchStartX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 50) { diff > 0 ? goToSlide(currentSlide + 1) : goToSlide(currentSlide - 1); }
+      if (Math.abs(diff) > 50) { diff > 0 ? goNext() : goPrev(); }
     });
 
     // ── Ticket highlights data ──
@@ -793,6 +1087,75 @@
       });
     }
 
+    // ── Recent merged PRs from GitHub ──
+    const RECENT_PRS = [
+      { num: 3614, title: "Feat: unsupported message UI RC sync", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3614" },
+      { num: 3613, title: "fix: handle placeholderMessage not supported UI in inbox", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3613" },
+      { num: 3611, title: "fix: don't prepend dashboard. prefix when locale key doesn't resolve", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3611" },
+      { num: 3609, title: "fix: resolve infinite request loops across routes", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3609" },
+      { num: 3608, title: "Fix/inbox oops filter crash rc", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3608" },
+      { num: 3606, title: "fix: prevent duplicate tags when importing contacts to broadcast", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3606" },
+      { num: 3594, title: "Fix/inbox oops filter crash", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3594" },
+      { num: 3589, title: "fix: prevent OOM in Amplify build by removing localeInjectPlugin", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3589" },
+      { num: 3586, title: "fix: selectedCount operator precedence shows wrong count", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3586" },
+      { num: 3580, title: "[P0] fix: promiseTimeout never rejects — attachments hang forever", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3580" },
+      { num: 3578, title: "fix: guard setTimeout with mounted ref in Broadcast", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3578" },
+      { num: 3575, title: "fix: add saveCampaign to useEffect deps to prevent stale closure", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3575" },
+      { num: 3573, title: "fix: add success notification after duplicating a flow", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3573" },
+      { num: 3569, title: "fix: add missing alt text to plan icon images", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3569" },
+      { num: 3568, title: "fix: use stable key in BillingTab sections list", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3568" },
+      { num: 3567, title: "fix: replace window.location.href with navigate()", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3567" },
+      { num: 3566, title: "fix: use APP.supportPhoneNumber in billing links", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3566" },
+      { num: 3565, title: "fix: replace hardcoded Quarterly with i18n translation", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3565" },
+      { num: 3562, title: "fix: remove duplicate window.open on Contact Support", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3562" },
+      { num: 3561, title: "fix: change invalid security prop to rel on billing", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3561" },
+      { num: 3560, title: "fix: remove debug console.log and sensitive phone data", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3560" },
+      { num: 3523, title: "fix: Invalid-number state kept after valid number", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3523" },
+      { num: 3501, title: "fix: oops resolution", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3501" },
+      { num: 3495, title: "Fix: flow performance table padding alignment", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3495" },
+      { num: 3488, title: "fix: oops resolution", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3488" },
+      { num: 3484, title: "Localization revamp", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3484" },
+      { num: 3483, title: "Message Flows Analytics > Flow Performance Tables", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3483" },
+      { num: 3482, title: "Inbox > Inline Unpin (X) Button on Pinned Filter", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3482" },
+      { num: 3481, title: "Inbox > Create Pin Filter Dialog Name Input", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3481" },
+      { num: 3480, title: "Keyword Reply > No Form Data Persistence Warning", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3480" },
+      { num: 3478, title: "Redirect us to message flow that assigned chat to user", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3478" },
+      { num: 3477, title: "AppStore > Empty Notification Nickname Accepted", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3477" },
+      { num: 3476, title: "CRM > No Edit or Delete Option for Custom Fields", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3476" },
+      { num: 3475, title: "Inbox > Note Timestamp Duplicated in Chat View", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3475" },
+      { num: 3467, title: "Message Flow > Goal Option Cards Not Tab-Navigable", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3467" },
+      { num: 3460, title: "Inbox > Raw interactiveMessage not supported string", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3460" },
+      { num: 3459, title: "Inbox > Raw WhatsApp System String BIZ_PRIVACY_MODE", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3459" },
+      { num: 3458, title: "Broadcast > Typo: Added Betweeen Has Three E's", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3458" },
+      { num: 3449, title: "Channels > WhatsApp Shows Re-connect When Connected", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3449" },
+      { num: 3447, title: "AppStore > No Character Limit on Notification Nickname", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3447" },
+      { num: 3443, title: "Keyword Reply > No Maximum Length Validation", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3443" },
+      { num: 3439, title: "Feat/waba template approval multi account", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3439" },
+      { num: 3427, title: "House cleaning mar26", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3427" },
+      { num: 3426, title: "fix: LARK-XU7vrTsopeIkQUcHQUdl merge", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3426" },
+      { num: 3425, title: "fix: whitelabel phone preview webp", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3425" },
+      { num: 3424, title: "Syncing master to RC : 19th March", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3424" },
+      { num: 3421, title: "Contacts > No Character Limit on Contact Notes", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3421" },
+    ];
+
+    function buildRecentPRs() {
+      const container = document.getElementById('recent-prs');
+      RECENT_PRS.forEach(pr => {
+        const a = document.createElement('a');
+        a.href = pr.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'flex items-center gap-2 px-3 py-1.5 group hover:bg-white/[0.02] transition-colors';
+        const authorColor = pr.author === 'piyushmakad' ? 'text-blue-400/40' : pr.author === 'amrit2611' ? 'text-green-400/40' : pr.author === 'okarin1511' ? 'text-purple-400/40' : 'text-white/20';
+        a.innerHTML = `
+          <span class="font-mono text-[9px] text-red-500/40 shrink-0">#${pr.num}</span>
+          <span class="text-white/35 text-[11px] truncate flex-1 group-hover:text-white/60 transition-colors">${pr.title}</span>
+          <span class="font-mono text-[8px] ${authorColor} shrink-0 hidden md:block">${pr.author.slice(0,8)}</span>
+        `;
+        container.appendChild(a);
+      });
+    }
+
     // ── AI Workflows data — organized by person ──
     const AI_WORKFLOW_PEOPLE = [
       {
@@ -812,6 +1175,17 @@
           { title: "Kibana Log Checker", schedule: "On ticket", desc: "Custom tool that auto-investigates production errors from Kibana logs. Flow: Lark ticket → auto-fetch Kibana logs → generate markdown report → classify frontend vs backend → auto-fix or flag for review", value: "Saves ~30 min per bug investigation — instant root cause classification", icon: "search", media: { type: "image", src: "cursor-pr-images/piyush-kibana.png" } },
           { title: "Architect Memory System", schedule: "Continuous", desc: "Persistent frontend & backend architect memory files logging wins, mistakes, and patterns from every task. Two-agent debate (frontend vs backend architect) before major decisions with live streaming dashboard. Self-learning — e.g. always dedup arrays in React callbacks, always check CI baseline before blaming a PR", value: "AI that learns from past mistakes — catches blind spots before they ship", icon: "brain", media: { type: "image", src: "cursor-pr-images/piyush-architect.png" } },
           { title: "Ticket Investigation Pipeline", schedule: "On ticket", desc: "Lark ticket → Kibana investigation → auto-branch creation → fix → PR. Frontend fixes auto-applied; backend changes require human approval. Branch naming linked to Lark ticket IDs for full traceability", value: "End-to-end ticket-to-PR automation with safety guardrails for backend", icon: "git-branch", media: { type: "image", src: "cursor-pr-images/piyush-ticket.png" } },
+        ]
+      },
+      {
+        person: "Amrit", role: "Frontend Developer", color: "text-red-500",
+        workflows: [
+          { title: "Performance Loop", schedule: "Autonomous", desc: "Audits page speed → identifies issues → fixes code → deploys → re-audits. Fully autonomous loop that keeps running until targets are met", value: "Achieved 60+ Lighthouse scores across 16 routes without manual runs", icon: "gauge" },
+          { title: "Ticket Triage Agent", schedule: "On demand", desc: "Reads Lark tickets + QA screenshots, searches codebase, classifies as fixed/needs-work. Cross-references existing PRs to avoid duplicate work", value: "Triaged 56 tickets in minutes — found 27 were already resolved", icon: "list-checks" },
+          { title: "1000-Bug Discovery", schedule: "On demand", desc: "Scans all 10 repos for code quality issues, security risks, and missing safeguards. Auto-classifies by severity and owning service", value: "Discovered 1,110 issues, auto-classified by severity and service", icon: "bug" },
+          { title: "Lark ↔ GitHub Sync", schedule: "On PR merge", desc: "Auto-creates Lark tickets from discovered bugs, updates status when PRs are merged. Two-way sync keeps both systems in sync without manual updates", value: "Eliminated manual ticket creation for 800+ issues", icon: "refresh-cw" },
+          { title: "Locale Migration", schedule: "One-time", desc: "Auto-migrates translation keys, injects hooks, cleans up dead code. Handles the full i18n migration pipeline end-to-end", value: "Completed in 1 day what was estimated at 1–2 weeks manually", icon: "languages" },
+          { title: "Beta Bug Audit", schedule: "On demand", desc: "4 parallel AI agents scan the live codebase, produce bug report with evidence. Each agent specializes in a different category (logic, UX, perf, security)", value: "Found 68 bugs, fixed 94% same day", icon: "shield-check" },
         ]
       },
     ];
@@ -940,17 +1314,32 @@
       lucide.createIcons();
     }
 
+    // ── Toggle panel ──
+    document.getElementById('toggle-menu-btn').addEventListener('click', () => {
+      document.getElementById('toggle-panel').classList.toggle('hidden');
+    });
+    document.addEventListener('click', (e) => {
+      const panel = document.getElementById('toggle-panel');
+      const btn = document.getElementById('toggle-menu-btn');
+      if (!panel.contains(e.target) && !btn.contains(e.target)) panel.classList.add('hidden');
+    });
+
     // ── Init ──
     buildCards('features-grid', FEATURES);
     buildCards('cursor-grid', CURSOR_TO_PR);
     buildMobileHighlights();
     buildTicketHighlights();
+    buildRecentPRs();
     buildAIWorkflows();
     buildPipeline();
     buildDots();
     lucide.createIcons();
     updateNav();
-    for (let i = 1; i < TOTAL_SLIDES; i++) document.getElementById(`slide-${i}`).classList.add('hidden-slide');
+    updateToggleUI();
+    // Hide all non-active slides
+    ALL_SLIDES.forEach(s => {
+      if (s.id !== 0) document.getElementById(`slide-${s.id}`).classList.add('hidden-slide');
+    });
   </script>
 </body>
 </html>
