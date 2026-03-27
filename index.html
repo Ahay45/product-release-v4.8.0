@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>Product Release Overview v4.8.0 | ChatDaddy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace']
+          },
+          colors: {
+            accent: '#ef4444'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; }
+
+    /* ── Slide system ── */
+    .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; will-change: transform, opacity; }
+    .slide.active { opacity: 1; pointer-events: auto; z-index: 2; }
+    .slide.exiting { pointer-events: none; z-index: 1; }
+    .slide.hidden-slide { display: none; }
+
+    @keyframes enterRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes enterLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes exitLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-60px); } }
+    @keyframes exitRight { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(60px); } }
+    .slide.enter-right { animation: enterRight 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.enter-left { animation: enterLeft 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.exit-left { animation: exitLeft 0.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.exit-right { animation: exitRight 0.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+
+    /* ── Content reveal ── */
+    @keyframes revealUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes revealLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes clipReveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+    @keyframes typeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes countUp { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .slide.active .reveal { opacity: 0; animation: revealUp 0.6s ease forwards; }
+    .slide.active .r1 { animation-delay: 0.05s; }
+    .slide.active .r2 { animation-delay: 0.15s; }
+    .slide.active .r3 { animation-delay: 0.25s; }
+    .slide.active .r4 { animation-delay: 0.35s; }
+    .slide.active .r5 { animation-delay: 0.5s; }
+    .slide.active .r6 { animation-delay: 0.65s; }
+    .slide.active .r7 { animation-delay: 0.8s; }
+
+    .slide.active .line-reveal { transform: scaleX(0); transform-origin: left; animation: revealLine 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.active .lr1 { animation-delay: 0.1s; }
+    .slide.active .lr2 { animation-delay: 0.2s; }
+
+    .slide.active .card-reveal { opacity: 0; animation: revealUp 0.45s ease forwards; }
+
+    .slide.active .list-reveal { opacity: 0; animation: typeIn 0.4s ease forwards; }
+
+    /* ── Noir aesthetic ── */
+    .editorial-rule { height: 1px; background: #fff; }
+    .editorial-rule-accent { height: 2px; background: #ef4444; }
+    .editorial-rule-thin { height: 1px; background: rgba(255,255,255,0.15); }
+
+    .noir-card { background: transparent; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s ease; }
+    .noir-card:hover { border-color: #ef4444; background: rgba(239,68,68,0.04); }
+
+    .stat-box { border: 1px solid rgba(255,255,255,0.2); }
+
+    /* Grid newspaper feel */
+    .editorial-grid { display: grid; gap: 1px; background: rgba(255,255,255,0.1); }
+    .editorial-grid > * { background: #000; }
+
+    /* Dot nav */
+    .dot { width: 6px; height: 6px; border: 1px solid rgba(255,255,255,0.4); transition: all 0.3s ease; cursor: pointer; }
+    .dot.active { background: #ef4444; border-color: #ef4444; width: 20px; }
+
+    /* Modal */
+    .modal-bg { background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+
+    /* Scanline subtle texture */
+    .noise::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,0.008) 2px,
+        rgba(255,255,255,0.008) 4px
+      );
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="fixed inset-0 overflow-hidden bg-black">
+
+    <!-- ===== SLIDE 0: HERO ===== -->
+    <div class="slide active noise" id="slide-0">
+      <div class="relative flex items-center justify-center h-full w-full">
+        <!-- Accent stripe top -->
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <!-- Thin grid lines -->
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+
+        <div class="relative z-10 text-center px-8 max-w-5xl">
+          <div class="reveal r1">
+            <span class="font-mono text-xs tracking-[0.3em] uppercase text-white/40">Issue No. 48 — March 2026</span>
+          </div>
+
+          <div class="editorial-rule-accent w-16 mx-auto my-6 reveal r2 line-reveal lr1"></div>
+
+          <h1 class="font-serif text-7xl md:text-[120px] font-black tracking-tight text-white leading-[0.9] mb-4 reveal r2">
+            PRODUCT<br>RELEASE
+          </h1>
+
+          <div class="editorial-rule w-32 mx-auto my-5 reveal r3 line-reveal lr2"></div>
+
+          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Overview — v4.8.0</p>
+
+          <div class="flex items-center justify-center gap-12 md:gap-20 mb-16 reveal r4">
+            <div class="text-center">
+              <div class="font-serif text-6xl md:text-7xl font-black text-white">7</div>
+              <div class="editorial-rule-thin w-full my-2"></div>
+              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Features</div>
+            </div>
+            <div class="text-center">
+              <div class="font-serif text-6xl md:text-7xl font-black text-white">6</div>
+              <div class="editorial-rule-thin w-full my-2"></div>
+              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Cursor to PR</div>
+            </div>
+            <div class="text-center">
+              <div class="font-serif text-6xl md:text-7xl font-black text-red-500">25<span class="text-4xl">%</span></div>
+              <div class="editorial-rule-accent w-full my-2"></div>
+              <div class="font-mono text-[10px] tracking-[0.25em] uppercase text-red-400/70">Ticket Reduction</div>
+            </div>
+          </div>
+
+          <div class="reveal r5">
+            <div class="flex items-center justify-center gap-3 text-white/25 font-mono text-xs tracking-wider">
+              <span class="w-8 h-px bg-white/20"></span>
+              <span>ARROW KEYS TO NAVIGATE</span>
+              <span class="w-8 h-px bg-white/20"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accent stripe bottom -->
+        <div class="absolute bottom-0 left-0 right-0 h-px bg-white/10"></div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 1: FEATURES ===== -->
+    <div class="slide noise" id="slide-1">
+      <div class="relative flex items-center justify-center h-full w-full">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Features</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">7 shipped to beta</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <div class="editorial-grid grid-cols-2 md:grid-cols-4" id="features-grid">
+            <!-- Generated by JS -->
+          </div>
+
+          <div class="mt-4 reveal r5">
+            <p class="font-mono text-[10px] text-white/25 tracking-[0.2em] uppercase text-center">Click any card to view details</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 2: CURSOR TO PR ===== -->
+    <div class="slide noise" id="slide-2">
+      <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full py-8">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Cursor&nbsp;→&nbsp;PR</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">6 pull requests</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <div class="editorial-grid grid-cols-1 md:grid-cols-5" id="cursor-grid">
+            <!-- Generated by JS -->
+          </div>
+
+          <div class="mt-4 reveal r5">
+            <p class="font-mono text-[10px] text-white/25 tracking-[0.2em] uppercase text-center">Click any card to view details</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 3: TICKET SUMMARY ===== -->
+    <div class="slide noise" id="slide-3">
+      <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full py-8">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Tickets &amp; PRs</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Engineering output</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <!-- PR stats row -->
+          <div class="grid grid-cols-5 gap-px bg-white/10 mb-6 reveal r2">
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">102</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Opened</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">15</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Repositories</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">41</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Merged</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">70+</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Commits</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">47→20</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Backlog</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Left: Ticket stats -->
+            <div class="w-full lg:w-[40%]">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Support Tickets</p>
+              <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
+                <div class="bg-black p-4 text-center">
+                  <div class="font-serif text-3xl font-black text-white">24</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Received</div>
+                </div>
+                <div class="bg-black p-4 text-center">
+                  <div class="font-serif text-3xl font-black text-white">7</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Resolved</div>
+                </div>
+                <div class="bg-black p-4 text-center">
+                  <div class="font-serif text-3xl font-black text-red-500">25%</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Decrease</div>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
+                <div class="bg-black px-4 py-3 flex items-center gap-2">
+                  <span class="font-serif text-xl font-black text-red-500">8</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Bugs</span>
+                </div>
+                <div class="bg-black px-4 py-3 flex items-center gap-2">
+                  <span class="font-serif text-xl font-black text-white/60">9</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Not Bugs</span>
+                </div>
+                <div class="bg-black px-4 py-3 flex items-center gap-2">
+                  <span class="font-serif text-xl font-black text-red-500">1</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">P0</span>
+                </div>
+              </div>
+
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">PR Breakdown</p>
+              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="text-white/60 text-sm">Frontend Dashboard</span>
+                  <span class="font-mono text-sm font-bold text-white">67</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="text-white/60 text-sm">Backend / Infra / OpenAPI</span>
+                  <span class="font-mono text-sm font-bold text-white">35</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="text-white/60 text-sm">In Review</span>
+                  <span class="font-mono text-sm font-bold text-white/50">58</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                  <span class="text-white/50 text-sm flex-1 ml-3">6 tickets in progress</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Big changes highlights -->
+            <div class="w-full lg:w-[60%]">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Big Changes & Impact</p>
+              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4" id="ticket-highlights">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 4: MOBILE UPDATE ===== -->
+    <div class="slide noise" id="slide-4">
+      <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full py-8">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Mobile</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">ChatDaddy App Update</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-8 reveal r1 line-reveal lr1"></div>
+
+          <div class="flex flex-col md:flex-row gap-8 items-start">
+            <div class="w-full md:w-1/2 shrink-0 reveal r2">
+              <div class="border border-white/10 p-1">
+                <img src="https://a82b2716-367b-4156-9921-3aad6849080c-00-2kw1o39k5a5qr.kirk.replit.dev/attached_assets/CD_Mobile_1773389000413.png" alt="ChatDaddy Mobile" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <ul class="space-y-0" id="mobile-highlights"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 5: AI WORKFLOWS ===== -->
+    <div class="slide noise" id="slide-5">
+      <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full py-8">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">AI&nbsp;Workflows</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Currently Implemented</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <!-- Top stats row -->
+          <div class="grid grid-cols-4 gap-px bg-white/10 mb-6 reveal r2">
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">9</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Automations</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">2</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Team Members</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">4</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">LLM Models</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">24/7</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Always On</div>
+            </div>
+          </div>
+
+          <!-- Two-column layout: workflows grid + model routing -->
+          <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- Left: Workflow categories -->
+            <div class="w-full lg:w-[62%] reveal r3">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Active Workflows</p>
+              <div class="border border-white/10 divide-y divide-white/10" id="ai-workflows-list">
+                <!-- Generated by JS -->
+              </div>
+            </div>
+
+            <!-- Right: Model routing + agent pipeline -->
+            <div class="w-full lg:w-[38%] flex flex-col gap-5">
+              <div class="reveal r4">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Model Routing</p>
+                <div class="border border-white/10 divide-y divide-white/10" id="model-routing">
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 6: DEPLOYMENT PIPELINE ===== -->
+    <div class="slide noise" id="slide-6">
+      <div class="relative flex items-center justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full py-8">
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-5xl font-black text-white tracking-tight">Pipeline</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">dev → beta → rc → staging → prod</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <div class="w-full lg:w-[55%] shrink-0 reveal r2">
+              <div class="border border-white/10 p-1">
+                <img src="https://a82b2716-367b-4156-9921-3aad6849080c-00-2kw1o39k5a5qr.kirk.replit.dev/attached_assets/ChatGPT_Image_Mar_13,_2026,_03_07_20_PM_1773389499790.png" alt="Pipeline" class="w-full grayscale hover:grayscale-0 transition-all duration-500">
+              </div>
+            </div>
+            <div class="w-full lg:w-[45%] flex flex-col gap-6">
+              <div class="reveal r3">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Stages</p>
+                <div class="space-y-0 border border-white/10 divide-y divide-white/10" id="pipeline-stages"></div>
+              </div>
+              <div class="reveal r4">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Rules</p>
+                <ul class="space-y-2" id="pipeline-rules"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 7: CLOSING ===== -->
+    <div class="slide noise" id="slide-7">
+      <div class="relative flex items-center justify-center h-full w-full">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 text-center px-8 max-w-4xl">
+          <div class="reveal r1">
+            <div class="w-px h-16 bg-white/20 mx-auto mb-8"></div>
+          </div>
+          <div class="reveal r2">
+            <p class="font-serif text-2xl md:text-3xl text-white/60 italic leading-relaxed max-w-3xl mx-auto mb-2">"Great things in business are never done by one person.<br>They're done by a team of people."</p>
+            <p class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25 mb-12">— Steve Jobs</p>
+          </div>
+          <div class="editorial-rule w-24 mx-auto my-8 reveal r3 line-reveal lr1"></div>
+          <h2 class="font-serif text-5xl md:text-8xl font-black text-white leading-[0.95] mb-4 reveal r4">
+            KEEP<br><span class="text-red-500">SHIPPING</span>
+          </h2>
+          <div class="reveal r5">
+            <div class="w-px h-8 bg-red-500 mx-auto my-6"></div>
+            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">v4.8.0 — 1 Mar – 13 Mar 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== NAV BUTTONS ===== -->
+    <button id="btn-prev" class="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-red-500 transition-all duration-200 hidden" aria-label="Previous">
+      <i data-lucide="chevron-left" class="w-5 h-5"></i>
+    </button>
+    <button id="btn-next" class="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-red-500 transition-all duration-200" aria-label="Next">
+      <i data-lucide="chevron-right" class="w-5 h-5"></i>
+    </button>
+
+    <!-- ===== PROGRESS BAR ===== -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 border border-white/10 px-5 py-3">
+      <div class="flex gap-2" id="progress-dots"></div>
+      <div class="w-px h-3 bg-white/10"></div>
+      <div class="font-mono text-[10px] text-white/30 tracking-wider"><span id="slide-num">1</span>/<span id="slide-total">8</span></div>
+      <div class="w-px h-3 bg-white/10 hidden md:block"></div>
+      <div class="font-mono text-[10px] text-white/30 tracking-[0.15em] uppercase hidden md:block" id="slide-label">Hero</div>
+    </div>
+
+    <!-- ===== MODAL ===== -->
+    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+      <div class="absolute inset-0 modal-bg" id="modal-overlay"></div>
+      <div class="relative bg-black border border-white/15 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto" id="modal-content">
+        <button id="modal-close" class="absolute top-3 right-3 z-10 text-white/40 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center bg-black/80 backdrop-blur border border-white/10 hover:border-red-500" aria-label="Close">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <!-- Large media area -->
+        <div class="relative w-full overflow-hidden bg-white/[0.02]" id="modal-media"></div>
+        <!-- Compact info bar below -->
+        <div class="p-5 md:p-6 border-t border-white/10">
+          <div class="flex items-start gap-4">
+            <div class="w-9 h-9 border border-white/15 flex items-center justify-center shrink-0" id="modal-icon"></div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-serif text-xl md:text-2xl font-black text-white leading-tight" id="modal-title"></h3>
+              <p class="text-white/40 leading-relaxed text-sm mt-2" id="modal-desc"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const BASE = 'https://a82b2716-367b-4156-9921-3aad6849080c-00-2kw1o39k5a5qr.kirk.replit.dev/attached_assets/';
+
+    const FEATURES = [
+      { title: "Delete Channel Refinement", description: "Refined delete channel experience with a clearer confirmation flow and detailed impact summary — showing exactly how many contacts, automation flows, and broadcasts will be affected before permanently removing a channel.", icon: "trash-2", media: { type: "video", src: BASE+"Delete_Channel_refinement_1773387811226.mp4" } },
+      { title: "Track Chat Reply by Day & Time", description: "New analytics insight showing peak chat reply activity broken down by day of the week and hour of the day, helping teams identify optimal staffing windows.", icon: "bar-chart-3", media: { type: "video", src: BASE+"Track_most_chat_reply_in_day_and_time_1773387811226.mp4" } },
+      { title: "Message Flow Pop-Up Refinement", description: "Improved message flow pop-up with a cleaner layout, better contextual information, and smoother interactions — making it faster and easier to configure automation flows.", icon: "message-square", media: { type: "video", src: BASE+"Message_Flow_Pop_Up_Refinement_1773387811226.mp4" } },
+      { title: "Custom Field in Inbox", description: "Custom contact fields are now surfaced directly inside the inbox view, giving agents instant access to key contact data without navigating away.", icon: "settings", media: { type: "video", src: BASE+"Custom_field_inbox_1773387811227.mp4" } },
+      { title: "Edit Filter & Pin Filter", description: "Users can now edit existing inbox filters on the fly and pin their most frequently used filters for quick one-click access.", icon: "list-filter", media: { type: "video", src: BASE+"Edit_Filter_and_pin_filter_1773387811228.mp4" } },
+      { title: "Message Flow Analytics", description: "Comprehensive analytics dashboard for message flows, tracking active flows, messages sent, reply rate, read rate, delivery rate, and failure rate.", icon: "bar-chart-3", media: { type: "image", src: BASE+"Message_Flow_Analytics_1773387811228.png" } },
+      { title: "Bot Flow Video Tutorial", description: "Step-by-step video tutorial embedded within the bot flow builder, walking users through automation flow setup with visual guidance.", icon: "video", media: { type: "video", src: BASE+"Bot_Flow_Video_Tutorial_1773387811228.mp4" } }
+    ];
+
+    const CURSOR_TO_PR = [
+      { title: "Mobile Banner Pop-Up", description: "Full-screen promotional banner with gradient background showcasing the ChatDaddy mobile app download — features an iPhone mockup with the app icon, Google Play and App Store buttons, and a dismissible overlay triggered on the Getting Started dashboard.", icon: "smartphone", media: { type: "image", src: "cursor-pr-images/mobile-banner.png" } },
+      { title: "Message Flow Survey", description: "In-flow feedback collection widget embedded in the message flow builder — adds an emoji-based satisfaction survey (5-point scale from sad to happy) with a free-text input field and submit button, rendered as a pop-up card inside the visual flow canvas.", icon: "message-square", media: { type: "image", src: "cursor-pr-images/message-flow-survey.png" } },
+      { title: "AI Feature Setting Control", description: "Granular AI feature permission toggles added to the team member access management panel — admins can enable or disable AI Translate and AI Transcript per teammate with individual checkboxes under a new 'AI Features' category in Settings > Members.", icon: "shield-check", media: { type: "image", src: "cursor-pr-images/ai-feature-control.jpeg" } },
+      { title: "WhatsApp Signup Step", description: "Updated the signup phone number step to reference WhatsApp instead of generic phone — shows the ChatDaddy logo, a 1/10 progress bar, country flag selector with +62 prefix, and clarifies that a 6-digit verification code will be sent via WhatsApp to confirm the number.", icon: "phone", media: { type: "image", src: "cursor-pr-images/whatsapp-signup.jpeg" } },
+      { title: "Dashboard Export", description: "New scheduled export modal for analytics dashboards — allows users to configure recurring PDF or CSV exports with frequency (weekly/monthly), delivery time, and email recipients, automatically emailing the Chats Performance dashboard every Monday at 09:00 AM.", icon: "download", media: { type: "image", src: "cursor-pr-images/schedule-export.png" } },
+      { title: "Renewal Reminder Pop-Up", description: "Account expiry reminder modal notifying teams of upcoming subscription expiration — displays team ID, expiry date, pricing update notice about the new credit-based system, and an auto-charge warning with Remind Me Later and Renew Now action buttons.", icon: "bell-ring", media: { type: "image", src: "cursor-pr-images/renewal-reminder.jpeg" } }
+    ];
+
+    const MOBILE_HIGHLIGHTS = [
+      "More reliable real-time chat connection",
+      "Faster chat loading, search, and image/media support",
+      "Redesigned WhatsApp-style chat list for a cleaner experience",
+      "Instant delivered & read status updates",
+      "Pinned, archived chats, and improved group chat previews",
+      "New contact info page with tags, assignees, and conversation details",
+      "Enhanced filters (saved filters, pending messages, unsolved notes, tags, assignees)",
+      "Faster login with auto country code detection",
+      "Various bug fixes and performance improvements"
+    ];
+
+    const PIPELINE_STAGES = [
+      { name: "DEV", label: "Feature Branch", desc: "Auto-created per branch in Amplify" },
+      { name: "BETA", label: "Master Merges", desc: "Early testing after PR merges" },
+      { name: "RC", label: "Release Candidate", desc: "Freeze — bug fixes only" },
+      { name: "STAGING", label: "Final Validation", desc: "Mirrors production config" },
+      { name: "PROD", label: "Live Production", desc: "After staging sign-off" }
+    ];
+
+    const PIPELINE_RULES = [
+      "Code must pass through every environment in order — no skipping",
+      "RC is a freeze stage — no new features, only bug fixes allowed",
+      "Staging should match production as closely as possible",
+      "Dev environments are temporary and auto-managed by Amplify"
+    ];
+
+    const SLIDE_LABELS = ["Hero", "Features", "Cursor → PR", "Tickets", "Mobile", "AI Workflows", "Pipeline", "Closing"];
+    const TOTAL_SLIDES = SLIDE_LABELS.length;
+    let currentSlide = 0;
+    let isTransitioning = false;
+    let touchStartX = 0;
+    let lastWheelTime = 0;
+
+    // ── Build cards (Noir style) ──
+    function buildCards(containerId, items) {
+      const grid = document.getElementById(containerId);
+      items.forEach((item, i) => {
+        const card = document.createElement('button');
+        card.className = 'noir-card p-4 text-left cursor-pointer group card-reveal';
+        card.style.animationDelay = `${0.2 + i * 0.05}s`;
+        card.innerHTML = `
+          <div class="flex items-start gap-3 mb-2">
+            <div class="w-8 h-8 border border-white/15 flex items-center justify-center shrink-0 group-hover:border-red-500 transition-colors">
+              <i data-lucide="${item.icon}" class="w-4 h-4 text-white/50 group-hover:text-red-500 transition-colors"></i>
+            </div>
+            <h3 class="font-serif text-sm font-bold text-white leading-tight">${item.title}</h3>
+          </div>
+          <p class="text-[11px] text-white/30 line-clamp-2 leading-relaxed pl-11">${item.description}</p>
+        `;
+        card.addEventListener('click', () => openModal(item));
+        grid.appendChild(card);
+      });
+    }
+
+    // ── Mobile highlights ──
+    function buildMobileHighlights() {
+      const ul = document.getElementById('mobile-highlights');
+      MOBILE_HIGHLIGHTS.forEach((h, i) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-3 border-b border-white/5 py-3 list-reveal';
+        li.style.animationDelay = `${0.4 + i * 0.06}s`;
+        li.innerHTML = `
+          <span class="font-mono text-[10px] text-red-500 mt-1 shrink-0">${String(i + 1).padStart(2, '0')}</span>
+          <span class="text-white/60 text-sm leading-relaxed">${h}</span>
+        `;
+        ul.appendChild(li);
+      });
+    }
+
+    // ── Pipeline ──
+    function buildPipeline() {
+      const container = document.getElementById('pipeline-stages');
+      PIPELINE_STAGES.forEach((stage) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 px-4 py-3';
+        div.innerHTML = `
+          <span class="font-mono text-[10px] font-bold tracking-[0.15em] text-red-500 w-16 shrink-0">${stage.name}</span>
+          <span class="text-white/70 text-sm">${stage.label}</span>
+          <span class="text-white/25 text-xs ml-auto hidden md:block">— ${stage.desc}</span>
+        `;
+        container.appendChild(div);
+      });
+
+      const rules = document.getElementById('pipeline-rules');
+      PIPELINE_RULES.forEach((rule, i) => {
+        const li = document.createElement('li');
+        li.className = 'flex items-start gap-3';
+        li.innerHTML = `
+          <span class="font-mono text-[10px] text-red-500/50 mt-0.5 shrink-0">${String(i + 1).padStart(2, '0')}</span>
+          <span class="text-white/50 text-sm leading-relaxed">${rule}</span>
+        `;
+        rules.appendChild(li);
+      });
+    }
+
+    // ── Progress dots ──
+    function buildDots() {
+      const dots = document.getElementById('progress-dots');
+      for (let i = 0; i < TOTAL_SLIDES; i++) {
+        const dot = document.createElement('button');
+        dot.className = `dot ${i === 0 ? 'active' : ''}`;
+        dot.addEventListener('click', () => goToSlide(i));
+        dots.appendChild(dot);
+      }
+    }
+
+    function updateDots() {
+      document.querySelectorAll('#progress-dots .dot').forEach((d, i) => {
+        d.className = `dot ${i === currentSlide ? 'active' : ''}`;
+      });
+      document.getElementById('slide-num').textContent = currentSlide + 1;
+      document.getElementById('slide-label').textContent = SLIDE_LABELS[currentSlide];
+    }
+
+    // ── Slide navigation ──
+    function goToSlide(index) {
+      if (isTransitioning || index < 0 || index >= TOTAL_SLIDES || index === currentSlide) return;
+      isTransitioning = true;
+      const goingForward = index > currentSlide;
+      const oldSlide = document.getElementById(`slide-${currentSlide}`);
+      const newSlide = document.getElementById(`slide-${index}`);
+
+      newSlide.classList.remove('hidden-slide');
+      oldSlide.classList.remove('enter-right', 'enter-left', 'exit-left', 'exit-right');
+      newSlide.classList.remove('enter-right', 'enter-left', 'exit-left', 'exit-right');
+
+      // Re-trigger content animations
+      newSlide.querySelectorAll('.reveal, .card-reveal, .line-reveal, .list-reveal').forEach(el => {
+        el.style.animation = 'none';
+        el.offsetHeight;
+        el.style.animation = '';
+      });
+
+      if (goingForward) {
+        oldSlide.classList.add('exiting', 'exit-left');
+        oldSlide.classList.remove('active');
+        newSlide.classList.add('active', 'enter-right');
+      } else {
+        oldSlide.classList.add('exiting', 'exit-right');
+        oldSlide.classList.remove('active');
+        newSlide.classList.add('active', 'enter-left');
+      }
+
+      currentSlide = index;
+      updateNav();
+      updateDots();
+
+      setTimeout(() => {
+        oldSlide.classList.remove('exiting', 'exit-left', 'exit-right');
+        oldSlide.classList.add('hidden-slide');
+        newSlide.classList.remove('enter-right', 'enter-left');
+        isTransitioning = false;
+      }, 600);
+    }
+
+    function updateNav() {
+      document.getElementById('btn-prev').classList.toggle('hidden', currentSlide === 0);
+      document.getElementById('btn-next').classList.toggle('hidden', currentSlide >= TOTAL_SLIDES - 1);
+    }
+
+    // ── Modal ──
+    function openModal(item) {
+      const modal = document.getElementById('modal');
+      const media = document.getElementById('modal-media');
+      const icon = document.getElementById('modal-icon');
+
+      if (item.media?.type === 'video') {
+        media.innerHTML = `<video src="${item.media.src}" class="w-full" autoplay loop muted playsinline></video>`;
+      } else if (item.media?.type === 'image') {
+        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" class="w-full">`;
+      } else {
+        media.innerHTML = '';
+      }
+
+      icon.innerHTML = `<i data-lucide="${item.icon}" class="w-4 h-4 text-red-500"></i>`;
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${item.description}</p>`;
+
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+      const v = document.querySelector('#modal-media video');
+      if (v) v.pause();
+    }
+
+    // ── Events ──
+    document.getElementById('btn-prev').addEventListener('click', () => goToSlide(currentSlide - 1));
+    document.getElementById('btn-next').addEventListener('click', () => goToSlide(currentSlide + 1));
+    document.getElementById('modal-overlay').addEventListener('click', closeModal);
+    document.getElementById('modal-close').addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (!document.getElementById('modal').classList.contains('hidden')) {
+        if (e.key === 'Escape') closeModal();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+    });
+
+    document.addEventListener('wheel', (e) => {
+      if (!document.getElementById('modal').classList.contains('hidden')) return;
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastWheelTime < 800) return;
+      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (d > 30) { lastWheelTime = now; goToSlide(currentSlide + 1); }
+      else if (d < -30) { lastWheelTime = now; goToSlide(currentSlide - 1); }
+    }, { passive: false });
+
+    document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
+    document.addEventListener('touchend', (e) => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) { diff > 0 ? goToSlide(currentSlide + 1) : goToSlide(currentSlide - 1); }
+    });
+
+    // ── Ticket highlights data ──
+    const TICKET_HIGHLIGHTS = [
+      { title: "Broadcast Duplicate Tags Fix", icon: "alert-triangle", severity: "P0", desc: "Fixed duplicate tags bug in broadcast — users were getting wrong recipients when importing contacts, causing misfired campaigns. This was a data integrity issue affecting campaign targeting accuracy.", value: "Prevents misfired campaigns reaching wrong audience segments" },
+      { title: "Submit Template Approval UI", icon: "file-check", severity: "NEW", desc: "Built Submit Template Approval UI for multiple WABA accounts — users can now resubmit templates across all their WhatsApp Business accounts in one flow instead of one-by-one.", value: "Bulk template management saves hours for multi-account users" },
+      { title: "Inbox Navigation Fixes", icon: "inbox", severity: "BUG", desc: "Fixed inbox navigation bugs — list view hiding when opening a chat, placeholder messages not handled properly. Users were losing context when switching between conversations.", value: "Smoother inbox experience — no more disappearing chat lists" },
+      { title: "P0 Critical Bug Fixes", icon: "shield-alert", severity: "P0", desc: "Fixed critical bugs: deleteSelectedProducts deleting ALL products (data loss risk), promiseTimeout never rejecting (attachments hanging forever), signUp API call was commented out (new accounts not being created), getAllProducts infinite loop.", value: "Prevented data loss, fixed broken signups, eliminated infinite loops" },
+      { title: "Billing Page Stability", icon: "credit-card", severity: "BUG", desc: "Fixed billing page issues: crashes for whitelabel tenants, hardcoded phone numbers, broken internal navigation, missing i18n translations, division-by-zero in broadcast progress.", value: "Billing page now works reliably across all tenant configurations" },
+      { title: "New Features Shipped", icon: "sparkles", severity: "NEW", desc: "Added Company Analytics page, App Store search, message edit for WhatsApp (15min window), Co-Existence chip on WABA channels. These are net-new capabilities expanding the product surface.", value: "New analytics, app discovery, and WhatsApp message editing capabilities" },
+      { title: "30+ Lark-Linked Bug Fixes", icon: "bug", severity: "BUG", desc: "30+ Lark-ticket-linked bug fixes including null guards, stale closures, debug console.log cleanup, mobile viewport fixes, and accessibility improvements. Each fix traced to a specific user report.", value: "Systematic backlog reduction with full traceability to user reports" },
+    ];
+
+    function buildTicketHighlights() {
+      const container = document.getElementById('ticket-highlights');
+      TICKET_HIGHLIGHTS.forEach((h, i) => {
+        const div = document.createElement('div');
+        const sevColor = h.severity === 'P0' ? 'text-red-500 bg-red-500/10' : h.severity === 'NEW' ? 'text-green-400 bg-green-400/10' : 'text-yellow-400 bg-yellow-400/10';
+        div.className = 'flex items-start gap-3 px-4 py-2.5 group hover:bg-white/[0.03] transition-colors cursor-pointer';
+        div.innerHTML = `
+          <div class="w-5 h-5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-red-500/50 transition-colors">
+            <i data-lucide="${h.icon}" class="w-3 h-3 text-white/25 group-hover:text-red-500/70 transition-colors"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-white text-[13px] font-semibold">${h.title}</span>
+              <span class="font-mono text-[8px] px-1.5 py-0.5 rounded ${sevColor}">${h.severity}</span>
+            </div>
+            <p class="text-white/20 text-[11px] leading-relaxed mt-0.5 hidden md:block">${h.value}</p>
+          </div>
+          <i data-lucide="chevron-right" class="w-3 h-3 text-white/10 group-hover:text-white/30 shrink-0 mt-1 transition-colors"></i>
+        `;
+        div.addEventListener('click', () => {
+          const modal = document.getElementById('modal');
+          const media = document.getElementById('modal-media');
+          media.innerHTML = '';
+          document.getElementById('modal-icon').innerHTML = `<i data-lucide="${h.icon}" class="w-4 h-4 text-red-500"></i>`;
+          document.getElementById('modal-title').textContent = h.title;
+          document.getElementById('modal-desc').innerHTML = `
+            <div class="flex items-center gap-2 mb-3 mt-1">
+              <span class="font-mono text-[9px] px-2 py-0.5 rounded ${sevColor} font-bold">${h.severity}</span>
+              <span class="text-white/20 text-[11px]">Frontend Dashboard</span>
+            </div>
+            <p class="text-white/40 text-sm leading-relaxed mb-3">${h.desc}</p>
+            <div class="border-t border-white/[0.06] pt-3">
+              <p class="font-mono text-[9px] tracking-[0.2em] uppercase text-white/20 mb-1">Business Impact</p>
+              <p class="text-white/70 text-sm font-medium">${h.value}</p>
+            </div>
+          `;
+          modal.classList.remove('hidden');
+          lucide.createIcons();
+        });
+        container.appendChild(div);
+      });
+    }
+
+    // ── AI Workflows data — organized by person ──
+    const AI_WORKFLOW_PEOPLE = [
+      {
+        person: "Akil", role: "Product Designer & PM", color: "text-red-500",
+        workflows: [
+          { title: "UIUX Audit", schedule: "Daily 09:00 UTC", desc: "Scans 16 UI anti-patterns — missing loading states, bare error throws, accessibility gaps. Feeds into design briefs automatically", value: "Prevents UX debt from accumulating silently", icon: "layout" },
+          { title: "Churn Audit", schedule: "Daily 09:00 UTC", desc: "Maps crash patterns to user-facing flows and scores churn risk per area (Inbox, Billing, Onboarding)", value: "Prioritizes stability work by retention impact, not just severity", icon: "user-x" },
+          { title: "Channel Audit", schedule: "Daily 09:00 UTC", desc: "Audits all 10 channel types for connection errors, broken OAuth, unsafe WebSocket parsing", value: "Stops features from shipping on broken channel infrastructure", icon: "radio" },
+          { title: "Ticket Reporter", schedule: "Daily 09:05 UTC", desc: "Routes audit findings → auto-creates GitHub PRs for code fixes, Lark tasks for UX issues", value: "Closes the loop from audit → fix without manual triage", icon: "ticket" },
+          { title: "10-Agent Product Pipeline", schedule: "On demand", desc: "Request Intake → Priority Scorer → PRD → User Stories → Design Brief → Wireframe → Feasibility → Experiment → Release Scope → Roadmap", value: "Full product lifecycle from idea to shipped feature", icon: "git-pull-request", media: { type: "video", src: "cursor-pr-images/ai-agent-pipeline.mp4" } },
+        ]
+      },
+      {
+        person: "Piyush", role: "Full Stack Developer", color: "text-red-500",
+        workflows: [
+          { title: "Claude Code AI Teammate", schedule: "Always on", desc: "Claude Code CLI as primary dev tool — reads tickets, writes code, runs tests, creates PRs. Multi-agent workflow: manager assigns tasks → workers execute in parallel across repos. Processed 30+ bug fix PRs per session — 67 frontend PRs in 2 weeks alongside backend work", value: "10x developer velocity — parallel multi-repo execution replaces sequential manual coding", icon: "terminal", media: { type: "image", src: "cursor-pr-images/piyush-claude-code.png" } },
+          { title: "Kibana Log Checker", schedule: "On ticket", desc: "Custom tool that auto-investigates production errors from Kibana logs. Flow: Lark ticket → auto-fetch Kibana logs → generate markdown report → classify frontend vs backend → auto-fix or flag for review", value: "Saves ~30 min per bug investigation — instant root cause classification", icon: "search", media: { type: "image", src: "cursor-pr-images/piyush-kibana.png" } },
+          { title: "Architect Memory System", schedule: "Continuous", desc: "Persistent frontend & backend architect memory files logging wins, mistakes, and patterns from every task. Two-agent debate (frontend vs backend architect) before major decisions with live streaming dashboard. Self-learning — e.g. always dedup arrays in React callbacks, always check CI baseline before blaming a PR", value: "AI that learns from past mistakes — catches blind spots before they ship", icon: "brain", media: { type: "image", src: "cursor-pr-images/piyush-architect.png" } },
+          { title: "Ticket Investigation Pipeline", schedule: "On ticket", desc: "Lark ticket → Kibana investigation → auto-branch creation → fix → PR. Frontend fixes auto-applied; backend changes require human approval. Branch naming linked to Lark ticket IDs for full traceability", value: "End-to-end ticket-to-PR automation with safety guardrails for backend", icon: "git-branch", media: { type: "image", src: "cursor-pr-images/piyush-ticket.png" } },
+        ]
+      },
+    ];
+
+    const MODEL_ROUTING = [
+      { model: "OPUS 4.6", role: "Production code, architecture, complex reasoning", color: "text-red-500" },
+      { model: "SONNET 4.6", role: "Planning, content, SEO, prioritization", color: "text-white/70" },
+      { model: "MINIMAX 2.5", role: "High-volume: CS, testing, scraping", color: "text-white/70" },
+      { model: "HAIKU 4.5", role: "Fallback, summarization, classification", color: "text-white/40" },
+    ];
+
+    function buildAIWorkflows() {
+      const container = document.getElementById('ai-workflows-list');
+      AI_WORKFLOW_PEOPLE.forEach((p, pi) => {
+        const section = document.createElement('div');
+        section.className = 'ai-person-section';
+
+        // Person header — clickable to expand/collapse
+        const header = document.createElement('button');
+        header.className = 'flex items-center gap-3 px-4 py-2.5 bg-white/[0.03] w-full text-left hover:bg-white/[0.06] transition-colors';
+        header.innerHTML = `
+          <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-white/30 transition-transform duration-300 ai-chevron"></i>
+          <i data-lucide="user" class="w-3.5 h-3.5 ${p.color}"></i>
+          <span class="font-mono text-[10px] font-bold tracking-[0.15em] uppercase ${p.color}">${p.person}</span>
+          <span class="text-white/20 text-[10px] ml-1">${p.role}</span>
+          <span class="ml-auto font-mono text-[9px] text-white/20">${p.workflows.length}</span>
+        `;
+
+        const body = document.createElement('div');
+        body.className = 'ai-person-body';
+        body.style.maxHeight = '500px';
+        body.style.overflow = 'hidden';
+        body.style.transition = 'max-height 0.35s ease, opacity 0.25s ease';
+
+        header.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const chevron = header.querySelector('.ai-chevron');
+          const isOpen = body.style.maxHeight !== '0px';
+          if (isOpen) {
+            body.style.maxHeight = '0px';
+            body.style.opacity = '0';
+            chevron.style.transform = 'rotate(-90deg)';
+          } else {
+            body.style.maxHeight = body.scrollHeight + 'px';
+            body.style.opacity = '1';
+            chevron.style.transform = 'rotate(0deg)';
+          }
+        });
+
+        p.workflows.forEach((w, i) => {
+          const div = document.createElement('div');
+          div.className = 'flex items-start gap-3 px-4 py-2 group hover:bg-white/[0.04] transition-colors list-reveal cursor-pointer border-b border-white/[0.04]';
+          div.style.animationDelay = `${0.3 + (pi * 3 + i) * 0.04}s`;
+          div.innerHTML = `
+            <div class="w-5 h-5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-red-500/50 transition-colors">
+              <i data-lucide="${w.icon}" class="w-3 h-3 text-white/25 group-hover:text-red-500/70 transition-colors"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-baseline gap-2">
+                <span class="text-white text-[13px] font-semibold">${w.title}</span>
+                <span class="font-mono text-[8px] text-white/15 tracking-wider hidden md:inline">${w.schedule}</span>
+              </div>
+              <p class="text-white/20 text-[11px] leading-relaxed mt-0.5 hidden md:block">${w.value}</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-3 h-3 text-white/10 group-hover:text-white/30 shrink-0 mt-1 transition-colors"></i>
+          `;
+          div.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openWorkflowModal(w, p);
+          });
+          body.appendChild(div);
+        });
+
+        section.appendChild(header);
+        section.appendChild(body);
+        container.appendChild(section);
+      });
+
+      const modelContainer = document.getElementById('model-routing');
+      MODEL_ROUTING.forEach((m) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-3 px-4 py-2.5';
+        div.innerHTML = `
+          <span class="font-mono text-[9px] font-bold tracking-[0.1em] ${m.color} w-20 shrink-0">${m.model}</span>
+          <span class="text-white/30 text-xs">${m.role}</span>
+        `;
+        modelContainer.appendChild(div);
+      });
+    }
+
+    function openWorkflowModal(w, p) {
+      const modal = document.getElementById('modal');
+      const media = document.getElementById('modal-media');
+      const icon = document.getElementById('modal-icon');
+      if (w.media?.type === 'video') {
+        media.innerHTML = `<video src="${w.media.src}" class="w-full" autoplay loop muted playsinline></video>`;
+      } else if (w.media?.type === 'image') {
+        media.innerHTML = `<img src="${w.media.src}" alt="${w.title}" class="w-full">`;
+      } else {
+        media.innerHTML = '';
+      }
+
+      document.getElementById('modal-desc').innerHTML = `
+        <div class="flex items-center gap-3 mb-3 mt-1">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-red-500"></i>
+            <span class="font-mono text-[10px] font-bold tracking-[0.15em] uppercase text-red-500">${p.person}</span>
+          </div>
+          <span class="text-white/15">|</span>
+          <span class="text-white/20 text-[11px]">${p.role}</span>
+          <span class="text-white/15">|</span>
+          <div class="flex items-center gap-1 text-white/25">
+            <i data-lucide="clock" class="w-3 h-3"></i>
+            <span class="font-mono text-[10px]">${w.schedule}</span>
+          </div>
+        </div>
+        <p class="text-white/40 text-sm leading-relaxed mb-3">${w.desc}</p>
+        <div class="border-t border-white/[0.06] pt-3">
+          <p class="font-mono text-[9px] tracking-[0.2em] uppercase text-white/20 mb-1">Value</p>
+          <p class="text-white/70 text-sm font-medium">${w.value}</p>
+        </div>
+      `;
+      icon.innerHTML = `<i data-lucide="${w.icon}" class="w-4 h-4 text-red-500"></i>`;
+      document.getElementById('modal-title').textContent = w.title;
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    // ── Init ──
+    buildCards('features-grid', FEATURES);
+    buildCards('cursor-grid', CURSOR_TO_PR);
+    buildMobileHighlights();
+    buildTicketHighlights();
+    buildAIWorkflows();
+    buildPipeline();
+    buildDots();
+    lucide.createIcons();
+    updateNav();
+    for (let i = 1; i < TOTAL_SLIDES; i++) document.getElementById(`slide-${i}`).classList.add('hidden-slide');
+  </script>
+</body>
+</html>
