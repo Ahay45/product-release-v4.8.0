@@ -1622,7 +1622,7 @@
           </div>
 
           <!-- Right: info panel -->
-          <div class="flex-1 flex flex-col justify-between p-7 border-l border-white/[0.07]" style="min-width:0;overflow-y:auto;max-height:90vh">
+          <div id="modal-info-panel" class="flex-1 flex flex-col justify-between p-7 border-l border-white/[0.07]" style="min-width:0;overflow-y:auto;max-height:90vh">
             <div>
               <!-- Counter badge -->
               <span id="modal-counter" class="hidden inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-white/25 border border-white/10 px-2 py-0.5 mb-4">1 / 11</span>
@@ -2154,6 +2154,10 @@
       counter.classList.remove('hidden');
       dots.classList.remove('hidden');
       document.getElementById('modal-nav-hint').classList.remove('hidden');
+      // always show left panel for carousel
+      document.getElementById('modal-media').parentElement.style.display = '';
+      const ip = document.getElementById('modal-info-panel');
+      if (ip) ip.style.maxWidth = '';
 
       prev.onclick = () => carouselGo(_carouselIdx - 1);
       next.onclick = () => carouselGo(_carouselIdx + 1);
@@ -2216,13 +2220,23 @@
       const modal = document.getElementById('modal');
       const media = document.getElementById('modal-media');
       const icon = document.getElementById('modal-icon');
+      const leftPanel = media.parentElement;
+      const rightPanel = document.getElementById('modal-info-panel');
+
+      const hasMedia = item.media?.type === 'video' || item.media?.type === 'image';
 
       if (item.media?.type === 'video') {
         media.innerHTML = `<video src="${item.media.src}" style="width:100%;display:block;" autoplay loop muted playsinline></video>`;
+        leftPanel.style.display = '';
+        if (rightPanel) rightPanel.style.maxWidth = '';
       } else if (item.media?.type === 'image') {
         media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" style="width:100%;display:block;">`;
+        leftPanel.style.display = '';
+        if (rightPanel) rightPanel.style.maxWidth = '';
       } else {
         media.innerHTML = '';
+        leftPanel.style.display = 'none';
+        if (rightPanel) rightPanel.style.maxWidth = '600px';
       }
 
       icon.innerHTML = `<i data-lucide="${item.icon}" class="w-4 h-4 text-red-500"></i>`;
@@ -2505,40 +2519,45 @@
     function buildShipped() {
       const grid = document.getElementById('shipped-grid');
       if (!grid) return;
+      const iconMap = { cyan: 'shield-check', violet: 'bar-chart-2', red: 'alert-circle' };
       SHIPPED_ITEMS.forEach(item => {
         const accentMap = { cyan: 'var(--cyan)', violet: 'var(--violet)', red: '#ef4444' };
         const accent = accentMap[item.color] || 'var(--cyan)';
         const hasImages = item.images && item.images.length > 0;
         const div = document.createElement('div');
-        div.className = 'noir-card p-0 overflow-hidden' + (hasImages ? ' cursor-pointer' : '');
+        div.className = 'noir-card p-0 overflow-hidden cursor-pointer group';
         div.innerHTML = `
-          <div style="border-left: 2px solid ${accent}; padding: 20px 24px;">
-            <div class="flex items-start justify-between gap-3 mb-2">
-              <span class="font-mono text-[9px] tracking-[0.2em] uppercase" style="color:${accent};opacity:0.6">${item.num}</span>
-              <div class="flex items-center gap-2">
-                ${hasImages ? `<span class="font-mono text-[9px] text-white/20 flex items-center gap-1"><i data-lucide="image" style="width:10px;height:10px"></i>${item.images.length} screenshot${item.images.length > 1 ? 's' : ''}</span>` : ''}
-                <span class="font-mono text-[9px] text-white/20 text-right leading-snug">${item.tag}</span>
-              </div>
+          <div style="border-left: 2px solid ${accent}; padding: 16px 20px;">
+            <div class="flex items-center justify-between gap-3 mb-1.5">
+              <span class="font-mono text-[9px] tracking-[0.2em] uppercase" style="color:${accent};opacity:0.5">${item.num}</span>
+              <span class="font-mono text-[9px] text-white/20">${item.tag}</span>
             </div>
-            <h3 class="font-display text-base font-bold text-white mb-2 leading-snug">${item.title}</h3>
-            <p class="text-white/55 text-sm leading-relaxed">${item.body}</p>
+            <h3 class="font-display text-sm font-bold text-white leading-snug">${item.title}</h3>
+            <div class="flex items-center gap-1.5 mt-2 text-white/20 group-hover:text-white/40 transition-colors">
+              <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+              <span class="font-mono text-[9px]">${hasImages ? `view details · ${item.images.length} screenshot${item.images.length > 1 ? 's' : ''}` : 'view details'}</span>
+            </div>
           </div>
         `;
-        if (hasImages) {
-          const carouselItems = item.images.map(img => ({
-            title: item.title,
-            description: img.caption,
-            icon: item.color === 'red' ? 'alert-circle' : item.color === 'violet' ? 'bar-chart-2' : 'shield-check',
-            media: { type: 'image', src: img.src }
-          }));
-          div.addEventListener('click', () => {
-            if (carouselItems.length === 1) {
-              openModal(carouselItems[0]);
-            } else {
-              openCarousel(carouselItems, 0, item.title, accent);
-            }
-          });
-        }
+        div.addEventListener('click', () => {
+          if (hasImages) {
+            const carouselItems = item.images.map((img, i) => ({
+              title: item.title,
+              description: i === 0 ? item.body + '\n\n' + img.caption : img.caption,
+              icon: iconMap[item.color] || 'shield-check',
+              media: { type: 'image', src: img.src }
+            }));
+            if (carouselItems.length === 1) openModal(carouselItems[0]);
+            else openCarousel(carouselItems, 0, item.title, accent);
+          } else {
+            openModal({
+              title: item.title,
+              description: item.body,
+              icon: iconMap[item.color] || 'shield-check',
+              media: null
+            });
+          }
+        });
         grid.appendChild(div);
       });
       lucide.createIcons();
