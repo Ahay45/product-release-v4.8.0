@@ -1146,9 +1146,19 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">CC&nbsp;→&nbsp;PR</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Claude Code shipped to production</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Abdul · CD · Theo — 29 features</span>
           </div>
           <div class="editorial-rule-accent w-full mb-8 reveal r1 line-reveal lr1"></div>
+
+          <!-- Section: Abdul -->
+          <div class="mb-8 reveal r2">
+            <div class="flex items-center gap-3 mb-4">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Abdul — Status Page</p>
+              <div class="flex-1 h-px bg-white/[0.06]"></div>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">3 features</span>
+            </div>
+            <div class="editorial-grid grid-cols-2 md:grid-cols-3" id="cc-abdul-grid"></div>
+          </div>
 
           <!-- Section: CD -->
           <div class="mb-8 reveal r2">
@@ -1697,6 +1707,28 @@
         description: "PR #3814 (Apr 13, open) — Bulk ticket operations on the CRM board: select multiple tickets, then move or delete in one action. BulkActionBar component with SelectionContext in BoardView, TicketCard selection state + collapsible details, sorting options in CRMHeader.",
         icon: "check-square",
         media: { type: "video", src: "cursor-pr-images/CRM%20Bulk%20Action%20Bar.mp4" }
+      }
+    ];
+
+    // ── CC → PR: Abdul Section ──
+    const CC_ABDUL = [
+      {
+        title: "Status Page — Incident Management",
+        description: "Full-featured ChatDaddy Status Page with incident tracking dashboard. Admins can create, publish, and resolve incidents with severity tags (Major, Critical) and investigation status. 25 incidents tracked with draft/open/resolved states — visible only to admins until published.",
+        icon: "activity",
+        media: { type: "image", src: "cursor-pr-images/abdul-status/We%20have%20a%20full%20fledged%20status%20page%2C%20incident%20updates.jpeg" }
+      },
+      {
+        title: "Email Subscriber Management",
+        description: "Subscriber list for status page email notifications — shows all active subscribers with email, status, source (public form or admin-added), and subscription date. Admins can add or remove subscribers manually. 7 active subscribers including core team members.",
+        icon: "mail",
+        media: { type: "image", src: "cursor-pr-images/abdul-status/email%20subscribe%20page%20and%20blasting%20emails.jpeg" }
+      },
+      {
+        title: "Subscribe to Incident Announcements",
+        description: "Public-facing subscription page for ChatDaddy Status email notifications. Users enter their email to receive alerts when a service incident starts, progresses, or is resolved — no marketing, incident updates only. Linked back to the ChatDaddy Status page.",
+        icon: "bell",
+        media: { type: "image", src: "cursor-pr-images/abdul-status/subcribe%20to%20incident%20announcement.jpeg" }
       }
     ];
 
@@ -2579,6 +2611,7 @@
 
     // ── Init ──
     buildCards('features-grid', FEATURES);
+    buildCards('cc-abdul-grid', CC_ABDUL);
     buildCards('cc-cd-grid', CC_CD);
     buildCards('cc-theo-grid', CC_THEO);
     buildMobileHighlights();
