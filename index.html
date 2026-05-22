@@ -8,15 +8,15 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,200..900;1,9..40,200..700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            display: ['Space Grotesk', 'sans-serif'],
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
+            display: ['Bricolage Grotesque', 'sans-serif'],
+            sans: ['DM Sans', 'sans-serif'],
+            mono: ['IBM Plex Mono', 'monospace']
           },
           colors: {
             accent: '#7b9cff',
@@ -61,15 +61,15 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       background: var(--void);
       color: var(--text);
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: 'kern' 1, 'liga' 1, 'ss01' 1;
+      font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
       line-height: 1.6;
-      letter-spacing: -0.012em;
+      letter-spacing: -0.008em;
       font-size: 14px;
     }
 
@@ -135,34 +135,41 @@
     .editorial-rule-thin   { height: 1px; background: var(--border); }
 
     /* ═══════════════════════════════════════════
-       TYPE SYSTEM — scale, weight, rhythm
+       TYPE SYSTEM — Bricolage + DM Sans + IBM Plex
     ═══════════════════════════════════════════ */
 
-    /* Display headings — Space Grotesk, condensed tight */
+    /* Display headings — Bricolage Grotesque, optical size large */
     .font-serif {
-      font-family: 'Space Grotesk', sans-serif !important;
-      letter-spacing: -0.035em;
-      line-height: 0.92;
-      font-weight: 700;
+      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-optical-sizing: auto;
+      letter-spacing: -0.028em;
+      line-height: 0.93;
+      font-weight: 800;
     }
 
-    /* Monospace labels — utility / data */
+    /* Monospace labels — IBM Plex Mono */
     .font-mono {
-      font-family: 'JetBrains Mono', monospace !important;
-      font-feature-settings: 'zero' 1, 'ss01' 1;
-      letter-spacing: 0.03em;
+      font-family: 'IBM Plex Mono', monospace !important;
+      font-feature-settings: 'zero' 1;
+      letter-spacing: 0.01em;
       font-size: 11px;
     }
 
-    /* Body prose */
-    p, li { line-height: 1.7; font-size: 13.5px; color: var(--text-70); }
+    /* Body prose — DM Sans, open tracking */
+    p, li {
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.72;
+      font-size: 13.5px;
+      color: var(--text-70);
+      letter-spacing: -0.004em;
+    }
 
     /* Eyebrow / section labels */
     .font-mono.tracking-\[0\.25em\],
     .font-mono.tracking-\[0\.2em\],
     .font-mono.tracking-\[0\.3em\] {
-      font-size: 9.5px;
-      letter-spacing: 0.20em;
+      font-size: 9px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--cyan-dim);
       font-weight: 500;
@@ -172,15 +179,15 @@
     /* Stat & number typography */
     .font-black, .font-bold {
       font-variant-numeric: tabular-nums;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
-    /* Size floor — minimum legibility */
-    .text-xs  { font-size: 11.5px !important; line-height: 1.55 !important; }
-    .text-sm  { font-size: 13px   !important; line-height: 1.60 !important; }
-    .text-base{ font-size: 14px   !important; line-height: 1.65 !important; }
+    /* Size floors */
+    .text-xs  { font-size: 11px !important; line-height: 1.55 !important; }
+    .text-sm  { font-size: 12.5px !important; line-height: 1.62 !important; }
+    .text-base{ font-size: 14px  !important; line-height: 1.65 !important; }
 
-    /* Contrast boosts for muted text */
+    /* Contrast floors for muted text */
     .text-white\/30 { color: rgba(238,240,246,0.50) !important; }
     .text-white\/40 { color: rgba(238,240,246,0.62) !important; }
     .text-white\/50 { color: rgba(238,240,246,0.72) !important; }
@@ -204,7 +211,7 @@
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 4px 8px;
       background: linear-gradient(transparent, rgba(8,12,20,0.92));
-      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 8px;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cyan-dim); text-align: center;
     }
@@ -499,27 +506,29 @@
     /* Section label spacing */
     p.font-mono.uppercase { margin-bottom: 10px !important; }
 
-    /* Hero title — gradient fill, very tight */
+    /* Hero title — Bricolage at max optical size, gradient fill */
     #slide-0 h1 {
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-      letter-spacing: -0.045em;
-      line-height: 0.87;
-      background: linear-gradient(150deg, #ffffff 25%, rgba(123,156,255,0.85) 60%, rgba(167,139,250,0.7) 100%);
+      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 0.88;
+      background: linear-gradient(150deg, #ffffff 25%, rgba(123,156,255,0.88) 58%, rgba(167,139,250,0.72) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
-    /* Inner slide headings — pill tag before heading */
+    /* Inner slide headings */
     h2.font-serif {
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-      letter-spacing: -0.032em;
+      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      letter-spacing: -0.030em;
       padding-left: 0;
       border-left: none;
       box-shadow: none;
-      line-height: 1.08;
+      line-height: 1.06;
       position: relative;
       display: inline-flex;
       align-items: center;
@@ -542,27 +551,30 @@
     }
     #slide-8 h2.font-serif::before { display: none; }
     #slide-8 p.font-serif {
-      font-family: 'Inter', sans-serif !important;
+      font-family: 'DM Sans', sans-serif !important;
       font-style: italic;
       font-weight: 300;
       color: var(--text-70) !important;
       font-size: 1.05rem;
-      line-height: 1.75;
+      line-height: 1.78;
+      letter-spacing: -0.005em;
     }
 
-    /* Hero subtitle eyebrow */
+    /* Hero subtitle eyebrow — IBM Plex Mono */
     #slide-0 span.font-mono.uppercase {
-      letter-spacing: 0.30em;
+      letter-spacing: 0.25em;
       color: var(--cyan-dim) !important;
+      font-size: 10px;
     }
     #slide-0 span.font-mono.uppercase::before { display: none; }
     #slide-0 p.font-mono::before { display: none; }
 
     /* Hero grid tile numbers */
     #hero-sections .font-serif {
-      font-family: 'Space Grotesk', sans-serif !important;
-      font-weight: 700;
-      letter-spacing: -0.025em;
+      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-optical-sizing: auto;
+      font-weight: 800;
+      letter-spacing: -0.028em;
     }
 
     /* Pipeline connector arrows — visible */
@@ -770,7 +782,7 @@
       width: 30px; height: 30px;
       background: linear-gradient(135deg, var(--cyan), var(--violet));
       color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
@@ -781,13 +793,13 @@
     }
     .sidebar-brand-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
     .sidebar-brand-name {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 600; font-size: 12px;
       color: var(--text); letter-spacing: -0.02em;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .sidebar-brand-version {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 9px; color: var(--cyan-dim); letter-spacing: 0.06em;
     }
     #sidebar-nav {
@@ -809,13 +821,13 @@
       background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow);
     }
     .sidebar-nav-num {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 9px; color: var(--text-30);
       width: 14px; flex-shrink: 0; letter-spacing: 0.05em;
     }
     .sidebar-nav-item.active .sidebar-nav-num { color: var(--cyan-dim); }
     .sidebar-nav-label {
-      font-family: 'Inter', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       font-size: 12px; font-weight: 500;
       color: var(--text-50); letter-spacing: -0.01em;
     }
@@ -832,7 +844,7 @@
       display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;
     }
     #sidebar-footer span {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 9px; color: var(--text-30);
       letter-spacing: 0.08em; text-transform: uppercase;
     }
