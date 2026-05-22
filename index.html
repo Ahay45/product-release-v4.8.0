@@ -2463,7 +2463,10 @@
         title: "WhatsApp Decryption Dashboard + Alerting",
         tag: "decrypt-dashboard.vercel.app",
         color: "violet",
-        body: "Live dashboard tracking per-account lost messages for the recurring \"message not available / waiting for this message\" complaints. Alert rule: flag at ≥8 lost/hr per account; ≥15 accounts at once = Meta-side event (don't tell customers to re-scan). Hourly cron posting to Lark with ready-to-send, jargon-free customer replies."
+        body: "Live dashboard tracking per-account lost messages for the recurring \"message not available / waiting for this message\" complaints. Alert rule: flag at ≥8 lost/hr per account; ≥15 accounts at once = Meta-side event (don't tell customers to re-scan). Hourly cron posting to Lark with ready-to-send, jargon-free customer replies.",
+        images: [
+          { src: "cursor-pr-images/decrypt-dashboard.png", caption: "Live decryption dashboard — 99.37% read rate, per-account lost message tracking" }
+        ]
       },
       {
         num: "03",
@@ -2484,7 +2487,11 @@
         title: "Events-Service Consumer Lag (ENOTFOUND)",
         tag: "Platform-wide · deployed this week",
         color: "red",
-        body: "A platform-wide issue: service-events was processing events ~5 minutes late, causing slow chat-load queries, tagging not working, and knock-on failures across the platform. Root-caused the ENOTFOUND worker-im errors behind it and deployed a fix this week."
+        body: "A platform-wide issue: service-events was processing events ~5 minutes late, causing slow chat-load queries, tagging not working, and knock-on failures across the platform. Root-caused the ENOTFOUND worker-im errors behind it and deployed a fix this week.",
+        images: [
+          { src: "cursor-pr-images/service-event-1.png", caption: "Kibana — ENOTFOUND errors in service-events (webhook delivery failures)" },
+          { src: "cursor-pr-images/service-event-2.png", caption: "Kibana — 13,522 ENOTFOUND errors in 30 min window, May 18 15:00–15:30 UTC" }
+        ]
       },
       {
         num: "06",
@@ -2501,20 +2508,40 @@
       SHIPPED_ITEMS.forEach(item => {
         const accentMap = { cyan: 'var(--cyan)', violet: 'var(--violet)', red: '#ef4444' };
         const accent = accentMap[item.color] || 'var(--cyan)';
+        const hasImages = item.images && item.images.length > 0;
         const div = document.createElement('div');
-        div.className = 'noir-card p-0 overflow-hidden';
+        div.className = 'noir-card p-0 overflow-hidden' + (hasImages ? ' cursor-pointer' : '');
         div.innerHTML = `
           <div style="border-left: 2px solid ${accent}; padding: 20px 24px;">
             <div class="flex items-start justify-between gap-3 mb-2">
               <span class="font-mono text-[9px] tracking-[0.2em] uppercase" style="color:${accent};opacity:0.6">${item.num}</span>
-              <span class="font-mono text-[9px] text-white/20 text-right leading-snug">${item.tag}</span>
+              <div class="flex items-center gap-2">
+                ${hasImages ? `<span class="font-mono text-[9px] text-white/20 flex items-center gap-1"><i data-lucide="image" style="width:10px;height:10px"></i>${item.images.length} screenshot${item.images.length > 1 ? 's' : ''}</span>` : ''}
+                <span class="font-mono text-[9px] text-white/20 text-right leading-snug">${item.tag}</span>
+              </div>
             </div>
             <h3 class="font-display text-base font-bold text-white mb-2 leading-snug">${item.title}</h3>
             <p class="text-white/55 text-sm leading-relaxed">${item.body}</p>
           </div>
         `;
+        if (hasImages) {
+          const carouselItems = item.images.map(img => ({
+            title: item.title,
+            description: img.caption,
+            icon: item.color === 'red' ? 'alert-circle' : item.color === 'violet' ? 'bar-chart-2' : 'shield-check',
+            media: { type: 'image', src: img.src }
+          }));
+          div.addEventListener('click', () => {
+            if (carouselItems.length === 1) {
+              openModal(carouselItems[0]);
+            } else {
+              openCarousel(carouselItems, 0, item.title, accent);
+            }
+          });
+        }
         grid.appendChild(div);
       });
+      lucide.createIcons();
     }
 
     function buildRecentPRs() {
