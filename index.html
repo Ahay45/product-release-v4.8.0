@@ -1195,118 +1195,96 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Tickets &amp; PRs</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">2 Apr – 16 Apr 2026</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">8 May – 22 May 2026</span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
-          <!-- PR stats row -->
+          <!-- Top stats row -->
           <div class="grid grid-cols-5 gap-px bg-white/10 mb-6 reveal r2">
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">136</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Commits</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">21</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">CD PRs</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">44</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Merged</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">14</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">V2 PRs</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">235</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">V2 Commits</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">35</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Total PRs</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">5</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">4</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Contributors</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">25+</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Bug Fixes</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">2</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Repos</div>
             </div>
           </div>
 
           <div class="flex flex-col lg:flex-row gap-6">
-            <!-- Left: Ticket stats -->
-            <div class="w-full lg:w-[40%]">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Support Tickets</p>
-              <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
-                <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-white">136</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">V1 Commits</div>
-                </div>
-                <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-white">44</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Merged</div>
-                </div>
-                <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-red-500">235</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">V2 Commits</div>
-                </div>
-              </div>
-              <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
-                <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-red-500">25+</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Bug Fixes</span>
-                </div>
-                <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-white/60">3</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">New Features</span>
-                </div>
-                <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-red-500">5</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">V2 Modules</span>
+            <!-- Left: contributor breakdown -->
+            <div class="w-full lg:w-[38%] flex flex-col gap-5">
+              <div>
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">PR By Contributor</p>
+                <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
+                  <div class="flex items-center justify-between px-4 py-2.5">
+                    <span class="text-white/60 text-sm">Akil <span class="text-white/20 text-xs">(Ahay45)</span></span>
+                    <div class="flex items-center gap-2">
+                      <span class="font-mono text-[9px] text-blue-400/60">CD + V2</span>
+                      <span class="font-mono text-sm font-bold text-white">16</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between px-4 py-2.5">
+                    <span class="text-white/60 text-sm">Abdul Haadi <span class="text-white/20 text-xs">(abdul-haadi)</span></span>
+                    <div class="flex items-center gap-2">
+                      <span class="font-mono text-[9px] text-green-400/60">CD + V2</span>
+                      <span class="font-mono text-sm font-bold text-white">11</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between px-4 py-2.5">
+                    <span class="text-white/60 text-sm">Aseem <span class="text-white/20 text-xs">(okarin1511)</span></span>
+                    <div class="flex items-center gap-2">
+                      <span class="font-mono text-[9px] text-yellow-400/60">CD</span>
+                      <span class="font-mono text-sm font-bold text-white">5</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between px-4 py-2.5">
+                    <span class="text-white/60 text-sm">Piyush <span class="text-white/20 text-xs">(piyushmakad)</span></span>
+                    <div class="flex items-center gap-2">
+                      <span class="font-mono text-[9px] text-green-400/60">CD</span>
+                      <span class="font-mono text-sm font-bold text-white">7</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">PR By Contributor</p>
-              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Amrit <span class="text-white/20 text-xs">(amrit2611)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-green-400/60">67 commits</span>
-                    <span class="font-mono text-sm font-bold text-white">67</span>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Aseem <span class="text-white/20 text-xs">(aseem)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-yellow-400/60">24 commits</span>
-                    <span class="font-mono text-sm font-bold text-white">24</span>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Akil <span class="text-white/20 text-xs">(Ahay45)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-blue-400/60">14 commits + 235 v2</span>
-                    <span class="font-mono text-sm font-bold text-white">14</span>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Piyush <span class="text-white/20 text-xs">(piyushmakad)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-green-400/60">12 commits</span>
-                    <span class="font-mono text-sm font-bold text-white">12</span>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Abdul Haadi <span class="text-white/20 text-xs">(haadi)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-white/20">9 commits</span>
-                    <span class="font-mono text-sm font-bold text-white/60">9</span>
-                  </div>
-                </div>
+              <div>
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r4">Big Changes & Impact</p>
+                <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4" id="ticket-highlights"></div>
               </div>
             </div>
 
-            <!-- Right: Big changes + recent PRs -->
-            <div class="w-full lg:w-[60%] flex flex-col gap-5">
-              <div>
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Big Changes & Impact</p>
-                <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4" id="ticket-highlights">
+            <!-- Right: two PR lists -->
+            <div class="w-full lg:w-[62%] flex flex-col gap-5">
+              <div class="reveal r3">
+                <div class="flex items-center gap-3 mb-2">
+                  <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">CD — frontend-dashboard</p>
+                  <div class="flex-1 h-px bg-white/[0.06]"></div>
+                  <span class="font-mono text-[10px] text-white/20">8 May – 22 May</span>
+                </div>
                   <!-- Generated by JS -->
                 </div>
               </div>
-              <div class="reveal r5">
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Merged PRs <span class="text-white/15">(2 Apr – 16 Apr 2026)</span></p>
-                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[180px] overflow-y-auto" id="recent-prs" style="scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) transparent;">
+
+              <div class="reveal r4">
+                <div class="flex items-center gap-3 mb-2">
+                  <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Theo — frontend-dashboard-v2</p>
+                  <div class="flex-1 h-px bg-white/[0.06]"></div>
+                  <span class="font-mono text-[10px] text-white/20">8 May – 22 May</span>
+                </div>
+                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[200px] overflow-y-auto" id="recent-v2-prs" style="scrollbar-width: thin; scrollbar-color: rgba(167,139,250,0.3) transparent;">
                   <!-- Generated by JS -->
                 </div>
               </div>
@@ -2328,13 +2306,12 @@
 
     // ── Ticket highlights data ──
     const TICKET_HIGHLIGHTS = [
-      { title: "Inbox CLS Fixed — Overlay Sidebar", icon: "layout", severity: "PERF", desc: "Eliminated cumulative layout shift (CLS 0.485) in the inbox. Sidebar now overlays instead of pushing the layout — no more content jumping when opening a chat, profile, or filter panel.", value: "Inbox CLS score dropped from 0.485 to near-zero — smoother experience for agents" },
-      { title: "Mobile App Popup Launch", icon: "smartphone", severity: "NEW", desc: "Download mobile popup now live for all users — promotional banner with QR code linking to iOS App Store and Android Play Store. Supports whitelabel suppression. Triggered on Getting Started dashboard.", value: "Drives mobile app installs across all active teams" },
-      { title: "Plan Tracking + Pricing Editor", icon: "credit-card", severity: "NEW", desc: "New Plan Tracking feature in the Admin Pricing Editor — admins can now track which teams are on which plans in real time. Includes a full pricing migrator tool for bulk plan transitions.", value: "Removes manual overhead from pricing migrations and plan audits" },
-      { title: "Analytics Aggregate Selector Restored", icon: "bar-chart-3", severity: "BUG", desc: "Restored the daily/weekly/monthly aggregate selector in analytics charts. Also added auto-reset — if a user picks a custom period, aggregate snaps back to daily automatically to prevent invalid combos.", value: "Analytics charts now always show valid data — no more blank or broken graphs" },
-      { title: "Filter Race Condition Eliminated", icon: "list-filter", severity: "BUG", desc: "Eliminated stale filter closures in FilterPanel causing incorrect results. Replaced debounced setFilters with replaceFilters for direct filter clicks — filter state is now always consistent with what the user selected.", value: "Inbox and CRM filters now always apply correctly without race conditions" },
-      { title: "25+ Lark-Linked Bug Fixes", icon: "bug", severity: "BUG", desc: "25+ Lark-ticket-linked fixes: delete modal hardcoded title, misleading spam error in flows, campaign date/title fields, chatbot description field, settings redirect, link tooltip, division-by-zero, debug console.log cleanup, accessibility improvements, percent cap on delta display.", value: "Systematic bug reduction — every fix traced to a specific user report in Lark" },
-      { title: "V2 Rebuild: 235 Commits in 2 Weeks", icon: "code", severity: "NEW", desc: "Frontend V2 (Zustand + TanStack) surged with: full FlowBuilder (dagre auto-layout, template gallery, WhatsApp preview), Status Page module (Lark/Slack alerts, SLA, uptime DB), complete Error Infrastructure (30 error types across 15 modules), 4-locale i18n system, Calls module, and Help widget.", value: "V2 rebuild is accelerating — major feature parity with V1 reached across 9 modules" },
+      { title: "WABA Calling — Full Production", icon: "phone", severity: "NEW", desc: "WhatsApp Business API calling shipped to production across all users. Includes call log dashboard (107 calls tracked), live transcript overlay, grant-access setup flow, and call credits top-up. Built by Aseem, Abdul, and Akil across 4 PRs.", value: "Full WABA calling available to all teams — replaces third-party calling integrations" },
+      { title: "Credit Locking System", icon: "lock", severity: "NEW", desc: "New credit locking mechanism prevents teams from using credits beyond their plan limit. Workspace access restricted screen shows remaining credits preserved safely with a clear reactivation CTA.", value: "Reduces revenue loss from over-usage — enforces billing boundaries automatically" },
+      { title: "Call Credits Top-Up", icon: "credit-card", severity: "NEW", desc: "Teams can now top up call credits directly from the billing page without changing their plan. Full top-up UI with amount selector and Stripe checkout flow. PR #3882 by Abdul.", value: "Removes blocker for teams running low on call credits mid-month" },
+      { title: "Contact Export Refactor", icon: "download", severity: "PERF", desc: "Contact export rebuilt with selection filter and single export button. Fixes broken export with custom filters — now exports exactly the filtered set, not just the first 50 contacts. PR #3885 by Piyush.", value: "Exports now accurate for all filtered contact sets — critical for broadcast targeting" },
+      { title: "V2: Onboarding + Billing + Inbox", icon: "code", severity: "NEW", desc: "14 V2 PRs merged in 2 weeks: full onboarding registration flow, transaction history & billing queries, rich text compose, attachment preview, bulk chat actions, message templates, starred messages, internal notes & automation tab, export chat/media/group members, 3-chat pin limit, signature editor, credit warning banner, and help page.", value: "V2 reaching feature parity with V1 — core inbox and billing flows fully rebuilt" },
+      { title: "Renewal Date + Voided Subscription Fix", icon: "calendar", severity: "BUG", desc: "Fixed renewal date popup showing incorrect renewal time. Also fixed voided subscription state not being handled — teams on voided plans now see correct renewal status and billing CTA.", value: "Billing accuracy restored — prevents support tickets from confused renewal states" },
     ];
 
     function buildTicketHighlights() {
@@ -2380,47 +2357,46 @@
       });
     }
 
-    // ── Recent merged PRs from GitHub ──
+    // ── Recent merged PRs — CD (frontend-dashboard, 8–22 May 2026) ──
     const RECENT_PRS = [
-      { num: 3773, title: "fix delete modal showing hardcoded Title placeholder", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3773" },
-      { num: 3772, title: "fix: show actual error instead of hardcoded spam message in flow sending", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3772" },
-      { num: 3771, title: "feat: download popup QR — App Store + Play Store links", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3771" },
-      { num: 3760, title: "fix: enable download mobile popup", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3760" },
-      { num: 3759, title: "feat: add Plan Tracking feature and enhance Pricing Editor sections", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3759" },
-      { num: 3756, title: "fix: auto-reset aggregate to daily on custom period and clamp invalid selections", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3756" },
-      { num: 3755, title: "fix: restore daily/weekly/monthly aggregate selector for analytics charts", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3755" },
-      { num: 3751, title: "fix: eliminate all stale filter closures in FilterPanel", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3751" },
-      { num: 3747, title: "feat: pricing migrator tool", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3747" },
-      { num: 3743, title: "fix: guard cross-team events in executeUpdates to prevent 404 loop", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3743" },
-      { num: 3741, title: "fix: replace explicit any types with proper TypeScript types across codebase", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3741" },
-      { num: 3728, title: "fix: set min-height on inbox row snippet container to prevent typing CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3728" },
-      { num: 3727, title: "fix: use tabular-nums and min-width on CRM timer to reduce inbox CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3727" },
-      { num: 3725, title: "fix: use overlay positioning for ProfileView sidebar to eliminate inbox CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3725" },
-      { num: 3732, title: "chore(deps): bump lodash from 4.17.21 to 4.18.1", author: "dependabot", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3732" },
-      { num: 3693, title: "fix: add cleanup for Paperform script injection to prevent memory leak", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3693" },
-      { num: 3692, title: "perf: calls fetch gate — reduce redundant API calls", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3692" },
-      { num: 3670, title: "fix: link tooltip display on hover", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3670" },
-      { num: 3669, title: "fix: division-by-zero in broadcast progress metrics", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3669" },
-      { num: 3668, title: "fix: remove debug console.log statements", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3668" },
-      { num: 3667, title: "fix: accessibility improvements across components", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3667" },
-      { num: 3666, title: "fix: settings redirect navigating to wrong route", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3666" },
-      { num: 3664, title: "fix: chatbot description field not saving correctly", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3664" },
-      { num: 3663, title: "fix: campaign date picker not persisting selection", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3663" },
-      { num: 3662, title: "fix: campaign title field clearing on re-render", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3662" },
-      { num: 3661, title: "fix: cap DeltaDisplay percentage at ±999% to prevent implausible values", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3661" },
-      { num: 3660, title: "fix: published-by field not showing correct author", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3660" },
-      { num: 3659, title: "fix: tools redirect broken after nav refactor", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3659" },
-      { num: 3658, title: "fix: leave group separator showing incorrectly", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3658" },
-      { num: 3657, title: "fix: form date format inconsistency in contacts", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3657" },
-      { num: 3656, title: "fix: keyword reply not matching correct channel", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3656" },
-      { num: 3655, title: "fix: false unsaved changes warning on clean form", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3655" },
-      { num: 3654, title: "fix: template loading spinner not dismissing", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3654" },
-      { num: 3653, title: "fix: template rating not persisting after submit", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3653" },
-      { num: 3624, title: "feat: refine download mobile pop-up design", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3624" },
-      { num: 3422, title: "feat: contacts special-character-only string validation", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3422" },
-      { num: 3702, title: "feat: pricing migrator (v2)", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3702" },
-      { num: 3742, title: "feat: enable download mobile popup for all users", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3742" },
-      { num: 3713, title: "fix: lint survey popup variants", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3713" },
+      { num: 3908, title: "feat: Add existing extra channels and teammates to billing calculations", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3908" },
+      { num: 3907, title: "Credit locking", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3907" },
+      { num: 3900, title: "Waba calling Log", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3900" },
+      { num: 3899, title: "fix: Voided renewal subscription", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3899" },
+      { num: 3898, title: "fix: Renewal Date popup renewal time", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3898" },
+      { num: 3895, title: "fix: contact Select All tags all matching contacts not just first 50", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3895" },
+      { num: 3893, title: "fix: contact Select All tags all matching contacts (rec27paEKOzV5r)", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3893" },
+      { num: 3892, title: "feat: Add Call Credits Top-Up functionality", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3892" },
+      { num: 3890, title: "Refactor: Contact Export with selection filter and single export button", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3890" },
+      { num: 3888, title: "Waba calling prod", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3888" },
+      { num: 3887, title: "fix: delete dashboard reverted due to staging branch", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3887" },
+      { num: 3885, title: "Refactor: Contact Export with selection filter and single export button", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3885" },
+      { num: 3882, title: "feat: Add Call Credits Top-Up functionality", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3882" },
+      { num: 3881, title: "fix: permissions", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3881" },
+      { num: 3877, title: "feat: improve funnel layer config selector and surface filter icon", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3877" },
+      { num: 3876, title: "feat: improve funnel layer config selector and surface filter icon", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3876" },
+      { num: 3875, title: "Feat/export contact prod", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3875" },
+      { num: 3874, title: "refact: tag layer funnel", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3874" },
+      { num: 3873, title: "feat: insufficient credit to connect", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3873" },
+      { num: 3868, title: "Waba calling", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3868" },
+    ];
+
+    // ── Recent merged PRs — V2/Theo (frontend-dashboard-v2, 8–22 May 2026) ──
+    const RECENT_V2_PRS = [
+      { num: 131, title: "Feature/signature editor", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/131" },
+      { num: 130, title: "feat: 3 chat pin limit enforcement", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/130" },
+      { num: 129, title: "feat(inbox): implement Export chat / media / group members", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/129" },
+      { num: 123, title: "feat(inbox): rich text formatting in compose", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/123" },
+      { num: 119, title: "View message name", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/119" },
+      { num: 115, title: "feat: cinematic attachment preview with upload progress and drag-and-drop", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/115" },
+      { num: 105, title: "feat: add CreditWarningBanner component to notify users of trial credits", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/105" },
+      { num: 104, title: "feat: add HelpPage and related components for user support", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/104" },
+      { num: 102, title: "feat(onboarding): add onboarding steps for user registration flow", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/102" },
+      { num: 101, title: "feat: internal note and automation tab", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/101" },
+      { num: 100, title: "Feature/starred messages", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/100" },
+      { num: 99, title: "feat: complete bulk chat actions system", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/99" },
+      { num: 98, title: "feat(inbox): message template popup — real data, sort, categories, variable fill-in", author: "Ahay45", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/98" },
+      { num: 78, title: "feat(billing): enhance transaction history and billing queries", author: "abdul-haadi", url: "https://github.com/chatdaddy/frontend-dashboard-v2/pull/78" },
     ];
 
     function buildRecentPRs() {
@@ -2434,6 +2410,24 @@
         const authorColor = pr.author === 'piyushmakad' ? 'text-blue-400/40' : pr.author === 'amrit2611' ? 'text-green-400/40' : pr.author === 'aseem' ? 'text-yellow-400/40' : pr.author === 'Ahay45' ? 'text-red-400/40' : 'text-white/20';
         a.innerHTML = `
           <span class="font-mono text-[9px] text-red-500/40 shrink-0">#${pr.num}</span>
+          <span class="text-white/35 text-[11px] truncate flex-1 group-hover:text-white/60 transition-colors">${pr.title}</span>
+          <span class="font-mono text-[8px] ${authorColor} shrink-0 hidden md:block">${pr.author.slice(0,8)}</span>
+        `;
+        container.appendChild(a);
+      });
+    }
+
+    function buildRecentV2PRs() {
+      const container = document.getElementById('recent-v2-prs');
+      RECENT_V2_PRS.forEach(pr => {
+        const a = document.createElement('a');
+        a.href = pr.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'flex items-center gap-2 px-3 py-1.5 group hover:bg-white/[0.02] transition-colors';
+        const authorColor = pr.author === 'Ahay45' ? 'text-blue-400/40' : pr.author === 'abdul-haadi' ? 'text-green-400/40' : 'text-violet-400/40';
+        a.innerHTML = `
+          <span class="font-mono text-[9px] text-violet-500/40 shrink-0">#${pr.num}</span>
           <span class="text-white/35 text-[11px] truncate flex-1 group-hover:text-white/60 transition-colors">${pr.title}</span>
           <span class="font-mono text-[8px] ${authorColor} shrink-0 hidden md:block">${pr.author.slice(0,8)}</span>
         `;
@@ -2617,6 +2611,7 @@
     buildMobileHighlights();
     buildTicketHighlights();
     buildRecentPRs();
+    buildRecentV2PRs();
     buildPipeline();
     buildDots();
     buildSidebarNav();
