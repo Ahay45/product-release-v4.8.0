@@ -803,7 +803,7 @@
        SIDEBAR LAYOUT
     ════════════════════════════════════════════ */
     #sidebar {
-      position: absolute;
+      position: fixed;
       left: 0; top: 0; bottom: 0;
       width: 210px;
       z-index: 30;
@@ -903,9 +903,9 @@
     /* Offset slides to start after sidebar */
     .slide { left: 210px !important; }
 
-    /* Hide old floating nav — sidebar replaces it */
-    #btn-prev, #btn-next { display: none !important; }
-    .fixed.bottom-6 { display: none !important; }
+    /* Arrow nav — offset right of sidebar */
+    #btn-prev { left: 226px !important; }
+    #btn-next { right: 16px !important; }
 
     /* ════════════════════════════════════════════
        SPACING SYSTEM
@@ -1615,7 +1615,7 @@
     </div>
 
     <!-- ===== NAV BUTTONS ===== -->
-    <button id="btn-prev" class="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-red-500 transition-all duration-200 hidden" aria-label="Previous">
+    <button id="btn-prev" class="fixed left-4 md:left-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-red-500 transition-all duration-200" aria-label="Previous">
       <i data-lucide="chevron-left" class="w-5 h-5"></i>
     </button>
     <button id="btn-next" class="fixed right-4 md:right-6 top-1/2 -translate-y-1/2 z-40 w-10 h-10 border border-white/15 flex items-center justify-center text-white/40 hover:text-white hover:border-red-500 transition-all duration-200" aria-label="Next">
