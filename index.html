@@ -484,28 +484,10 @@
     .editorial-rule-accent + * h2,
     .editorial-rule-accent + .reveal h2 { position: relative; }
 
-    /* Slide content padding baseline */
-    .slide > div > div[class*="max-w"] {
-      padding-top: 2.5rem;
-      padding-bottom: 3rem;
-    }
+    /* Slide content padding — handled by spacing system below */
 
-    /* Card padding — give text breathing room */
-    .noir-card > div { padding: 20px 22px !important; }
-
-    /* List row height — minimum tap target */
-    .divide-y > div,
-    .divide-y > li {
-      padding-top: 12px !important;
-      padding-bottom: 12px !important;
-      min-height: 44px;
-    }
-
-    /* Stat grid cell padding */
-    .grid.gap-px > div { padding: 14px 16px !important; }
-
-    /* Section eyebrow margin */
-    p.font-mono.uppercase { margin-bottom: 14px !important; font-size: 11px !important; }
+    /* Section eyebrow font size */
+    p.font-mono.uppercase { font-size: 11px !important; }
 
     /* Section eyebrow — cyan overline instead of label */
     p.font-mono.uppercase {
@@ -903,12 +885,88 @@
     #btn-prev, #btn-next { display: none !important; }
     .fixed.bottom-6 { display: none !important; }
 
-    /* Hero layout overhaul — left-aligned, full-height split */
+    /* ════════════════════════════════════════════
+       SPACING SYSTEM
+       --space-page:  outer slide padding (left/right)
+       --space-top:   slide content top padding
+       --space-gap:   between major sections
+       --space-card:  inside cards
+       --space-row:   inside list rows
+    ════════════════════════════════════════════ */
+    :root {
+      --space-page: 52px;
+      --space-top:  44px;
+      --space-gap:  24px;
+      --space-card: 24px 28px;
+      --space-row:  14px 20px;
+    }
+
+    /* ── SLIDE OUTER WRAPPER — override Tailwind px-6/px-12 ── */
+    .slide > div > div[class*="max-w"] {
+      padding-left:   var(--space-page) !important;
+      padding-right:  var(--space-page) !important;
+      padding-top:    var(--space-top)  !important;
+      padding-bottom: 40px !important;
+    }
+
+    /* ── SLIDE HEADING AREA ── */
+    /* More air between heading and content rule */
+    .editorial-rule-accent.w-full { margin-bottom: 28px !important; }
+
+    /* ── CARDS — inner padding ── */
+    .noir-card > div,
+    .noir-card > a > div { padding: var(--space-card) !important; }
+
+    /* Card title spacing */
+    .noir-card h3,
+    .noir-card .font-serif { margin-bottom: 10px; }
+
+    /* Card footer / tag area */
+    .noir-card .mt-auto,
+    .noir-card .pt-3 { padding-top: 16px !important; margin-top: 16px !important; }
+
+    /* ── STAT GRID CELLS ── */
+    .grid.gap-px > div { padding: 20px 18px !important; }
+
+    /* ── BORDER PANELS (list containers) ── */
+    .border.border-white\/10 { padding: 0 !important; }
+
+    /* ── LIST ROWS ── */
+    .divide-y > div,
+    .divide-y > li,
+    [id="recent-prs"] > div,
+    [id="ticket-highlights"] > div {
+      padding: var(--space-row) !important;
+    }
+    /* First/last row extra breathing room */
+    .divide-y > div:first-child,
+    .divide-y > li:first-child { padding-top: 16px !important; }
+    .divide-y > div:last-child,
+    .divide-y > li:last-child  { padding-bottom: 16px !important; }
+
+    /* ── SECTION EYEBROWS — space above/below ── */
+    p.font-mono.uppercase {
+      margin-top: 8px !important;
+      margin-bottom: 14px !important;
+    }
+
+    /* ── MULTI-COLUMN GAPS ── */
+    .flex.flex-col.lg\:flex-row { gap: 28px !important; }
+    .editorial-grid { gap: 20px !important; }
+
+    /* ── PIPELINE BOXES ── */
+    .pipeline-box > div,
+    .pipeline-box { padding: 18px 20px !important; }
+
+    /* ── PIPELINE FLOW DIAGRAM ── */
+    .pipeline-flow-diagram { padding: 24px !important; }
+
+    /* ── HERO layout overhaul — left-aligned, full-height split ── */
     #slide-0 > div.relative.flex {
       flex-direction: column !important;
       align-items: flex-start !important;
       justify-content: space-between !important;
-      padding: 52px 56px 40px !important;
+      padding: 52px var(--space-page) 40px !important;
       text-align: left !important;
     }
     #slide-0 .text-center {
@@ -928,10 +986,16 @@
     #slide-0 #hero-sections { width: 100% !important; }
     #slide-0 p.font-mono.uppercase::before { display: none; }
 
-    /* Inner slide heading — increase left border weight */
-    h2.font-serif { border-left-width: 3px !important; }
+    /* Hero section grid tiles — more padding */
+    #hero-sections button { padding: 20px 16px !important; }
 
-    /* Keyboard hint in sidebar context */
+    /* ── INNER SLIDE HEADING ── */
+    h2.font-serif {
+      border-left-width: 0 !important;
+      margin-bottom: 4px;
+    }
+
+    /* Keyboard hint */
     #slide-0 span:has(+ span + span) { display: none; }
 
   </style>
