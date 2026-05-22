@@ -1175,9 +1175,9 @@
             <div class="flex items-center gap-3 mb-4">
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Theo — AI QA Agent</p>
               <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">24 features</span>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">22 features</span>
             </div>
-            <div class="editorial-grid grid-cols-2 md:grid-cols-4" id="cc-theo-grid"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="cc-theo-grid"></div>
           </div>
 
           <div class="mt-6 reveal r5">
@@ -1605,6 +1605,13 @@
         <button id="modal-close" class="absolute top-3 right-3 z-10 text-white/40 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center bg-black/80 backdrop-blur border border-white/10 hover:border-red-500" aria-label="Close">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
+        <!-- Carousel prev/next — only shown in carousel mode -->
+        <button id="modal-prev" class="hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/10 hover:border-white/30 text-white/50 hover:text-white transition-all" aria-label="Previous">
+          <i data-lucide="chevron-left" class="w-5 h-5"></i>
+        </button>
+        <button id="modal-next" class="hidden absolute right-12 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/10 hover:border-white/30 text-white/50 hover:text-white transition-all" aria-label="Next">
+          <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
         <!-- Large media area -->
         <div class="relative w-full overflow-hidden bg-white/[0.02]" id="modal-media"></div>
         <!-- Compact info bar below -->
@@ -1612,8 +1619,13 @@
           <div class="flex items-start gap-4">
             <div class="w-9 h-9 border border-white/15 flex items-center justify-center shrink-0" id="modal-icon"></div>
             <div class="flex-1 min-w-0">
-              <h3 class="font-serif text-xl md:text-2xl font-black text-white leading-tight" id="modal-title"></h3>
-              <p class="text-white/40 leading-relaxed text-sm mt-2" id="modal-desc"></p>
+              <div class="flex items-center gap-3 mb-1">
+                <h3 class="font-serif text-xl md:text-2xl font-black text-white leading-tight" id="modal-title"></h3>
+                <span id="modal-counter" class="hidden font-mono text-[10px] text-white/25 tracking-[0.15em] shrink-0"></span>
+              </div>
+              <p class="text-white/40 leading-relaxed text-sm" id="modal-desc"></p>
+              <!-- Dot indicators for carousel -->
+              <div id="modal-dots" class="hidden flex gap-1.5 mt-3 flex-wrap"></div>
             </div>
           </div>
         </div>
@@ -1705,141 +1717,41 @@
       }
     ];
 
-    // ── CC → PR: Theo Section ──
-    const CC_THEO = [
-      {
-        title: "Channel Selector in Broadcast",
-        description: "Dedicated channel picker inside the broadcast composer — lets agents choose which WhatsApp or channel to send from before scheduling. Prevents mis-sends and gives full control over multi-channel broadcast routing.",
-        icon: "radio",
-        media: { type: "image", src: "cursor-pr-images/theo/CHannel%20selector%20in%20broadcast.png" }
-      },
-      {
-        title: "Deleted Chat Tab in Inbox",
-        description: "New 'Deleted' tab in the chat detail panel showing a full audit trail of deleted messages — original content preserved, sender and timestamp visible. Includes search and bulk hide-all option for compliance and moderation.",
-        icon: "trash-2",
-        media: { type: "image", src: "cursor-pr-images/theo/Deleted%20chat%20tab%20in%20inbox.png" }
-      },
-      {
-        title: "Edit & Delete Note in Inbox",
-        description: "Agents can now edit or delete internal notes directly from the inbox chat view. Inline editing with save/cancel controls keeps note management fast without leaving the conversation.",
-        icon: "file-edit",
-        media: { type: "image", src: "cursor-pr-images/theo/Edit%20and%20delete%20note%20in%20inbox.png" }
-      },
-      {
-        title: "Flow Selector in Broadcast",
-        description: "Automation flow picker integrated into the broadcast composer — attach a follow-up flow to trigger after the broadcast is sent. Enables automated sequences like follow-up messages, tag assignments, or CRM updates post-broadcast.",
-        icon: "git-branch",
-        media: { type: "image", src: "cursor-pr-images/theo/FLow%20selector%20in%20boradcast.png" }
-      },
-      {
-        title: "Import Contact CSV in Broadcast",
-        description: "Upload a CSV file directly into the broadcast audience selector. Maps columns to contact fields, validates entries, and previews the import before adding to the broadcast list — no manual contact creation required.",
-        icon: "upload",
-        media: { type: "video", src: "cursor-pr-images/theo/Import%20contact%20csv%20boardcast.mov" }
-      },
-      {
-        title: "Mega Search in Inbox",
-        description: "Global search modal across Chats, Messages, and Contacts simultaneously. Instant results with highlighted keyword matches, contact avatars, and message previews — accessible from anywhere in the inbox with a single shortcut.",
-        icon: "search",
-        media: { type: "image", src: "cursor-pr-images/theo/Mega%20search%20in%20inbox.png" }
-      },
-      {
-        title: "Multi Forward Chat",
-        description: "Select and forward multiple messages to one or more contacts or channels at once. Bulk message forwarding with recipient picker — reduces repetitive copy-paste for broadcast-style manual sends.",
-        icon: "forward",
-        media: { type: "image", src: "cursor-pr-images/theo/Multi%20forward%20chat.png" }
-      },
-      {
-        title: "Poll View in Chat Inbox",
-        description: "WhatsApp polls render natively in the chat thread with live vote counts per option. Vote notifications appear as inline messages and real-time results update as contacts respond.",
-        icon: "bar-chart-2",
-        media: { type: "image", src: "cursor-pr-images/theo/Poll%20view%20in%20chat%20inbox.png" }
-      },
-      {
-        title: "Reply Privately from Group",
-        description: "Agents can reply privately to a group member directly from the group chat view — opens a 1-on-1 conversation without leaving the group thread. Supports private follow-ups while maintaining group context.",
-        icon: "message-square",
-        media: { type: "video", src: "cursor-pr-images/theo/Reply%20message%20privately%20from%20group.mov" }
-      },
-      {
-        title: "Smart Timing — Send Broadcast",
-        description: "Broadcast scheduling with AI-powered smart timing — automatically sends each message at the time each contact is most likely to read it, based on their past engagement patterns. Maximises open rates without manual scheduling.",
-        icon: "clock",
-        media: { type: "image", src: "cursor-pr-images/theo/Smart%20timing%20send%20broadcast.png" }
-      },
-      {
-        title: "Ticketing in Inbox",
-        description: "Create and manage support tickets directly from the inbox chat view. Attach conversations to tickets, assign priority and status, and track resolution — all without switching context from the chat.",
-        icon: "ticket",
-        media: { type: "image", src: "cursor-pr-images/theo/Ticketing%20in%20inbox.png" }
-      },
-      {
-        title: "V2 Announcement Popup",
-        description: "In-app announcement modal introducing ChatDaddy V2 to existing users. Contextual overlay with a feature highlight, direct CTA to explore the new platform, and dismissible flow to avoid interrupting active workflows.",
-        icon: "megaphone",
-        media: { type: "video", src: "cursor-pr-images/theo/V2%20announcement%20popup.mov" }
-      },
-      {
-        title: "Audience Quality Summary",
-        description: "Pre-send broadcast audience health report — shows valid, invalid, and duplicate contact counts with a quality score before confirming. Helps agents clean lists and avoid wasted sends to unreachable numbers.",
-        icon: "users",
-        media: { type: "image", src: "cursor-pr-images/theo/audience%20quality%20summary.png" }
-      },
-      {
-        title: "Automation History",
-        description: "Per-contact automation log showing every automation that has run — trigger name, timestamp, outcome, and any errors. Full audit trail for debugging automations and understanding why a contact received specific messages.",
-        icon: "history",
-        media: { type: "image", src: "cursor-pr-images/theo/automation%20history.png" }
-      },
-      {
-        title: "Bulk Delete Broadcast",
-        description: "Select and delete multiple broadcasts at once from the broadcast list. Batch cleanup with confirmation dialog — removes draft, scheduled, or completed broadcasts without going into each one individually.",
-        icon: "trash",
-        media: { type: "image", src: "cursor-pr-images/theo/bulk%20delete%20broadcast.png" }
-      },
-      {
-        title: "Contact Health Filter",
-        description: "Filter contacts by health score in the audience picker — segment by engagement level, message deliverability, and activity recency. Target only high-quality contacts for campaigns to improve broadcast performance.",
-        icon: "heart-pulse",
-        media: { type: "image", src: "cursor-pr-images/theo/contact%20health%20filter.png" }
-      },
-      {
-        title: "Disable Edit When Broadcast Active",
-        description: "Broadcast composer fields are locked and read-only once a broadcast is in sending state. Prevents mid-send edits that could cause inconsistent delivery, with a clear visual indicator that the broadcast is live.",
-        icon: "lock",
-        media: { type: "image", src: "cursor-pr-images/theo/disable%20edit%20broadcast%20when%20active.png" }
-      },
-      {
-        title: "Mention Person in Group Chat",
-        description: "@mention support in group chats from the inbox — type @ to get a member picker with name and contact search. Mentioned members receive a notification highlight in their inbox thread.",
-        icon: "at-sign",
-        media: { type: "image", src: "cursor-pr-images/theo/mention%20person%20in%20group%20chat%20in%20inbox.png" }
-      },
-      {
-        title: "Message Send Tiering",
-        description: "Tiered message sending limits based on plan and channel health — shows current tier, daily send cap, and upgrade path. Prevents accidental over-sending and gives agents visibility into rate limits before launching broadcasts.",
-        icon: "layers",
-        media: { type: "image", src: "cursor-pr-images/theo/message%20send%20tiering.png" }
-      },
-      {
-        title: "Product Catalog View in Chat",
-        description: "WhatsApp product catalog messages render inline in the chat thread — product image, name, price, and description displayed natively. Agents can see exactly what the customer received without leaving the conversation.",
-        icon: "package",
-        media: { type: "image", src: "cursor-pr-images/theo/product%20catalog%20view%20in%20chat%20inbox.png" }
-      },
-      {
-        title: "View & Deselect Contacts in Broadcast",
-        description: "Full contact list preview in the broadcast audience panel — see every recipient before sending with the ability to individually deselect contacts. Gives agents granular control over who receives the broadcast.",
-        icon: "user-check",
-        media: { type: "image", src: "cursor-pr-images/theo/view%20and%20diselect%20contact%20in%20broadcast.png" }
-      },
-      {
-        title: "Warning Before Sending Broadcast",
-        description: "Confirmation modal with a summary of the broadcast — recipient count, channel, scheduled time, and estimated cost — shown before final send. Reduces accidental sends and gives agents a last checkpoint to review.",
-        icon: "alert-triangle",
-        media: { type: "image", src: "cursor-pr-images/theo/warning%20before%20sending%20broadcast.png" }
-      }
+    // ── CC → PR: Theo — Broadcasts group ──
+    const CC_THEO_BROADCASTS = [
+      { title: "Channel Selector in Broadcast", description: "Dedicated channel picker inside the broadcast composer — lets agents choose which WhatsApp or channel to send from before scheduling. Prevents mis-sends and gives full control over multi-channel broadcast routing.", icon: "radio", media: { type: "image", src: "cursor-pr-images/theo/CHannel%20selector%20in%20broadcast.png" } },
+      { title: "Flow Selector in Broadcast", description: "Automation flow picker integrated into the broadcast composer — attach a follow-up flow to trigger after the broadcast is sent. Enables automated sequences like follow-up messages, tag assignments, or CRM updates post-broadcast.", icon: "git-branch", media: { type: "image", src: "cursor-pr-images/theo/FLow%20selector%20in%20boradcast.png" } },
+      { title: "Import Contact CSV in Broadcast", description: "Upload a CSV file directly into the broadcast audience selector. Maps columns to contact fields, validates entries, and previews the import before adding to the broadcast list — no manual contact creation required.", icon: "upload", media: { type: "video", src: "cursor-pr-images/theo/Import%20contact%20csv%20boardcast.mov" } },
+      { title: "Smart Timing — Send Broadcast", description: "Broadcast scheduling with AI-powered smart timing — automatically sends each message at the time each contact is most likely to read it, based on their past engagement patterns. Maximises open rates without manual scheduling.", icon: "clock", media: { type: "image", src: "cursor-pr-images/theo/Smart%20timing%20send%20broadcast.png" } },
+      { title: "Audience Quality Summary", description: "Pre-send broadcast audience health report — shows valid, invalid, and duplicate contact counts with a quality score before confirming. Helps agents clean lists and avoid wasted sends to unreachable numbers.", icon: "users", media: { type: "image", src: "cursor-pr-images/theo/audience%20quality%20summary.png" } },
+      { title: "Bulk Delete Broadcast", description: "Select and delete multiple broadcasts at once from the broadcast list. Batch cleanup with confirmation dialog — removes draft, scheduled, or completed broadcasts without going into each one individually.", icon: "trash", media: { type: "image", src: "cursor-pr-images/theo/bulk%20delete%20broadcast.png" } },
+      { title: "Contact Health Filter", description: "Filter contacts by health score in the audience picker — segment by engagement level, message deliverability, and activity recency. Target only high-quality contacts for campaigns to improve broadcast performance.", icon: "heart-pulse", media: { type: "image", src: "cursor-pr-images/theo/contact%20health%20filter.png" } },
+      { title: "Disable Edit When Broadcast Active", description: "Broadcast composer fields are locked and read-only once a broadcast is in sending state. Prevents mid-send edits that could cause inconsistent delivery, with a clear visual indicator that the broadcast is live.", icon: "lock", media: { type: "image", src: "cursor-pr-images/theo/disable%20edit%20broadcast%20when%20active.png" } },
+      { title: "Message Send Tiering", description: "Tiered message sending limits based on plan and channel health — shows current tier, daily send cap, and upgrade path. Prevents accidental over-sending and gives agents visibility into rate limits before launching broadcasts.", icon: "layers", media: { type: "image", src: "cursor-pr-images/theo/message%20send%20tiering.png" } },
+      { title: "View & Deselect Contacts in Broadcast", description: "Full contact list preview in the broadcast audience panel — see every recipient before sending with the ability to individually deselect contacts. Gives agents granular control over who receives the broadcast.", icon: "user-check", media: { type: "image", src: "cursor-pr-images/theo/view%20and%20diselect%20contact%20in%20broadcast.png" } },
+      { title: "Warning Before Sending Broadcast", description: "Confirmation modal with a summary of the broadcast — recipient count, channel, scheduled time, and estimated cost — shown before final send. Reduces accidental sends and gives agents a last checkpoint to review.", icon: "alert-triangle", media: { type: "image", src: "cursor-pr-images/theo/warning%20before%20sending%20broadcast.png" } },
     ];
+
+    // ── CC → PR: Theo — Inbox group ──
+    const CC_THEO_INBOX = [
+      { title: "Deleted Chat Tab in Inbox", description: "New 'Deleted' tab in the chat detail panel showing a full audit trail of deleted messages — original content preserved, sender and timestamp visible. Includes search and bulk hide-all option for compliance and moderation.", icon: "trash-2", media: { type: "image", src: "cursor-pr-images/theo/Deleted%20chat%20tab%20in%20inbox.png" } },
+      { title: "Edit & Delete Note in Inbox", description: "Agents can now edit or delete internal notes directly from the inbox chat view. Inline editing with save/cancel controls keeps note management fast without leaving the conversation.", icon: "file-edit", media: { type: "image", src: "cursor-pr-images/theo/Edit%20and%20delete%20note%20in%20inbox.png" } },
+      { title: "Mega Search in Inbox", description: "Global search modal across Chats, Messages, and Contacts simultaneously. Instant results with highlighted keyword matches, contact avatars, and message previews — accessible from anywhere in the inbox with a single shortcut.", icon: "search", media: { type: "image", src: "cursor-pr-images/theo/Mega%20search%20in%20inbox.png" } },
+      { title: "Multi Forward Chat", description: "Select and forward multiple messages to one or more contacts or channels at once. Bulk message forwarding with recipient picker — reduces repetitive copy-paste for broadcast-style manual sends.", icon: "forward", media: { type: "image", src: "cursor-pr-images/theo/Multi%20forward%20chat.png" } },
+      { title: "Poll View in Chat Inbox", description: "WhatsApp polls render natively in the chat thread with live vote counts per option. Vote notifications appear as inline messages and real-time results update as contacts respond.", icon: "bar-chart-2", media: { type: "image", src: "cursor-pr-images/theo/Poll%20view%20in%20chat%20inbox.png" } },
+      { title: "Reply Privately from Group", description: "Agents can reply privately to a group member directly from the group chat view — opens a 1-on-1 conversation without leaving the group thread. Supports private follow-ups while maintaining group context.", icon: "message-square", media: { type: "video", src: "cursor-pr-images/theo/Reply%20message%20privately%20from%20group.mov" } },
+      { title: "Mention Person in Group Chat", description: "@mention support in group chats from the inbox — type @ to get a member picker with name and contact search. Mentioned members receive a notification highlight in their inbox thread.", icon: "at-sign", media: { type: "image", src: "cursor-pr-images/theo/mention%20person%20in%20group%20chat%20in%20inbox.png" } },
+      { title: "Product Catalog View in Chat", description: "WhatsApp product catalog messages render inline in the chat thread — product image, name, price, and description displayed natively. Agents can see exactly what the customer received without leaving the conversation.", icon: "package", media: { type: "image", src: "cursor-pr-images/theo/product%20catalog%20view%20in%20chat%20inbox.png" } },
+      { title: "Ticketing in Inbox", description: "Create and manage support tickets directly from the inbox chat view. Attach conversations to tickets, assign priority and status, and track resolution — all without switching context from the chat.", icon: "ticket", media: { type: "image", src: "cursor-pr-images/theo/Ticketing%20in%20inbox.png" } },
+      { title: "Automation History", description: "Per-contact automation log showing every automation that has run — trigger name, timestamp, outcome, and any errors. Full audit trail for debugging automations and understanding why a contact received specific messages.", icon: "history", media: { type: "image", src: "cursor-pr-images/theo/automation%20history.png" } },
+    ];
+
+    // ── CC → PR: Theo — Other ──
+    const CC_THEO_OTHER = [
+      { title: "V2 Announcement Popup", description: "In-app announcement modal introducing ChatDaddy V2 to existing users. Contextual overlay with a feature highlight, direct CTA to explore the new platform, and dismissible flow to avoid interrupting active workflows.", icon: "megaphone", media: { type: "video", src: "cursor-pr-images/theo/V2%20announcement%20popup.mov" } },
+    ];
+
+    const CC_THEO = [...CC_THEO_BROADCASTS, ...CC_THEO_INBOX, ...CC_THEO_OTHER];
 
     const MOBILE_HIGHLIGHTS = [
       "Prevented 418 image spam — aggressive dedup + upload guard",
@@ -2181,7 +2093,111 @@
     }
 
     // ── Modal ──
+    // ── Carousel state ──
+    let _carouselItems = null;
+    let _carouselIdx = 0;
+
+    function buildCarouselGroupCards(containerId, groups) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      groups.forEach(group => {
+        const card = document.createElement('div');
+        card.className = 'noir-card cursor-pointer group';
+        card.style.cssText = `border-left: 2px solid ${group.accent};`;
+        card.innerHTML = `
+          <div style="padding: 20px 22px;">
+            <div class="flex items-center gap-2 mb-3">
+              <i data-lucide="${group.icon}" class="w-4 h-4 shrink-0" style="color:${group.accent}"></i>
+              <span class="font-display text-sm font-bold text-white">${group.label}</span>
+              <span class="ml-auto font-mono text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(255,255,255,0.05);color:${group.accent}">${group.count} features</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              ${group.items.slice(0,4).map(i=>`<span class="font-mono text-[9px] text-white/30 bg-white/[0.04] px-2 py-0.5 rounded">${i.title.split(' ').slice(0,3).join(' ')}</span>`).join('')}
+              ${group.count > 4 ? `<span class="font-mono text-[9px] text-white/20 px-2 py-0.5">+${group.count-4} more</span>` : ''}
+            </div>
+            <div class="mt-3 flex items-center gap-1.5 text-white/20 group-hover:text-white/50 transition-colors">
+              <i data-lucide="play-circle" class="w-3 h-3"></i>
+              <span class="font-mono text-[9px]">View all ${group.count}</span>
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', () => openCarousel(group.items, 0, group.label, group.accent));
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function openCarousel(items, startIdx, groupLabel, accent) {
+      _carouselItems = items;
+      _carouselIdx = startIdx;
+
+      const prev = document.getElementById('modal-prev');
+      const next = document.getElementById('modal-next');
+      const counter = document.getElementById('modal-counter');
+      const dots = document.getElementById('modal-dots');
+
+      prev.classList.remove('hidden');
+      next.classList.remove('hidden');
+      counter.classList.remove('hidden');
+      dots.classList.remove('hidden');
+
+      prev.onclick = () => carouselGo(_carouselIdx - 1);
+      next.onclick = () => carouselGo(_carouselIdx + 1);
+
+      renderCarouselSlide();
+      document.getElementById('modal').classList.remove('hidden');
+    }
+
+    function renderCarouselSlide() {
+      const item = _carouselItems[_carouselIdx];
+      const total = _carouselItems.length;
+      const media = document.getElementById('modal-media');
+      const icon = document.getElementById('modal-icon');
+
+      if (item.media?.type === 'video') {
+        media.innerHTML = `<video src="${item.media.src}" class="w-full" autoplay loop muted playsinline></video>`;
+      } else if (item.media?.type === 'image') {
+        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" class="w-full">`;
+      } else {
+        media.innerHTML = '';
+      }
+
+      icon.innerHTML = `<i data-lucide="${item.icon}" class="w-4 h-4 text-red-500"></i>`;
+      document.getElementById('modal-title').textContent = item.title;
+      document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${item.description}</p>`;
+      document.getElementById('modal-counter').textContent = `${_carouselIdx + 1} / ${total}`;
+
+      // dots
+      const dotsEl = document.getElementById('modal-dots');
+      dotsEl.innerHTML = '';
+      _carouselItems.forEach((_, i) => {
+        const d = document.createElement('button');
+        d.style.cssText = `width:6px;height:6px;border-radius:50%;border:none;cursor:pointer;transition:all 0.18s;background:${i === _carouselIdx ? 'var(--cyan)' : 'rgba(255,255,255,0.15)'}`;
+        d.onclick = () => carouselGo(i);
+        dotsEl.appendChild(d);
+      });
+
+      // prev/next opacity
+      document.getElementById('modal-prev').style.opacity = _carouselIdx === 0 ? '0.3' : '1';
+      document.getElementById('modal-next').style.opacity = _carouselIdx === total - 1 ? '0.3' : '1';
+
+      lucide.createIcons();
+    }
+
+    function carouselGo(idx) {
+      if (!_carouselItems) return;
+      _carouselIdx = Math.max(0, Math.min(idx, _carouselItems.length - 1));
+      renderCarouselSlide();
+    }
+
     function openModal(item) {
+      // Hide carousel controls when opening a single item
+      _carouselItems = null;
+      document.getElementById('modal-prev').classList.add('hidden');
+      document.getElementById('modal-next').classList.add('hidden');
+      document.getElementById('modal-counter').classList.add('hidden');
+      document.getElementById('modal-dots').classList.add('hidden');
+
       const modal = document.getElementById('modal');
       const media = document.getElementById('modal-media');
       const icon = document.getElementById('modal-icon');
@@ -2212,6 +2228,11 @@
         modal.classList.add('hidden');
         overlay.style.animation = '';
         content.style.animation = '';
+        _carouselItems = null;
+        document.getElementById('modal-prev').classList.add('hidden');
+        document.getElementById('modal-next').classList.add('hidden');
+        document.getElementById('modal-counter').classList.add('hidden');
+        document.getElementById('modal-dots').classList.add('hidden');
         const v = modal.querySelector('video');
         if (v) v.pause();
       }, 160);
@@ -2226,6 +2247,10 @@
     document.addEventListener('keydown', (e) => {
       if (!document.getElementById('modal').classList.contains('hidden')) {
         if (e.key === 'Escape') closeModal();
+        if (_carouselItems) {
+          if (e.key === 'ArrowRight') { e.preventDefault(); carouselGo(_carouselIdx + 1); }
+          if (e.key === 'ArrowLeft') { e.preventDefault(); carouselGo(_carouselIdx - 1); }
+        }
         return;
       }
       if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goNext(); }
@@ -2684,7 +2709,11 @@
     buildCards('features-grid', FEATURES);
     buildCards('cc-abdul-grid', CC_ABDUL);
     buildCards('cc-cd-grid', CC_CD);
-    buildCards('cc-theo-grid', CC_THEO);
+    buildCarouselGroupCards('cc-theo-grid', [
+      { label: 'Broadcasts', icon: 'megaphone', count: CC_THEO_BROADCASTS.length, items: CC_THEO_BROADCASTS, accent: 'var(--cyan)' },
+      { label: 'Inbox', icon: 'inbox', count: CC_THEO_INBOX.length, items: CC_THEO_INBOX, accent: 'var(--violet)' },
+      { label: 'Other', icon: 'sparkles', count: CC_THEO_OTHER.length, items: CC_THEO_OTHER, accent: 'rgba(255,255,255,0.3)' },
+    ]);
     buildMobileHighlights();
     buildTicketHighlights();
     buildShipped();
