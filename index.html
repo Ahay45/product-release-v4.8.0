@@ -3,126 +3,865 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-  <title>Product Release Overview v4.8.15 | ChatDaddy</title>
+  <title>Product Release Overview v4.8.16 | ChatDaddy</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            serif: ['Playfair Display', 'Georgia', 'serif'],
+            display: ['Space Grotesk', 'sans-serif'],
             sans: ['Inter', 'sans-serif'],
             mono: ['JetBrains Mono', 'monospace']
           },
           colors: {
-            accent: '#ef4444'
+            accent: '#00e5ff'
           }
         }
       }
     }
   </script>
   <style>
+    /* ── Neon Noir theme variables ── */
+    :root {
+      --void:        #080c14;
+      --void-light:  #0d1420;
+      --void-mid:    #111827;
+      --glass:       rgba(255,255,255,0.04);
+      --glass-hover: rgba(255,255,255,0.07);
+      --cyan:        #00e5ff;
+      --cyan-dim:    rgba(0,229,255,0.6);
+      --cyan-glow:   rgba(0,229,255,0.18);
+      --cyan-faint:  rgba(0,229,255,0.06);
+      --amber:       #ff9500;
+      --text:        #e8edf5;
+      --text-70:     rgba(232,237,245,0.70);
+      --text-50:     rgba(232,237,245,0.50);
+      --text-30:     rgba(232,237,245,0.48);
+      --text-15:     rgba(232,237,245,0.32);
+      --text-08:     rgba(232,237,245,0.20);
+      --text-muted:  rgba(232,237,245,0.55);
+      --border:      rgba(232,237,245,0.08);
+      --border-mid:  rgba(232,237,245,0.12);
+      --border-hi:   rgba(232,237,245,0.20);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: #000; color: #fff; overflow: hidden; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--void);
+      color: var(--text);
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-feature-settings: 'kern' 1, 'liga' 1;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,229,255,0.008) 3px,
+        rgba(0,229,255,0.008) 4px
+      );
+    }
 
     /* ── Slide system ── */
-    .slide { position: absolute; inset: 0; opacity: 0; pointer-events: none; will-change: transform, opacity; }
-    .slide.active { opacity: 1; pointer-events: auto; z-index: 2; }
+    .slide {
+      position: absolute; inset: 0;
+      opacity: 0; pointer-events: none;
+      will-change: transform, opacity;
+      background: var(--void);
+    }
+    .slide.active  { opacity: 1; pointer-events: auto; z-index: 2; }
     .slide.exiting { pointer-events: none; z-index: 1; }
     .slide.hidden-slide { display: none; }
 
-    @keyframes enterRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes enterLeft { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes exitLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-60px); } }
-    @keyframes exitRight { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(60px); } }
-    .slide.enter-right { animation: enterRight 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
-    .slide.enter-left { animation: enterLeft 0.5s cubic-bezier(0.22,1,0.36,1) forwards; }
-    .slide.exit-left { animation: exitLeft 0.4s cubic-bezier(0.22,1,0.36,1) forwards; }
-    .slide.exit-right { animation: exitRight 0.4s cubic-bezier(0.22,1,0.36,1) forwards; }
+    /* No torn edges */
+    .slide::before, .slide::after { display: none; }
+
+    /* ── Slide transitions — clean, no rotation ── */
+    @keyframes enterRight { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes enterLeft  { from { opacity:0; transform:translateX(-40px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes exitLeft   { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(-40px); } }
+    @keyframes exitRight  { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(40px); } }
+    .slide.enter-right { animation: enterRight 0.45s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.enter-left  { animation: enterLeft  0.45s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.exit-left   { animation: exitLeft   0.35s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.exit-right  { animation: exitRight  0.35s cubic-bezier(0.22,1,0.36,1) forwards; }
 
     /* ── Content reveal ── */
-    @keyframes revealUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes revealLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-    @keyframes clipReveal { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
-    @keyframes typeIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes countUp { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes revealUp  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes revealLine{ from { transform:scaleX(0); } to { transform:scaleX(1); } }
+    @keyframes typeIn    { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
 
-    .slide.active .reveal { opacity: 0; animation: revealUp 0.6s ease forwards; }
+    .slide.active .reveal      { opacity:0; animation: revealUp  0.55s ease forwards; }
     .slide.active .r1 { animation-delay: 0.05s; }
     .slide.active .r2 { animation-delay: 0.15s; }
     .slide.active .r3 { animation-delay: 0.25s; }
     .slide.active .r4 { animation-delay: 0.35s; }
-    .slide.active .r5 { animation-delay: 0.5s; }
+    .slide.active .r5 { animation-delay: 0.50s; }
     .slide.active .r6 { animation-delay: 0.65s; }
-    .slide.active .r7 { animation-delay: 0.8s; }
-
-    .slide.active .line-reveal { transform: scaleX(0); transform-origin: left; animation: revealLine 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .slide.active .r7 { animation-delay: 0.80s; }
+    .slide.active .line-reveal   { transform:scaleX(0); transform-origin:left; animation: revealLine 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
     .slide.active .lr1 { animation-delay: 0.1s; }
     .slide.active .lr2 { animation-delay: 0.2s; }
+    .slide.active .card-reveal   { opacity:0; animation: revealUp 0.45s ease forwards; }
+    .slide.active .list-reveal   { opacity:0; animation: typeIn  0.4s ease forwards; }
 
-    .slide.active .card-reveal { opacity: 0; animation: revealUp 0.45s ease forwards; }
+    /* ── Neon divider rules ── */
+    .editorial-rule        { height: 1px; background: var(--border-mid); opacity: 1; }
+    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.15) 70%, transparent 100%); box-shadow: 0 0 8px var(--cyan-glow); }
+    .editorial-rule-thin   { height: 1px; background: var(--border); }
 
-    .slide.active .list-reveal { opacity: 0; animation: typeIn 0.4s ease forwards; }
+    /* ── TYPE SCALE & READABILITY ── */
 
-    /* ── Noir aesthetic ── */
-    .editorial-rule { height: 1px; background: #fff; }
-    .editorial-rule-accent { height: 2px; background: #ef4444; }
-    .editorial-rule-thin { height: 1px; background: rgba(255,255,255,0.15); }
+    /* Display headings — Space Grotesk tight */
+    .font-serif {
+      font-family: 'Space Grotesk', sans-serif !important;
+      letter-spacing: -0.03em;
+      line-height: 0.92;
+    }
 
-    .noir-card { background: transparent; border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s ease; }
-    .noir-card:hover { border-color: #ef4444; background: rgba(239,68,68,0.04); }
-    .mobile-phone-frame { width: 140px; height: 280px; border: 2px solid rgba(255,255,255,0.12); border-radius: 16px; overflow: hidden; transition: all 0.3s ease; position: relative; }
-    .mobile-phone-frame:hover { border-color: #ef4444; transform: translateY(-4px); box-shadow: 0 8px 30px rgba(239,68,68,0.15); }
-    .mobile-phone-frame::after { content: attr(data-label); position: absolute; bottom: 0; left: 0; right: 0; padding: 4px 8px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); font-family: monospace; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-align: center; }
-    .mobile-phone-frame img { filter: grayscale(0.3); transition: filter 0.3s ease; }
-    .mobile-phone-frame:hover img { filter: grayscale(0); }
-    @keyframes mobile-scroll { 0%,100% { transform: translateX(0); } 50% { transform: translateX(calc(-50% + 50vw - 80px)); } }
+    /* Monospace labels — better legibility */
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace !important;
+      font-feature-settings: 'zero' 1, 'ss01' 1;
+      letter-spacing: 0.04em;
+    }
+
+    /* Body text — breathing room */
+    p, li, span { line-height: 1.6; }
+
+    /* Section eyebrow labels */
+    .font-mono.tracking-\[0\.25em\],
+    .font-mono.tracking-\[0\.2em\],
+    .font-mono.tracking-\[0\.3em\] {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan-dim);
+      opacity: 1 !important;
+    }
+
+    /* Ensure text-white/30 meets contrast on dark */
+    .text-white\/30 { color: rgba(232,237,245,0.52) !important; }
+    .text-white\/40 { color: rgba(232,237,245,0.60) !important; }
+    .text-white\/50 { color: rgba(232,237,245,0.70) !important; }
+    .text-white\/60 { color: rgba(232,237,245,0.78) !important; }
+    .text-white\/20 { color: rgba(232,237,245,0.38) !important; }
+    .text-white\/25 { color: rgba(232,237,245,0.44) !important; }
+    .text-white\/15 { color: rgba(232,237,245,0.34) !important; }
+
+    /* Stat numbers — tabular nums */
+    .font-black, .font-bold { font-variant-numeric: tabular-nums; }
+
+    /* Small text minimum size */
+    .text-xs  { font-size: 12px !important; line-height: 1.5 !important; }
+    .text-sm  { font-size: 13px !important; line-height: 1.55 !important; }
+
+    /* Mobile phone frame */
+    .mobile-phone-frame {
+      width: 140px; height: 280px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      position: relative;
+      border: 1px solid var(--border-mid);
+      border-radius: 4px;
+      background: var(--void-mid);
+    }
+    .mobile-phone-frame::after {
+      content: attr(data-label);
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 4px 8px;
+      background: linear-gradient(transparent, rgba(8,12,20,0.92));
+      font-family: 'JetBrains Mono', monospace; font-size: 8px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--cyan-dim); text-align: center;
+    }
+    .mobile-phone-frame img { transition: filter 0.3s ease; filter: saturate(0.75); }
+    .mobile-phone-frame:hover img { filter: saturate(1); }
+
+    @keyframes mobile-scroll { 0%,100% { transform:translateX(0); } 50% { transform:translateX(calc(-50% + 50vw - 80px)); } }
     .mobile-gallery-auto { animation: mobile-scroll 20s ease-in-out infinite; }
     .mobile-gallery:hover .mobile-gallery-inner { animation-play-state: paused; }
-    .pipeline-flow-diagram { background: rgba(255,255,255,0.01); }
+
+    /* Pipeline */
+    .pipeline-flow-diagram { background: var(--void-light); border: 1px solid var(--border-mid) !important; border-radius: 2px; }
     .pipeline-box { transition: all 0.3s ease; }
-    .pipeline-box:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(239,68,68,0.1); }
 
-    .stat-box { border: 1px solid rgba(255,255,255,0.2); }
-
-    /* Grid newspaper feel */
-    .editorial-grid { display: grid; gap: 1px; background: rgba(255,255,255,0.1); }
-    .editorial-grid > * { background: #000; }
+    /* Grid */
+    .editorial-grid { display: grid; gap: 16px; background: transparent; }
+    .editorial-grid > * { background: transparent; }
 
     /* Dot nav */
-    .dot { width: 6px; height: 6px; border: 1px solid rgba(255,255,255,0.4); transition: all 0.3s ease; cursor: pointer; }
-    .dot.active { background: #ef4444; border-color: #ef4444; width: 20px; }
+    .dot { width:6px; height:6px; border:1px solid var(--text-30); transition:all 0.3s ease; cursor:pointer; border-radius:50%; }
+    .dot.active { background: var(--cyan); border-color: var(--cyan); width:20px; border-radius:3px; box-shadow: 0 0 8px var(--cyan-glow); }
 
     /* Modal */
-    .modal-bg { background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+    .modal-bg { background: rgba(8,12,20,0.90); backdrop-filter: blur(8px); }
 
     /* Scrollbar */
-    ::-webkit-scrollbar { width: 2px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--void-light); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hi); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--cyan-dim); }
 
-    /* Scanline subtle texture */
-    .noise::after {
+    /* Dot-grid background on slides */
+    .noise {
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(0,229,255,0.06) 0%, transparent 70%),
+        radial-gradient(circle, rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(180deg, var(--void) 0%, #0a0f1a 100%);
+      background-size: 100% 100%, 28px 28px, 100% 100%;
+    }
+
+    /* ── Tailwind colour overrides (neon noir) ── */
+    /* Backgrounds */
+    .bg-black               { background-color: var(--void-mid) !important; }
+    .bg-black\/95           { background-color: rgba(13,20,32,0.97) !important; }
+    .bg-white\/\[0\.02\]    { background-color: rgba(255,255,255,0.02) !important; }
+    .bg-white\/\[0\.03\]    { background-color: rgba(255,255,255,0.03) !important; }
+    .bg-white\/\[0\.04\]    { background-color: rgba(255,255,255,0.04) !important; }
+    .bg-white\/10           { background-color: rgba(255,255,255,0.06) !important; }
+    .bg-white\/15           { background-color: rgba(255,255,255,0.08) !important; }
+    .bg-white\/20           { background-color: rgba(255,255,255,0.10) !important; }
+
+    /* Hover backgrounds */
+    .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(0,229,255,0.04) !important; }
+    .hover\:bg-white\/\[0\.04\]:hover { background-color: rgba(0,229,255,0.07) !important; }
+
+    /* Text */
+    .text-white             { color: var(--text) !important; }
+    .text-white\/15         { color: var(--text-15) !important; }
+    .text-white\/20         { color: rgba(232,237,245,0.22) !important; }
+    .text-white\/25         { color: rgba(232,237,245,0.28) !important; }
+    .text-white\/30         { color: var(--text-30) !important; }
+    .text-white\/40         { color: rgba(232,237,245,0.42) !important; }
+    .text-white\/50         { color: var(--text-50) !important; }
+    .text-white\/60         { color: rgba(232,237,245,0.62) !important; }
+    .text-white\/70         { color: var(--text-70) !important; }
+
+    /* Cyan accent replaces red */
+    .text-red-500           { color: var(--cyan) !important; }
+    .text-red-400\/50       { color: var(--cyan-dim) !important; opacity: 0.7; }
+    .bg-red-500             { background-color: var(--cyan) !important; }
+    .bg-red-500\/5          { background-color: var(--cyan-faint) !important; }
+    .hover\:text-red-500:hover { color: var(--cyan) !important; }
+    .hover\:border-red-500:hover { border-color: var(--cyan) !important; }
+    .border-red-500         { border-color: var(--cyan) !important; }
+    .divide-red-500         { border-color: var(--cyan) !important; }
+
+    /* Borders */
+    .border-white\/10       { border-color: var(--border) !important; }
+    .border-white\/12       { border-color: var(--border-mid) !important; }
+    .border-white\/15       { border-color: var(--border-mid) !important; }
+    .border-white\/20       { border-color: var(--border-hi) !important; }
+    .border-white\/8        { border-color: var(--border) !important; }
+    .divide-white\/\[0\.04\] > * + * { border-color: var(--border) !important; }
+    .divide-white\/\[0\.06\] > * + * { border-color: var(--border-mid) !important; }
+    .divide-white\/10 > * + * { border-color: var(--border) !important; }
+    .divide-white\/\[0\.06\] { border-color: var(--border-mid) !important; }
+    .divide-x > * + * { border-color: var(--border) !important; }
+
+    /* Misc */
+    .text-green-400\/60     { color: rgba(52,211,153,0.75) !important; }
+    .text-yellow-400\/60    { color: rgba(251,191,36,0.75) !important; }
+    .text-blue-400\/60      { color: rgba(96,165,250,0.75) !important; }
+    .text-green-400         { color: rgb(52,211,153) !important; }
+    .bg-black\/80           { background-color: rgba(8,12,20,0.90) !important; }
+    .bg-white\/\[0\.08\]    { background-color: rgba(255,255,255,0.06) !important; }
+
+    /* Top accent stripe — neon cyan */
+    .slide .absolute.top-0.left-0.right-0.h-1 {
+      background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.25)) !important;
+      box-shadow: 0 2px 12px var(--cyan-glow);
+    }
+
+    /* Grid bg dots — more visible */
+    .absolute.inset-0 { opacity: 0.25 !important; }
+
+    /* Nav buttons */
+    #btn-prev, #btn-next {
+      background: var(--void-mid) !important;
+      border: 1px solid var(--border-mid) !important;
+      color: var(--text-30) !important;
+      width: 40px; height: 40px;
+      border-radius: 50% !important;
+      box-shadow: 0 2px 12px rgba(8,12,20,0.5);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+    }
+    #btn-prev:hover, #btn-next:hover {
+      border-color: var(--cyan) !important;
+      color: var(--cyan) !important;
+      box-shadow: 0 0 16px var(--cyan-glow) !important;
+    }
+
+    /* Progress bar */
+    #progress-dots ~ *, .fixed.bottom-6 {
+      border-color: var(--border-mid) !important;
+      background: var(--void-mid);
+    }
+
+    /* Toggle panel */
+    #toggle-panel {
+      background: var(--void-mid) !important;
+      border-color: var(--border-mid) !important;
+      backdrop-filter: blur(12px);
+    }
+    #toggle-menu-btn {
+      background: var(--void-mid) !important;
+      border-color: var(--border-mid) !important;
+    }
+
+    /* Emerald / indigo overrides */
+    .border-emerald-500\/20 { border-color: rgba(52,211,153,0.2) !important; }
+    .bg-emerald-500\/\[0\.04\] { background-color: rgba(52,211,153,0.05) !important; }
+    .text-emerald-400       { color: rgb(52,211,153) !important; }
+    .text-emerald-400\/70   { color: rgba(52,211,153,0.75) !important; }
+    .border-indigo-500\/20  { border-color: rgba(99,102,241,0.25) !important; }
+    .bg-indigo-500\/\[0\.04\] { background-color: rgba(99,102,241,0.05) !important; }
+    .text-indigo-300        { color: rgb(165,180,252) !important; }
+    .text-indigo-300\/70    { color: rgba(165,180,252,0.75) !important; }
+    .border-indigo-500\/25  { border-color: rgba(99,102,241,0.25) !important; }
+    .text-indigo-400        { color: rgb(129,140,248) !important; }
+    .border-cyan-500\/20    { border-color: rgba(0,229,255,0.2) !important; }
+    .bg-indigo-400          { background-color: rgb(129,140,248) !important; }
+
+    /* ═══════════════════════════════════════════════════════
+       NEON NOIR COMPONENT AESTHETIC
+       Glass panels, sharp geometry, cyan glow
+    ════════════════════════════════════════════════════════ */
+
+    /* ── CARDS — glass panels with neon top edge ── */
+    .noir-card {
+      background: var(--glass) !important;
+      border: 1px solid var(--border-mid) !important;
+      box-shadow: 0 4px 24px rgba(8,12,20,0.5) !important;
+      clip-path: none !important;
+      filter: none !important;
+      transform: none !important;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    /* Neon top edge replaces tape */
+    .noir-card::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(255,255,255,0.008) 2px,
-        rgba(255,255,255,0.008) 4px
-      );
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      z-index: 2;
       pointer-events: none;
+      transform: none;
+      width: 100%;
+      clip-path: none;
+      border-radius: 0;
     }
+    .noir-card:hover {
+      border-color: rgba(0,229,255,0.4) !important;
+      box-shadow: 0 0 28px var(--cyan-glow), 0 4px 24px rgba(8,12,20,0.5) !important;
+      transform: translateY(-3px);
+      filter: none !important;
+    }
+    .noir-card:hover::before { opacity: 1; }
+    .editorial-grid > *:nth-child(2n)  .noir-card { }
+    .editorial-grid > *:nth-child(3n)  .noir-card { }
+    .editorial-grid > *:nth-child(4n)  .noir-card { }
+
+    /* ── STAT GRID — sharp data cells ── */
+    .grid.gap-px { gap: 1px !important; background: var(--border) !important; }
+    .grid.gap-px > div {
+      background: var(--void-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      transform: none !important;
+      position: relative;
+      transition: background 0.2s ease;
+    }
+    .grid.gap-px > div:hover { background: rgba(0,229,255,0.04) !important; }
+
+    /* ── BORDER PANELS — glass sheets ── */
+    .border.border-white\/10,
+    div.border.border-white\/10,
+    .border-white\/10.divide-y {
+      border: 1px solid var(--border-mid) !important;
+      background: var(--void-light) !important;
+      clip-path: none !important;
+      filter: none !important;
+      padding-bottom: 0 !important;
+      border-radius: 2px;
+      position: relative;
+    }
+    /* Remove notebook margin line */
+    .border.border-white\/10::before,
+    div.border.border-white\/10::before { display: none; }
+
+    /* Clean list rows */
+    .divide-y > * { background: transparent !important; }
+    .divide-y > * + * { border-top: 1px solid var(--border) !important; }
+
+    /* ── LAYOUT — slide structure ── */
+
+    /* Section header accent bar — left border treatment */
+    .editorial-rule-accent + * h2,
+    .editorial-rule-accent + .reveal h2 { position: relative; }
+
+    /* Slide content padding baseline */
+    .slide > div > div[class*="max-w"] {
+      padding-top: 2.5rem;
+      padding-bottom: 5rem;
+    }
+
+    /* Section eyebrow — cyan overline instead of label */
+    p.font-mono.uppercase {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--cyan-dim) !important;
+    }
+    p.font-mono.uppercase::before {
+      content: '';
+      display: inline-block;
+      width: 16px;
+      height: 1px;
+      background: var(--cyan);
+      flex-shrink: 0;
+      box-shadow: 0 0 6px var(--cyan-glow);
+    }
+
+    /* Stat number highlight */
+    .grid.gap-px > div .font-serif {
+      background: linear-gradient(135deg, var(--text) 30%, var(--cyan-dim));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grid.gap-px > div .text-red-500 {
+      background: linear-gradient(135deg, var(--cyan), #00fff7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+    }
+
+    /* Card content spacing */
+    .noir-card { padding: 0 !important; }
+
+    /* List rows — better vertical rhythm */
+    .divide-y > div,
+    .divide-y > li {
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+      min-height: 40px;
+    }
+
+    /* Section label spacing */
+    p.font-mono.uppercase { margin-bottom: 10px !important; }
+
+    /* Hero title — very tight, impactful */
+    #slide-0 h1 {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 0.88;
+      background: linear-gradient(160deg, #ffffff 40%, rgba(232,237,245,0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Inner slide headings — left accent stripe */
+    h2.font-serif {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      padding-left: 14px;
+      border-left: 3px solid var(--cyan);
+      box-shadow: -4px 0 16px var(--cyan-glow);
+      line-height: 1.1;
+    }
+
+    /* Closing slide */
+    #slide-8 h2.font-serif {
+      border-left: none;
+      padding-left: 0;
+      box-shadow: none;
+      text-align: center;
+    }
+    #slide-8 p.font-serif {
+      font-family: 'Inter', sans-serif !important;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text-70) !important;
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+
+    /* Hero subtitle eyebrow */
+    #slide-0 span.font-mono.uppercase {
+      letter-spacing: 0.35em;
+      color: var(--cyan-dim) !important;
+    }
+    #slide-0 span.font-mono.uppercase::before { display: none; }
+    #slide-0 p.font-mono::before { display: none; }
+
+    /* Hero grid tile numbers */
+    #hero-sections .font-serif {
+      font-family: 'Space Grotesk', sans-serif !important;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    /* Pipeline connector arrows — visible */
+    #pipeline-visual .text-white\/20 { color: var(--cyan-dim) !important; opacity: 0.7; }
+
+    /* Progress bar text */
+    #slide-num, #slide-total, #slide-label { color: var(--text-50) !important; }
+
+    /* Toggle knob */
+    .toggle-knob { background: var(--cyan) !important; }
+
+    /* Scrollbar in panels */
+    #recent-prs::-webkit-scrollbar-thumb { background: var(--cyan-dim); }
+
+    /* ── DIVIDER LINES — neon strokes ── */
+    .editorial-rule        { height: 1px; background: var(--border-mid) !important; opacity: 1; position: relative; }
+    .editorial-rule::after { display: none; }
+    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.15) 70%, transparent 100%) !important; box-shadow: 0 0 8px var(--cyan-glow); position: relative; }
+    .editorial-rule-accent::after { display: none; }
+    .editorial-rule-thin   { height: 1px; background: var(--border) !important; position: relative; }
+    .editorial-rule-thin::after { display: none; }
+
+    /* ── HERO GRID BUTTONS — glass tiles with bottom sweep ── */
+    #hero-sections { background: var(--border) !important; gap: 1px !important; }
+    #hero-sections button {
+      background: var(--void-mid) !important;
+      position: relative;
+      clip-path: none !important;
+      filter: none !important;
+      transform: none !important;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+      overflow: hidden;
+    }
+    /* Bottom neon sweep on hover */
+    #hero-sections button::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--cyan);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+      z-index: 2;
+      top: auto;
+      inset: auto 0 0 0;
+      width: 100%;
+      border: none;
+      border-radius: 0;
+    }
+    #hero-sections button:hover {
+      background: rgba(0,229,255,0.05) !important;
+      box-shadow: inset 0 0 24px var(--cyan-faint);
+      filter: none !important;
+      transform: none !important;
+    }
+    #hero-sections button:hover::before { transform: scaleX(1); }
+
+    /* ── PIPELINE BOXES — terminal blocks ── */
+    .pipeline-box {
+      background: var(--void-light) !important;
+      clip-path: none !important;
+      filter: none !important;
+      transform: none !important;
+      border: 1px solid var(--border-mid) !important;
+      border-radius: 2px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .pipeline-box:hover {
+      border-color: var(--cyan) !important;
+      box-shadow: 0 0 16px var(--cyan-glow);
+      filter: none !important;
+      transform: none !important;
+    }
+
+    /* ── PIPELINE FLOW DIAGRAM ── */
+    .pipeline-flow-diagram {
+      background: var(--void-light) !important;
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      padding-bottom: 0 !important;
+      border-radius: 2px;
+    }
+
+    /* ── MOBILE PHONE FRAMES ── neon bordered ── */
+    .mobile-phone-frame {
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      transform: none !important;
+      background: var(--void-mid) !important;
+      border-radius: 4px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .mobile-phone-frame:hover {
+      border-color: var(--cyan) !important;
+      box-shadow: 0 0 20px var(--cyan-glow), inset 0 0 12px var(--cyan-faint) !important;
+      transform: translateY(-4px) !important;
+      filter: none !important;
+    }
+
+    /* ── NAV BUTTONS — glass circles ── */
+    #btn-prev, #btn-next {
+      background: var(--void-mid) !important;
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 50% !important;
+    }
+
+    /* ── TOGGLE MENU ── */
+    #toggle-menu-btn {
+      background: var(--void-mid) !important;
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 2px;
+    }
+    #toggle-panel {
+      background: var(--void-mid) !important;
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      padding-bottom: 0 !important;
+      backdrop-filter: blur(12px);
+      border-radius: 2px;
+    }
+
+    /* ── DOT NAV — neon pills ── */
+    .dot {
+      width: 6px; height: 6px;
+      border-radius: 50% !important;
+      border: 1px solid var(--text-30) !important;
+      transform: none !important;
+    }
+    .dot.active {
+      background: var(--cyan) !important;
+      border-color: var(--cyan) !important;
+      width: 20px;
+      border-radius: 3px !important;
+      box-shadow: 0 0 10px var(--cyan-glow);
+      transform: none !important;
+    }
+
+    /* ── MODAL ── dark glass panel ── */
+    .modal-bg { background: rgba(8,12,20,0.90) !important; }
+    #modal-inner {
+      background: var(--void-mid) !important;
+      border: 1px solid var(--border-mid) !important;
+      clip-path: none !important;
+      filter: none !important;
+      border-radius: 4px;
+      box-shadow: 0 8px 40px rgba(8,12,20,0.8), 0 0 60px var(--cyan-faint) !important;
+    }
+
+    /* ── V2 video container ── */
+    #slide-7 .border.border-white\/10 {
+      clip-path: none !important;
+      filter: none !important;
+      padding-bottom: 0 !important;
+      background: var(--void-light) !important;
+      border: 1px solid var(--border-mid) !important;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    /* ── STAT BOX ── */
+    .bg-white\/10 { background-color: var(--void-mid) !important; }
+
+    /* ── HERO stat glow ── */
+    #hero-sections .text-red-500 { text-shadow: 0 0 20px var(--cyan-glow); }
+
+    /* ════════════════════════════════════════════
+       SIDEBAR LAYOUT
+    ════════════════════════════════════════════ */
+    #sidebar {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 210px;
+      z-index: 30;
+      background: var(--void-light);
+      border-right: 1px solid var(--border-mid);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #sidebar::after {
+      content: '';
+      position: absolute;
+      top: 20%; bottom: 20%; right: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
+      opacity: 0.25;
+    }
+    #sidebar-brand {
+      padding: 22px 18px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sidebar-logo {
+      width: 30px; height: 30px;
+      background: var(--cyan);
+      color: var(--void);
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: -0.02em;
+    }
+    .sidebar-brand-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .sidebar-brand-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600; font-size: 12px;
+      color: var(--text); letter-spacing: -0.02em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .sidebar-brand-version {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; color: var(--cyan-dim); letter-spacing: 0.06em;
+    }
+    #sidebar-nav {
+      flex: 1; padding: 12px 0;
+      display: flex; flex-direction: column; gap: 1px;
+      overflow-y: auto;
+    }
+    .sidebar-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 18px; cursor: pointer;
+      transition: background 0.18s ease, color 0.18s ease;
+      position: relative; border: none; background: transparent; width: 100%; text-align: left;
+    }
+    .sidebar-nav-item:hover { background: var(--glass-hover); }
+    .sidebar-nav-item.active { background: var(--cyan-faint); }
+    .sidebar-nav-item.active::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+      background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow);
+    }
+    .sidebar-nav-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; color: var(--text-30);
+      width: 14px; flex-shrink: 0; letter-spacing: 0.05em;
+    }
+    .sidebar-nav-item.active .sidebar-nav-num { color: var(--cyan-dim); }
+    .sidebar-nav-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: var(--text-50); letter-spacing: -0.01em;
+    }
+    .sidebar-nav-item.active .sidebar-nav-label { color: var(--text); }
+    .sidebar-nav-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--cyan); flex-shrink: 0; margin-left: auto;
+      opacity: 0; transition: opacity 0.18s ease;
+      box-shadow: 0 0 6px var(--cyan-glow);
+    }
+    .sidebar-nav-item.active .sidebar-nav-dot { opacity: 1; }
+    #sidebar-footer {
+      padding: 14px 18px; border-top: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;
+    }
+    #sidebar-footer span {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; color: var(--text-30);
+      letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    /* Offset slides to start after sidebar */
+    .slide { left: 210px !important; }
+
+    /* Hide old floating nav — sidebar replaces it */
+    #btn-prev, #btn-next { display: none !important; }
+    .fixed.bottom-6 { display: none !important; }
+
+    /* Hero layout overhaul — left-aligned, full-height split */
+    #slide-0 > div.relative.flex {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      justify-content: space-between !important;
+      padding: 52px 56px 40px !important;
+      text-align: left !important;
+    }
+    #slide-0 .text-center {
+      text-align: left !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      width: 100% !important;
+    }
+    #slide-0 .editorial-rule-accent.mx-auto,
+    #slide-0 .editorial-rule.mx-auto { margin-left: 0 !important; }
+    #slide-0 .flex.items-center.justify-center.gap-3 { justify-content: flex-start !important; }
+    #slide-0 h1 {
+      font-size: clamp(68px, 8.5vw, 130px) !important;
+      letter-spacing: -0.04em !important;
+      line-height: 0.88 !important;
+    }
+    #slide-0 #hero-sections { width: 100% !important; }
+    #slide-0 p.font-mono.uppercase::before { display: none; }
+
+    /* Inner slide heading — increase left border weight */
+    h2.font-serif { border-left-width: 3px !important; }
+
+    /* Keyboard hint in sidebar context */
+    #slide-0 span:has(+ span + span) { display: none; }
+
   </style>
 </head>
 <body>
-  <div id="app" class="fixed inset-0 overflow-hidden bg-black">
+
+  <div id="app" class="fixed inset-0 overflow-hidden" style="background:var(--void)">
+
+    <!-- ===== SIDEBAR ===== -->
+    <div id="sidebar">
+      <div id="sidebar-brand">
+        <div class="sidebar-logo">CD</div>
+        <div class="sidebar-brand-text">
+          <span class="sidebar-brand-name">ChatDaddy</span>
+          <span class="sidebar-brand-version">v4.8.16</span>
+        </div>
+      </div>
+      <nav id="sidebar-nav">
+        <!-- populated by JS -->
+      </nav>
+      <div id="sidebar-footer">
+        <span>April 2026</span>
+        <span>Issue No. 49</span>
+      </div>
+    </div>
 
     <!-- ===== SLIDE 0: HERO ===== -->
     <div class="slide active noise" id="slide-0">
@@ -134,7 +873,7 @@
 
         <div class="relative z-10 text-center px-8 max-w-5xl">
           <div class="reveal r1">
-            <span class="font-mono text-xs tracking-[0.3em] uppercase text-white/40">Issue No. 48 — March 2026</span>
+            <span class="font-mono text-xs tracking-[0.3em] uppercase text-white/40">Issue No. 49 — April 2026</span>
           </div>
 
           <div class="editorial-rule-accent w-16 mx-auto my-6 reveal r2 line-reveal lr1"></div>
@@ -145,39 +884,39 @@
 
           <div class="editorial-rule w-32 mx-auto my-5 reveal r3 line-reveal lr2"></div>
 
-          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Overview — v4.8.15</p>
+          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Overview — v4.8.16</p>
 
           <!-- Section overview grid -->
           <div class="grid grid-cols-3 md:grid-cols-6 gap-px bg-white/[0.06] mb-8 reveal r4" id="hero-sections">
             <button onclick="goToSlide(2)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">6</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">3</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Cursor → PR</div>
             </button>
             <button onclick="goToSlide(3)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-red-500 group-hover:text-white transition-colors">25<span class="text-xl">%</span></div>
-              <div class="editorial-rule-accent w-8 mx-auto my-2"></div>
-              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-red-400/50">Tickets ↓</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">44</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">PRs Merged</div>
             </button>
             <button onclick="goToSlide(4)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">v2</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">12</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Mobile</div>
             </button>
-            <button onclick="goToSlide(5)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">18</div>
-              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
-              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">AI Workflows</div>
-            </button>
             <button onclick="goToSlide(6)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">5</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">3</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Pipeline</div>
             </button>
             <button onclick="goToSlide(7)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-red-500 group-hover:text-white transition-colors">→</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500 group-hover:text-white transition-colors">95%</div>
               <div class="editorial-rule-accent w-8 mx-auto my-2"></div>
-              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-red-400/50">Closing</div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-red-400/50">V2 Rebuild</div>
+            </button>
+            <button onclick="goToSlide(8)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">→</div>
+              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
+              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Closing</div>
             </button>
           </div>
 
@@ -191,7 +930,7 @@
         </div>
 
         <!-- Accent stripe bottom -->
-        <div class="absolute bottom-0 left-0 right-0 h-px bg-white/10"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,var(--cyan),transparent);opacity:0.3;"></div>
       </div>
     </div>
 
@@ -226,11 +965,11 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Cursor&nbsp;→&nbsp;PR</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">6 pull requests</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Abdul + Ahay45 · 3 PRs</span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
-          <div class="editorial-grid grid-cols-1 md:grid-cols-5" id="cursor-grid">
+          <div class="editorial-grid grid-cols-1 md:grid-cols-3" id="cursor-grid">
             <!-- Generated by JS -->
           </div>
 
@@ -249,31 +988,31 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Tickets &amp; PRs</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Engineering output</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">2 Apr – 16 Apr 2026</span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
           <!-- PR stats row -->
           <div class="grid grid-cols-5 gap-px bg-white/10 mb-6 reveal r2">
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">200</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Opened</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">136</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Commits</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">51</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Merged</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">44</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Merged</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">139</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">In Review</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">235</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">V2 Commits</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">47</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Human PRs</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">5</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Contributors</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">47→20</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Backlog</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">25+</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Bug Fixes</div>
             </div>
           </div>
 
@@ -283,68 +1022,68 @@
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Support Tickets</p>
               <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
                 <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-white">24</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Received</div>
+                  <div class="font-serif text-3xl font-black text-white">136</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">V1 Commits</div>
                 </div>
                 <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-white">7</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Resolved</div>
+                  <div class="font-serif text-3xl font-black text-white">44</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Merged</div>
                 </div>
                 <div class="bg-black p-4 text-center">
-                  <div class="font-serif text-3xl font-black text-red-500">25%</div>
-                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Decrease</div>
+                  <div class="font-serif text-3xl font-black text-red-500">235</div>
+                  <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">V2 Commits</div>
                 </div>
               </div>
               <div class="grid grid-cols-3 gap-px bg-white/10 mb-4 reveal r3">
                 <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-red-500">8</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Bugs</span>
+                  <span class="font-serif text-xl font-black text-red-500">25+</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Bug Fixes</span>
                 </div>
                 <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-white/60">9</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">Not Bugs</span>
+                  <span class="font-serif text-xl font-black text-white/60">3</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">New Features</span>
                 </div>
                 <div class="bg-black px-4 py-3 flex items-center gap-2">
-                  <span class="font-serif text-xl font-black text-red-500">1</span>
-                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">P0</span>
+                  <span class="font-serif text-xl font-black text-red-500">5</span>
+                  <span class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/40">V2 Modules</span>
                 </div>
               </div>
 
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">PR By Contributor</p>
               <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Piyush <span class="text-white/20 text-xs">(piyushmakad)</span></span>
+                  <span class="text-white/60 text-sm">Amrit <span class="text-white/20 text-xs">(amrit2611)</span></span>
                   <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-green-400/60">16 merged</span>
-                    <span class="font-mono text-sm font-bold text-white">45</span>
+                    <span class="font-mono text-[9px] text-green-400/60">67 commits</span>
+                    <span class="font-mono text-sm font-bold text-white">67</span>
+                  </div>
+                </div>
+                <div class="flex items-center justify-between px-4 py-2.5">
+                  <span class="text-white/60 text-sm">Aseem <span class="text-white/20 text-xs">(aseem)</span></span>
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-[9px] text-yellow-400/60">24 commits</span>
+                    <span class="font-mono text-sm font-bold text-white">24</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
                   <span class="text-white/60 text-sm">Akil <span class="text-white/20 text-xs">(Ahay45)</span></span>
                   <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-yellow-400/60">22 review</span>
-                    <span class="font-mono text-sm font-bold text-white">22</span>
+                    <span class="font-mono text-[9px] text-blue-400/60">14 commits + 235 v2</span>
+                    <span class="font-mono text-sm font-bold text-white">14</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Pratiksha <span class="text-white/20 text-xs">(okarin1511)</span></span>
+                  <span class="text-white/60 text-sm">Piyush <span class="text-white/20 text-xs">(piyushmakad)</span></span>
                   <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-green-400/60">1 merged</span>
-                    <span class="font-mono text-sm font-bold text-white">17</span>
+                    <span class="font-mono text-[9px] text-green-400/60">12 commits</span>
+                    <span class="font-mono text-sm font-bold text-white">12</span>
                   </div>
                 </div>
                 <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">Amrit <span class="text-white/20 text-xs">(amrit2611)</span></span>
+                  <span class="text-white/60 text-sm">Abdul Haadi <span class="text-white/20 text-xs">(haadi)</span></span>
                   <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-green-400/60">5 merged</span>
-                    <span class="font-mono text-sm font-bold text-white">8</span>
-                  </div>
-                </div>
-                <div class="flex items-center justify-between px-4 py-2.5">
-                  <span class="text-white/60 text-sm">CI/CD Bots <span class="text-white/20 text-xs">(actions + dependabot)</span></span>
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-[9px] text-white/20">auto</span>
-                    <span class="font-mono text-sm font-bold text-white/40">8</span>
+                    <span class="font-mono text-[9px] text-white/20">9 commits</span>
+                    <span class="font-mono text-sm font-bold text-white/60">9</span>
                   </div>
                 </div>
               </div>
@@ -359,7 +1098,7 @@
                 </div>
               </div>
               <div class="reveal r5">
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Recent Merged PRs <span class="text-white/15">(last 2 weeks)</span></p>
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Merged PRs <span class="text-white/15">(2 Apr – 16 Apr 2026)</span></p>
                 <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[180px] overflow-y-auto" id="recent-prs" style="scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) transparent;">
                   <!-- Generated by JS -->
                 </div>
@@ -378,50 +1117,26 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Mobile</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Complete Redesign</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">12 updates shipped</span>
           </div>
           <div class="editorial-rule-accent w-full mb-4 reveal r1 line-reveal lr1"></div>
 
           <!-- Tagline -->
-          <p class="text-white/40 text-sm md:text-base leading-relaxed mb-6 max-w-2xl reveal r2">The app just got a complete makeover — rebuilt from the ground up with a clean white design, modern bottom navigation, and dedicated Settings page.</p>
+          <p class="text-white/40 text-sm md:text-base leading-relaxed mb-6 max-w-2xl reveal r2">Major stability, performance, and UX improvements — rebuilt composer, full iOS/Android fixes, caching layer, and real-time WebSocket patching.</p>
 
-          <!-- Phone gallery row -->
+          <!-- Media preview row -->
           <div class="reveal r3 mb-6">
             <div class="overflow-x-auto pb-3 mobile-gallery" style="scrollbar-width: thin; scrollbar-color: rgba(239,68,68,0.3) transparent;">
-             <div class="flex gap-3 mobile-gallery-inner mobile-gallery-auto w-max">
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Chat List" data-desc="Fresh modern interface with All/Unread/Groups filters, live connection status, and real-time unread badge" onclick="openMobileDetail(0)">
-                <img src="cursor-pr-images/mobile/chat-list.png" alt="Chat List" class="w-full h-full object-cover">
+             <div class="flex gap-3 mobile-gallery-inner w-max">
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="New Composer" data-desc="WhatsApp-style message composer with emoji picker, voice recording, redesigned attachments, multi-image selection, and PDF sending." onclick="openMobileDetail(0)">
+                <img src="cursor-pr-images/mobile/new/IMG_7484.PNG" alt="New Composer" class="w-full h-full object-cover">
               </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Settings" data-desc="Dedicated Settings page with profile info, incognito mode toggle, team switching, and help" onclick="openMobileDetail(1)">
-                <img src="cursor-pr-images/mobile/settings.png" alt="Settings" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Switch Team" data-desc="Quick team switching — search and switch between all your teams without logging out" onclick="openMobileDetail(2)">
-                <img src="cursor-pr-images/mobile/switch-team.png" alt="Switch Team" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="New Chat" data-desc="Tap + to start a new chat instantly — enter any phone number with country code and go" onclick="openMobileDetail(3)">
-                <img src="cursor-pr-images/mobile/new-chat.png" alt="New Chat" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Channels" data-desc="Live channel status — see WhatsApp connection, test numbers, and all channels at a glance" onclick="openMobileDetail(4)">
-                <img src="cursor-pr-images/mobile/channel-status.png" alt="Channel Status" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Chat View" data-desc="WhatsApp-style chat interface with schedule message, notes, chatbot responses, and typing" onclick="openMobileDetail(5)">
-                <img src="cursor-pr-images/mobile/chat-view.png" alt="Chat View" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Contact" data-desc="Full contact info page with tags, assignees, conversation stats, and save changes" onclick="openMobileDetail(6)">
-                <img src="cursor-pr-images/mobile/contact-info.png" alt="Contact Info" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Sharing" data-desc="Contact sharing with card view — Call & Message action buttons for shared contacts" onclick="openMobileDetail(7)">
-                <img src="cursor-pr-images/mobile/contact-share.png" alt="Contact Sharing" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Reactions" data-desc="Emoji reactions on messages — long press to react with heart, laugh, surprise, and more. Delete & copy actions" onclick="openMobileDetail(8)">
-                <img src="cursor-pr-images/mobile/emoji-reactions.jpeg" alt="Emoji Reactions" class="w-full h-full object-cover">
-              </div>
-              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Flow Chat" data-desc="WhatsApp flow messages with automated chatbot responses, schedule message, and notes toggle" onclick="openMobileDetail(9)">
-                <img src="cursor-pr-images/mobile/chat-flow.jpeg" alt="Chat Flow" class="w-full h-full object-cover">
+              <div class="mobile-phone-frame shrink-0 cursor-pointer" data-label="Feature Demo" data-desc="Live demo of the rebuilt composer and new mobile features — emoji picker, voice recording, attachments, iOS keyboard dismiss, and notification tap-to-chat." onclick="openMobileDetail(1)" style="position:relative;">
+                <video src="cursor-pr-images/mobile/new/ScreenRecording_04-15-2026%2012-26-59_1.MP4" class="w-full h-full object-cover" autoplay loop muted playsinline></video>
               </div>
              </div>
             </div>
-            <p class="font-mono text-[9px] text-white/15 tracking-[0.2em] uppercase text-center mt-2">Scroll to see all screens · Click to enlarge</p>
+            <p class="font-mono text-[9px] text-white/15 tracking-[0.2em] uppercase text-center mt-2">Click to enlarge</p>
           </div>
 
           <!-- What's new list -->
@@ -440,62 +1155,6 @@
     </div>
 
     <!-- ===== SLIDE 5: AI WORKFLOWS ===== -->
-    <div class="slide noise" id="slide-5">
-      <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
-        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
-        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
-          <div class="flex items-baseline justify-between mb-1 reveal r1">
-            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">AI&nbsp;Workflows</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Currently Implemented</span>
-          </div>
-          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
-
-          <!-- Top stats row -->
-          <div class="grid grid-cols-4 gap-px bg-white/10 mb-6 reveal r2">
-            <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">15</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Automations</div>
-            </div>
-            <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">3</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Team Members</div>
-            </div>
-            <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">4</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">LLM Models</div>
-            </div>
-            <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">24/7</div>
-              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Always On</div>
-            </div>
-          </div>
-
-          <!-- Two-column layout: workflows grid + model routing -->
-          <div class="flex flex-col lg:flex-row gap-6">
-
-            <!-- Left: Workflow categories -->
-            <div class="w-full lg:w-[62%] reveal r3">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Active Workflows</p>
-              <div class="border border-white/10 divide-y divide-white/10" id="ai-workflows-list">
-                <!-- Generated by JS -->
-              </div>
-            </div>
-
-            <!-- Right: Model routing + agent pipeline -->
-            <div class="w-full lg:w-[38%] flex flex-col gap-5">
-              <div class="reveal r4">
-                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Model Routing</p>
-                <div class="border border-white/10 divide-y divide-white/10" id="model-routing">
-                  <!-- Generated by JS -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- ===== SLIDE 6: DEPLOYMENT PIPELINE ===== -->
     <div class="slide noise" id="slide-6">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
@@ -504,7 +1163,7 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-5xl font-black text-white tracking-tight">Pipeline</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">dev → beta → rc → staging → prod</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">dev → beta → prod</span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
@@ -546,8 +1205,191 @@
       </div>
     </div>
 
-    <!-- ===== SLIDE 7: CLOSING ===== -->
+    <!-- ===== SLIDE 7: CHATDADDY V2 ===== -->
     <div class="slide noise" id="slide-7">
+      <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
+
+          <!-- Title row -->
+          <div class="flex items-baseline justify-between mb-1 reveal r1">
+            <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">ChatDaddy V2</h2>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">Ground-up rebuild</span>
+          </div>
+          <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
+
+          <!-- Video preview -->
+          <div class="reveal r2 mb-6">
+            <div class="border border-white/10 overflow-hidden cursor-pointer group" onclick="openModal({ title: 'New ChatDaddy V2', description: 'A full walkthrough of the new ChatDaddy V2 — rebuilt from the ground up with a modern stack, cleaner architecture, and faster UX.', icon: 'play', media: { type: 'video', src: 'cursor-pr-images/New%20Chatdaddy%20V2.mp4' } })">
+              <video src="cursor-pr-images/New%20Chatdaddy%20V2.mp4" class="w-full" autoplay loop muted playsinline></video>
+              <div class="px-4 py-2 flex items-center gap-2 bg-white/[0.02] group-hover:bg-white/[0.04] transition-colors">
+                <i data-lucide="play" class="w-3 h-3 text-red-500"></i>
+                <span class="font-mono text-[10px] text-white/30 tracking-[0.15em] uppercase">New ChatDaddy V2 — Click to watch full video</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stat bar -->
+          <div class="grid grid-cols-4 gap-px bg-white/10 mb-6 reveal r3">
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">95%</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Overall Progress</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">21</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Active Modules</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">20</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">PRs Merged</div>
+            </div>
+            <div class="bg-black p-4 text-center">
+              <div class="font-serif text-3xl md:text-4xl font-black text-red-500">136</div>
+              <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-red-400/50 mt-1">Error Scenarios</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col lg:flex-row gap-6">
+
+            <!-- Left: module completion -->
+            <div class="w-full lg:w-[60%]">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Module Completion</p>
+              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r3">
+                <div class="grid grid-cols-4 divide-x divide-white/[0.06]">
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Auth</span>
+                    <span class="font-mono text-xs font-bold text-white">100%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Calls</span>
+                    <span class="font-mono text-xs font-bold text-white">100%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">i18n</span>
+                    <span class="font-mono text-xs font-bold text-white">100%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Errors</span>
+                    <span class="font-mono text-xs font-bold text-white">100%</span>
+                  </div>
+                </div>
+                <div class="grid grid-cols-4 divide-x divide-white/[0.06]">
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Channels</span>
+                    <span class="font-mono text-xs font-bold text-white/70">99%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">AI / Bot</span>
+                    <span class="font-mono text-xs font-bold text-white/70">99%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Inbox</span>
+                    <span class="font-mono text-xs font-bold text-white/70">98%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Analytics</span>
+                    <span class="font-mono text-xs font-bold text-white/70">98%</span>
+                  </div>
+                </div>
+                <div class="grid grid-cols-4 divide-x divide-white/[0.06]">
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Broadcasts</span>
+                    <span class="font-mono text-xs font-bold text-white/70">97%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">CRM</span>
+                    <span class="font-mono text-xs font-bold text-white/70">97%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Automation</span>
+                    <span class="font-mono text-xs font-bold text-white/70">96%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Onboarding</span>
+                    <span class="font-mono text-xs font-bold text-white/70">95%</span>
+                  </div>
+                </div>
+                <div class="grid grid-cols-4 divide-x divide-white/[0.06]">
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Billing</span>
+                    <span class="font-mono text-xs font-bold text-white/70">95%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Admin</span>
+                    <span class="font-mono text-xs font-bold text-white/70">95%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Settings</span>
+                    <span class="font-mono text-xs font-bold text-white/70">93%</span>
+                  </div>
+                  <div class="px-3 py-2.5 flex items-center justify-between gap-2">
+                    <span class="text-white/50 text-xs">Campaigns</span>
+                    <span class="font-mono text-xs font-bold text-white/70">90%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tech stack -->
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 mt-5 reveal r4">Tech Stack</p>
+              <div class="grid grid-cols-4 gap-px bg-white/10 reveal r4">
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">React 18</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">TypeScript</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">MUI v6</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">Zustand</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">TanStack Query</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">TanStack Router</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">Vite</span></div>
+                <div class="bg-black px-3 py-2.5 text-center"><span class="font-mono text-[10px] text-white/40">Zod</span></div>
+              </div>
+            </div>
+
+            <!-- Right: highlights -->
+            <div class="w-full lg:w-[40%]">
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3 reveal r3">Highlights</p>
+              <div class="border border-white/10 divide-y divide-white/[0.06] reveal r4">
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Modules complete</span>
+                  <span class="font-mono text-sm font-bold text-white">4 / 23</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Modules in progress</span>
+                  <span class="font-mono text-sm font-bold text-white">17 / 23</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Not started</span>
+                  <span class="font-mono text-sm font-bold text-white/40">2 / 23</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Error scenarios</span>
+                  <span class="font-mono text-sm font-bold text-red-500">100%</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Localization</span>
+                  <span class="font-mono text-sm font-bold text-red-500">100%</span>
+                </div>
+                <div class="flex items-center justify-between px-4 py-3">
+                  <span class="text-white/60 text-sm">Live tracker</span>
+                  <span class="font-mono text-[10px] font-bold text-white/30">ahay45.github.io/chatdaddy-rebuild-tracker</span>
+                </div>
+              </div>
+
+              <div class="mt-5 reveal r5">
+                <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/30 mb-3">Branch</p>
+                <div class="border border-white/10 px-4 py-3 flex items-center justify-between">
+                  <span class="font-mono text-xs text-white/40">akil/review</span>
+                  <span class="font-mono text-[10px] text-white/20">last sync 2026-04-15</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SLIDE 8: CLOSING ===== -->
+    <div class="slide noise" id="slide-8">
       <div class="relative flex items-center justify-center h-full w-full">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
         <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
@@ -556,16 +1398,16 @@
             <div class="w-px h-16 bg-white/20 mx-auto mb-8"></div>
           </div>
           <div class="reveal r2">
-            <p class="font-serif text-2xl md:text-3xl text-white/60 italic leading-relaxed max-w-3xl mx-auto mb-2">"Great things in business are never done by one person.<br>They're done by a team of people."</p>
-            <p class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25 mb-12">— Steve Jobs</p>
+            <p class="font-serif text-2xl md:text-3xl text-white/60 italic leading-relaxed max-w-3xl mx-auto mb-2">"The secret of getting ahead is getting started.<br>The secret of getting started is breaking your complex tasks into small manageable ones — and shipping them."</p>
+            <p class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25 mb-12">— Mark Twain</p>
           </div>
           <div class="editorial-rule w-24 mx-auto my-8 reveal r3 line-reveal lr1"></div>
           <h2 class="font-serif text-5xl md:text-8xl font-black text-white leading-[0.95] mb-4 reveal r4">
-            KEEP<br><span class="text-red-500">SHIPPING</span>
+            KEEP<br><span class="text-red-500">BUILDING</span>
           </h2>
           <div class="reveal r5">
             <div class="w-px h-8 bg-red-500 mx-auto my-6"></div>
-            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">v4.8.15 — 15 Mar – 27 Mar 2026</span>
+            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">v4.8.16 — 2 Apr – 16 Apr 2026</span>
           </div>
         </div>
       </div>
@@ -596,7 +1438,7 @@
     </button>
 
     <!-- ===== PROGRESS BAR ===== -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 border border-white/10 px-5 py-3">
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-4 border px-5 py-3" style="background:var(--void-mid);border-color:var(--border-mid);box-shadow:0 4px 20px rgba(8,12,20,0.5)">
       <div class="flex gap-2" id="progress-dots"></div>
       <div class="w-px h-3 bg-white/10"></div>
       <div class="font-mono text-[10px] text-white/30 tracking-wider"><span id="slide-num">1</span>/<span id="slide-total">8</span></div>
@@ -607,7 +1449,7 @@
     <!-- ===== MODAL ===== -->
     <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
       <div class="absolute inset-0 modal-bg" id="modal-overlay"></div>
-      <div class="relative bg-black border border-white/15 max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto" id="modal-content">
+      <div class="relative max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto" id="modal-content" style="background:var(--void-mid);border:1px solid var(--border-mid);box-shadow:0 8px 40px rgba(8,12,20,0.8),0 0 60px var(--cyan-faint);border-radius:4px">
         <button id="modal-close" class="absolute top-3 right-3 z-10 text-white/40 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center bg-black/80 backdrop-blur border border-white/10 hover:border-red-500" aria-label="Close">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
@@ -641,48 +1483,55 @@
     ];
 
     const CURSOR_TO_PR = [
-      { title: "Mobile Banner Pop-Up", description: "Full-screen promotional banner with gradient background showcasing the ChatDaddy mobile app download — features an iPhone mockup with the app icon, Google Play and App Store buttons, and a dismissible overlay triggered on the Getting Started dashboard.", icon: "smartphone", media: { type: "image", src: "cursor-pr-images/mobile-banner.png" } },
-      { title: "Message Flow Survey", description: "In-flow feedback collection widget embedded in the message flow builder — adds an emoji-based satisfaction survey (5-point scale from sad to happy) with a free-text input field and submit button, rendered as a pop-up card inside the visual flow canvas.", icon: "message-square", media: { type: "image", src: "cursor-pr-images/message-flow-survey.png" } },
-      { title: "AI Feature Setting Control", description: "Granular AI feature permission toggles added to the team member access management panel — admins can enable or disable AI Translate and AI Transcript per teammate with individual checkboxes under a new 'AI Features' category in Settings > Members.", icon: "shield-check", media: { type: "image", src: "cursor-pr-images/ai-feature-control.jpeg" } },
-      { title: "WhatsApp Signup Step", description: "Updated the signup phone number step to reference WhatsApp instead of generic phone — shows the ChatDaddy logo, a 1/10 progress bar, country flag selector with +62 prefix, and clarifies that a 6-digit verification code will be sent via WhatsApp to confirm the number.", icon: "phone", media: { type: "image", src: "cursor-pr-images/whatsapp-signup.jpeg" } },
-      { title: "Dashboard Export", description: "New scheduled export modal for analytics dashboards — allows users to configure recurring PDF or CSV exports with frequency (weekly/monthly), delivery time, and email recipients, automatically emailing the Chats Performance dashboard every Monday at 09:00 AM.", icon: "download", media: { type: "image", src: "cursor-pr-images/schedule-export.png" } },
-      { title: "Renewal Reminder Pop-Up", description: "Account expiry reminder modal notifying teams of upcoming subscription expiration — displays team ID, expiry date, pricing update notice about the new credit-based system, and an auto-charge warning with Remind Me Later and Renew Now action buttons.", icon: "bell-ring", media: { type: "image", src: "cursor-pr-images/renewal-reminder.jpeg" } }
+      {
+        title: "Billing V3 — New Clients",
+        description: "For new or unpaid users (free tier / evaluating) required to unlock the full product. Shows all plans (Mini → Enterprise) with features per plan, monthly vs annual toggle (30% saving), and full usage + credits overview. Full pricing transparency — exact 'due today' shown at checkout. Flow: Overview (usage + current status) → Choose plan (see exact price) → Checkout (add-ons + coupon + Stripe payment). Flexible: add channels or teammates anytime, upgrade or downgrade anytime. Key reassurances: no hidden pricing, Stripe handles billing + receipts, usage visible at all times, Enterprise → sales contact flow.",
+        icon: "credit-card",
+        media: { type: "video", src: "cursor-pr-images/abdul/Billing%20V3%20%28New%20Clients%20%3A%20No%20Subscription%29.mp4" }
+      },
+      {
+        title: "Migration — Legacy Clients",
+        description: "For old credit-based clients only (existing paying users) whose billing model is being phased out. Everything stays the same except billing structure — credits fully transfer (nothing lost), all channels stay connected (no downtime), team & permissions unchanged. Switches to flat monthly pricing for predictable billing. Optional add-ons if needed. Share link: /billing-migrate — takes ~2 minutes. Flow: See current credits, channels & team → Pick recommended plan → View exact cost → Confirm + pay via Stripe. Key reassurances: no forced migration, can skip anytime, can change plan later.",
+        icon: "arrow-right-left",
+        media: { type: "video", src: "cursor-pr-images/abdul/Migration%20(Legacy%20Clients%20%E2%86%92%20New%20Plans).mp4" }
+      },
+      {
+        title: "CRM Bulk Action Bar",
+        description: "PR #3814 (Apr 13, open) — Bulk ticket operations on the CRM board: select multiple tickets, then move or delete in one action. BulkActionBar component with SelectionContext in BoardView, TicketCard selection state + collapsible details, sorting options in CRMHeader.",
+        icon: "check-square",
+        media: { type: "video", src: "cursor-pr-images/CRM%20Bulk%20Action%20Bar.mp4" }
+      }
     ];
 
     const MOBILE_HIGHLIGHTS = [
-      "Fresh, modern interface across every screen — clean white design",
-      "Bottom navigation bar (Chats + Settings) for quick access",
-      "Live channel status — see if WhatsApp is connected at a glance",
-      "New chat shortcut — tap + to message any number instantly",
-      "Real-time unread badge that's always accurate",
-      "Dedicated Settings with profile, team switching, incognito mode",
-      "Deleted message support with chat & preview updates",
-      "New attachment menu: Gallery, Camera, Video, Document, Location, Contact",
-      "Contact sharing with card view (Call & Message actions)",
-      "Location messages open directly in Maps",
-      "Emoji reactions, delete & copy actions in chat",
-      "Support for 15+ file formats with improved handling",
-      "Available on TestFlight for iOS and Android"
+      "Prevented 418 image spam — aggressive dedup + upload guard",
+      "Fixed notification cold-start navigation",
+      "Built ChatRepository caching layer for faster load times",
+      "Implemented WebSocket event patching system for real-time sync",
+      "Rebuilt message composer — WhatsApp-style with emoji picker, voice recording, redesigned attachments",
+      "Added multi-image selection support",
+      "Enabled PDF sending",
+      "Added iOS keyboard swipe-to-dismiss",
+      "Fixed iOS push notifications (APNs, provisioning, bundle ID mismatch, foreground handling, token retry)",
+      "Fixed iOS OGG audio playback using just_audio_media_kit and flutter_sound",
+      "Fixed Android AD_ID permission for Play Store compliance",
+      "Implemented notification tap-to-chat for foreground, background, and killed states"
     ];
 
     const MOBILE_SCREENS = [
-      { label: "Chat List", src: "cursor-pr-images/mobile/chat-list.png", desc: "Fresh modern interface with All/Unread/Groups filters, live connection status, and real-time unread badge" },
-      { label: "Settings", src: "cursor-pr-images/mobile/settings.png", desc: "Dedicated Settings page with profile info, incognito mode toggle, team switching, and help" },
-      { label: "Switch Team", src: "cursor-pr-images/mobile/switch-team.png", desc: "Quick team switching — search and switch between all your teams without logging out" },
-      { label: "New Chat", src: "cursor-pr-images/mobile/new-chat.png", desc: "Tap + to start a new chat instantly — enter any phone number with country code and go" },
-      { label: "Channels", src: "cursor-pr-images/mobile/channel-status.png", desc: "Live channel status — see WhatsApp connection, test numbers, and all channels at a glance" },
-      { label: "Chat View", src: "cursor-pr-images/mobile/chat-view.png", desc: "WhatsApp-style chat interface with schedule message, notes, chatbot responses" },
-      { label: "Contact", src: "cursor-pr-images/mobile/contact-info.png", desc: "Full contact info page with tags, assignees, conversation stats" },
-      { label: "Sharing", src: "cursor-pr-images/mobile/contact-share.png", desc: "Contact sharing with card view — Call & Message action buttons for shared contacts" },
-      { label: "Reactions", src: "cursor-pr-images/mobile/emoji-reactions.jpeg", desc: "Emoji reactions on messages — long press to react with heart, laugh, surprise, and more. Delete & copy actions" },
-      { label: "Flow Chat", src: "cursor-pr-images/mobile/chat-flow.jpeg", desc: "WhatsApp flow messages with automated chatbot responses, schedule message, and notes toggle" },
+      { label: "New Composer", type: "image", src: "cursor-pr-images/mobile/new/IMG_7484.PNG", desc: "WhatsApp-style message composer with emoji picker, voice recording, redesigned attachments, multi-image selection, and PDF sending." },
+      { label: "Feature Demo", type: "video", src: "cursor-pr-images/mobile/new/ScreenRecording_04-15-2026%2012-26-59_1.MP4", desc: "Live demo of the rebuilt composer and new mobile features — emoji picker, voice recording, attachments, iOS keyboard dismiss, and notification tap-to-chat." },
     ];
 
     function openMobileDetail(idx) {
       const s = MOBILE_SCREENS[idx];
       const modal = document.getElementById('modal');
       const media = document.getElementById('modal-media');
-      media.innerHTML = `<img src="${s.src}" alt="${s.label}" class="w-full max-h-[70vh] object-contain rounded">`;
+      if (s.type === 'video') {
+        media.innerHTML = `<video src="${s.src}" class="w-full max-h-[70vh]" autoplay loop muted playsinline controls></video>`;
+      } else {
+        media.innerHTML = `<img src="${s.src}" alt="${s.label}" class="w-full max-h-[70vh] object-contain rounded">`;
+      }
       document.getElementById('modal-icon').innerHTML = `<i data-lucide="smartphone" class="w-4 h-4 text-red-500"></i>`;
       document.getElementById('modal-title').textContent = s.label;
       document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${s.desc}</p>`;
@@ -693,8 +1542,6 @@
     const PIPELINE_STAGES = [
       { name: "DEV", label: "Write Code", desc: "Amplify build or localhost — any branch", size: "sm", color: "text-white/40" },
       { name: "BETA", label: "Master / Beta", desc: "Merged PRs land here first for early testing", size: "md", color: "text-white/50" },
-      { name: "RC", label: "Release Candidate", desc: "Freeze stage — only bug fixes, no new features", size: "lg", color: "text-white/70" },
-      { name: "STAGING", label: "Staging", desc: "The airplane hanger — plane sits here until ready for takeoff", size: "lg", color: "text-white/80" },
       { name: "PROD", label: "Production", desc: "Live — whitelabel clients notified of new release", size: "lg", color: "text-red-500" }
     ];
 
@@ -702,20 +1549,16 @@
       { step: "Claude fetches GitHub PRs", detail: "AI agent pulls PR URLs from the last 2 weeks, linking each to its release", icon: "git-pull-request" },
       { step: "Developer writes code", detail: "Feature branches auto-deploy to Amplify preview or localhost for testing", icon: "code" },
       { step: "PR merged → Beta", detail: "After code review, PR merges into master/beta branch for early testing", icon: "git-merge" },
-      { step: "Approved → Release Candidate", detail: "RC is a freeze stage — no new features, only bug fixes allowed", icon: "shield-check" },
-      { step: "Every 6 hours → Staging", detail: "RC auto-merges into staging. This is the airplane hanger — the plane sits until ready", icon: "clock" },
-      { step: "Every morning 5am UTC → Production", detail: "Staging deploys to prod. Whitelabel clients are notified of the new release", icon: "rocket" },
+      { step: "Every morning 5am UTC → Production", detail: "Beta deploys to prod. Whitelabel clients are notified of the new release", icon: "rocket" },
     ];
 
     const PIPELINE_SCHEDULE = [
-      { label: "RC → Staging", freq: "Every 6 hours", detail: "Full testing window per merge cycle" },
-      { label: "Staging → Prod", freq: "Daily 5:00 AM UTC", detail: "Whitelabel clients notified of new release" },
-      { label: "Testing windows", freq: "3 environments", detail: "Dev → RC → Staging — 3 layers to catch bugs before prod" },
+      { label: "Beta → Prod", freq: "Daily 5:00 AM UTC", detail: "Whitelabel clients notified of new release" },
+      { label: "Testing windows", freq: "2 environments", detail: "Dev → Beta — 2 layers to catch bugs before prod" },
     ];
 
     const PIPELINE_TESTING = [
-      { env: "RC", window: "~6 hours", what: "Feature-level QA, regression checks" },
-      { env: "STAGING", window: "Overnight", what: "Full integration testing, branding checks" },
+      { env: "BETA", window: "Variable", what: "Feature-level QA, regression checks" },
       { env: "PROD", window: "Continuous", what: "Monitoring, error tracking via Sentry" },
     ];
 
@@ -725,9 +1568,9 @@
       { id: 2, label: "Cursor → PR", hideable: false },
       { id: 3, label: "Tickets", hideable: false },
       { id: 4, label: "Mobile", hideable: false },
-      { id: 5, label: "AI Workflows", hideable: false },
       { id: 6, label: "Pipeline", hideable: false },
-      { id: 7, label: "Closing", hideable: false },
+      { id: 7, label: "V2 Rebuild", hideable: false },
+      { id: 8, label: "Closing", hideable: false },
     ];
 
     function getActiveSlides() { return ALL_SLIDES.filter(s => !s.hidden); }
@@ -794,11 +1637,11 @@
         const borderColor = stage.name === 'PROD' ? 'border-red-500' : 'border-white/20';
         const bgHover = stage.name === 'PROD' ? 'bg-red-500/5' : 'bg-white/[0.02]';
         box.innerHTML = `
-          <div class="pipeline-box ${sizeClass} ${borderColor} border-2 rounded-xl flex flex-col items-center justify-center p-2 hover:${bgHover} transition-all cursor-default group" title="${stage.desc}">
+          <div class="pipeline-box ${sizeClass} flex flex-col items-center justify-center p-2 transition-all cursor-default group" title="${stage.desc}">
             <span class="font-mono text-[9px] font-bold tracking-[0.15em] ${stage.color} mb-1">${stage.name}</span>
             <span class="text-white/50 text-[10px] text-center leading-tight">${stage.label}</span>
           </div>
-          ${i < PIPELINE_STAGES.length - 1 ? '<div class="flex items-center mx-1.5"><svg width="24" height="16" viewBox="0 0 24 16"><path d="M0 8h18M14 3l6 5-6 5" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' : ''}
+          ${i < PIPELINE_STAGES.length - 1 ? '<div class="flex items-center mx-1.5"><svg width="24" height="16" viewBox="0 0 24 16"><path d="M0 8h18M14 3l6 5-6 5" fill="none" stroke="rgba(28,18,8,0.25)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>' : ''}
         `;
         visual.appendChild(box);
       });
@@ -873,6 +1716,32 @@
       document.getElementById('slide-label').textContent = active[activeIdx]?.label || '';
     }
 
+    // ── Sidebar nav ──
+    function buildSidebarNav() {
+      const nav = document.getElementById('sidebar-nav');
+      if (!nav) return;
+      nav.innerHTML = '';
+      const active = getActiveSlides();
+      active.forEach((s) => {
+        const btn = document.createElement('button');
+        btn.className = 'sidebar-nav-item' + (s.id === currentSlide ? ' active' : '');
+        btn.dataset.slideId = s.id;
+        btn.innerHTML = `<span class="sidebar-nav-num">${String(s.id + 1).padStart(2,'0')}</span><span class="sidebar-nav-label">${s.label}</span>`;
+        btn.addEventListener('click', () => goToSlide(s.id));
+        nav.appendChild(btn);
+      });
+    }
+
+    function updateSidebarNav() {
+      document.querySelectorAll('#sidebar-nav .sidebar-nav-item').forEach(btn => {
+        const id = parseInt(btn.dataset.slideId);
+        btn.classList.toggle('active', id === currentSlide);
+      });
+      // scroll active item into view
+      const activeBtn = document.querySelector('#sidebar-nav .sidebar-nav-item.active');
+      if (activeBtn) activeBtn.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
     // ── Slide navigation ──
     function nextActiveSlide(forward) {
       const active = getActiveSlides();
@@ -914,6 +1783,7 @@
       currentSlide = slideId;
       updateNav();
       updateDots();
+      updateSidebarNav();
 
       setTimeout(() => {
         oldSlide.classList.remove('exiting', 'exit-left', 'exit-right');
@@ -1056,13 +1926,13 @@
 
     // ── Ticket highlights data ──
     const TICKET_HIGHLIGHTS = [
-      { title: "Broadcast Duplicate Tags Fix", icon: "alert-triangle", severity: "P0", desc: "Fixed duplicate tags bug in broadcast — users were getting wrong recipients when importing contacts, causing misfired campaigns. This was a data integrity issue affecting campaign targeting accuracy.", value: "Prevents misfired campaigns reaching wrong audience segments" },
-      { title: "Submit Template Approval UI", icon: "file-check", severity: "NEW", desc: "Built Submit Template Approval UI for multiple WABA accounts — users can now resubmit templates across all their WhatsApp Business accounts in one flow instead of one-by-one.", value: "Bulk template management saves hours for multi-account users" },
-      { title: "Inbox Navigation Fixes", icon: "inbox", severity: "BUG", desc: "Fixed inbox navigation bugs — list view hiding when opening a chat, placeholder messages not handled properly. Users were losing context when switching between conversations.", value: "Smoother inbox experience — no more disappearing chat lists" },
-      { title: "P0 Critical Bug Fixes", icon: "shield-alert", severity: "P0", desc: "Fixed critical bugs: deleteSelectedProducts deleting ALL products (data loss risk), promiseTimeout never rejecting (attachments hanging forever), signUp API call was commented out (new accounts not being created), getAllProducts infinite loop.", value: "Prevented data loss, fixed broken signups, eliminated infinite loops" },
-      { title: "Billing Page Stability", icon: "credit-card", severity: "BUG", desc: "Fixed billing page issues: crashes for whitelabel tenants, hardcoded phone numbers, broken internal navigation, missing i18n translations, division-by-zero in broadcast progress.", value: "Billing page now works reliably across all tenant configurations" },
-      { title: "New Features Shipped", icon: "sparkles", severity: "NEW", desc: "Added Company Analytics page, App Store search, message edit for WhatsApp (15min window), Co-Existence chip on WABA channels. These are net-new capabilities expanding the product surface.", value: "New analytics, app discovery, and WhatsApp message editing capabilities" },
-      { title: "30+ Lark-Linked Bug Fixes", icon: "bug", severity: "BUG", desc: "30+ Lark-ticket-linked bug fixes including null guards, stale closures, debug console.log cleanup, mobile viewport fixes, and accessibility improvements. Each fix traced to a specific user report.", value: "Systematic backlog reduction with full traceability to user reports" },
+      { title: "Inbox CLS Fixed — Overlay Sidebar", icon: "layout", severity: "PERF", desc: "Eliminated cumulative layout shift (CLS 0.485) in the inbox. Sidebar now overlays instead of pushing the layout — no more content jumping when opening a chat, profile, or filter panel.", value: "Inbox CLS score dropped from 0.485 to near-zero — smoother experience for agents" },
+      { title: "Mobile App Popup Launch", icon: "smartphone", severity: "NEW", desc: "Download mobile popup now live for all users — promotional banner with QR code linking to iOS App Store and Android Play Store. Supports whitelabel suppression. Triggered on Getting Started dashboard.", value: "Drives mobile app installs across all active teams" },
+      { title: "Plan Tracking + Pricing Editor", icon: "credit-card", severity: "NEW", desc: "New Plan Tracking feature in the Admin Pricing Editor — admins can now track which teams are on which plans in real time. Includes a full pricing migrator tool for bulk plan transitions.", value: "Removes manual overhead from pricing migrations and plan audits" },
+      { title: "Analytics Aggregate Selector Restored", icon: "bar-chart-3", severity: "BUG", desc: "Restored the daily/weekly/monthly aggregate selector in analytics charts. Also added auto-reset — if a user picks a custom period, aggregate snaps back to daily automatically to prevent invalid combos.", value: "Analytics charts now always show valid data — no more blank or broken graphs" },
+      { title: "Filter Race Condition Eliminated", icon: "list-filter", severity: "BUG", desc: "Eliminated stale filter closures in FilterPanel causing incorrect results. Replaced debounced setFilters with replaceFilters for direct filter clicks — filter state is now always consistent with what the user selected.", value: "Inbox and CRM filters now always apply correctly without race conditions" },
+      { title: "25+ Lark-Linked Bug Fixes", icon: "bug", severity: "BUG", desc: "25+ Lark-ticket-linked fixes: delete modal hardcoded title, misleading spam error in flows, campaign date/title fields, chatbot description field, settings redirect, link tooltip, division-by-zero, debug console.log cleanup, accessibility improvements, percent cap on delta display.", value: "Systematic bug reduction — every fix traced to a specific user report in Lark" },
+      { title: "V2 Rebuild: 235 Commits in 2 Weeks", icon: "code", severity: "NEW", desc: "Frontend V2 (Zustand + TanStack) surged with: full FlowBuilder (dagre auto-layout, template gallery, WhatsApp preview), Status Page module (Lark/Slack alerts, SLA, uptime DB), complete Error Infrastructure (30 error types across 15 modules), 4-locale i18n system, Calls module, and Help widget.", value: "V2 rebuild is accelerating — major feature parity with V1 reached across 9 modules" },
     ];
 
     function buildTicketHighlights() {
@@ -1110,53 +1980,45 @@
 
     // ── Recent merged PRs from GitHub ──
     const RECENT_PRS = [
-      { num: 3614, title: "Feat: unsupported message UI RC sync", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3614" },
-      { num: 3613, title: "fix: handle placeholderMessage not supported UI in inbox", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3613" },
-      { num: 3611, title: "fix: don't prepend dashboard. prefix when locale key doesn't resolve", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3611" },
-      { num: 3609, title: "fix: resolve infinite request loops across routes", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3609" },
-      { num: 3608, title: "Fix/inbox oops filter crash rc", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3608" },
-      { num: 3606, title: "fix: prevent duplicate tags when importing contacts to broadcast", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3606" },
-      { num: 3594, title: "Fix/inbox oops filter crash", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3594" },
-      { num: 3589, title: "fix: prevent OOM in Amplify build by removing localeInjectPlugin", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3589" },
-      { num: 3586, title: "fix: selectedCount operator precedence shows wrong count", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3586" },
-      { num: 3580, title: "[P0] fix: promiseTimeout never rejects — attachments hang forever", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3580" },
-      { num: 3578, title: "fix: guard setTimeout with mounted ref in Broadcast", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3578" },
-      { num: 3575, title: "fix: add saveCampaign to useEffect deps to prevent stale closure", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3575" },
-      { num: 3573, title: "fix: add success notification after duplicating a flow", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3573" },
-      { num: 3569, title: "fix: add missing alt text to plan icon images", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3569" },
-      { num: 3568, title: "fix: use stable key in BillingTab sections list", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3568" },
-      { num: 3567, title: "fix: replace window.location.href with navigate()", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3567" },
-      { num: 3566, title: "fix: use APP.supportPhoneNumber in billing links", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3566" },
-      { num: 3565, title: "fix: replace hardcoded Quarterly with i18n translation", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3565" },
-      { num: 3562, title: "fix: remove duplicate window.open on Contact Support", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3562" },
-      { num: 3561, title: "fix: change invalid security prop to rel on billing", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3561" },
-      { num: 3560, title: "fix: remove debug console.log and sensitive phone data", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3560" },
-      { num: 3523, title: "fix: Invalid-number state kept after valid number", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3523" },
-      { num: 3501, title: "fix: oops resolution", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3501" },
-      { num: 3495, title: "Fix: flow performance table padding alignment", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3495" },
-      { num: 3488, title: "fix: oops resolution", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3488" },
-      { num: 3484, title: "Localization revamp", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3484" },
-      { num: 3483, title: "Message Flows Analytics > Flow Performance Tables", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3483" },
-      { num: 3482, title: "Inbox > Inline Unpin (X) Button on Pinned Filter", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3482" },
-      { num: 3481, title: "Inbox > Create Pin Filter Dialog Name Input", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3481" },
-      { num: 3480, title: "Keyword Reply > No Form Data Persistence Warning", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3480" },
-      { num: 3478, title: "Redirect us to message flow that assigned chat to user", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3478" },
-      { num: 3477, title: "AppStore > Empty Notification Nickname Accepted", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3477" },
-      { num: 3476, title: "CRM > No Edit or Delete Option for Custom Fields", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3476" },
-      { num: 3475, title: "Inbox > Note Timestamp Duplicated in Chat View", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3475" },
-      { num: 3467, title: "Message Flow > Goal Option Cards Not Tab-Navigable", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3467" },
-      { num: 3460, title: "Inbox > Raw interactiveMessage not supported string", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3460" },
-      { num: 3459, title: "Inbox > Raw WhatsApp System String BIZ_PRIVACY_MODE", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3459" },
-      { num: 3458, title: "Broadcast > Typo: Added Betweeen Has Three E's", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3458" },
-      { num: 3449, title: "Channels > WhatsApp Shows Re-connect When Connected", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3449" },
-      { num: 3447, title: "AppStore > No Character Limit on Notification Nickname", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3447" },
-      { num: 3443, title: "Keyword Reply > No Maximum Length Validation", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3443" },
-      { num: 3439, title: "Feat/waba template approval multi account", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3439" },
-      { num: 3427, title: "House cleaning mar26", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3427" },
-      { num: 3426, title: "fix: LARK-XU7vrTsopeIkQUcHQUdl merge", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3426" },
-      { num: 3425, title: "fix: whitelabel phone preview webp", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3425" },
-      { num: 3424, title: "Syncing master to RC : 19th March", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3424" },
-      { num: 3421, title: "Contacts > No Character Limit on Contact Notes", author: "okarin1511", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3421" },
+      { num: 3773, title: "fix delete modal showing hardcoded Title placeholder", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3773" },
+      { num: 3772, title: "fix: show actual error instead of hardcoded spam message in flow sending", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3772" },
+      { num: 3771, title: "feat: download popup QR — App Store + Play Store links", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3771" },
+      { num: 3760, title: "fix: enable download mobile popup", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3760" },
+      { num: 3759, title: "feat: add Plan Tracking feature and enhance Pricing Editor sections", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3759" },
+      { num: 3756, title: "fix: auto-reset aggregate to daily on custom period and clamp invalid selections", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3756" },
+      { num: 3755, title: "fix: restore daily/weekly/monthly aggregate selector for analytics charts", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3755" },
+      { num: 3751, title: "fix: eliminate all stale filter closures in FilterPanel", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3751" },
+      { num: 3747, title: "feat: pricing migrator tool", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3747" },
+      { num: 3743, title: "fix: guard cross-team events in executeUpdates to prevent 404 loop", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3743" },
+      { num: 3741, title: "fix: replace explicit any types with proper TypeScript types across codebase", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3741" },
+      { num: 3728, title: "fix: set min-height on inbox row snippet container to prevent typing CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3728" },
+      { num: 3727, title: "fix: use tabular-nums and min-width on CRM timer to reduce inbox CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3727" },
+      { num: 3725, title: "fix: use overlay positioning for ProfileView sidebar to eliminate inbox CLS", author: "amrit2611", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3725" },
+      { num: 3732, title: "chore(deps): bump lodash from 4.17.21 to 4.18.1", author: "dependabot", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3732" },
+      { num: 3693, title: "fix: add cleanup for Paperform script injection to prevent memory leak", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3693" },
+      { num: 3692, title: "perf: calls fetch gate — reduce redundant API calls", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3692" },
+      { num: 3670, title: "fix: link tooltip display on hover", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3670" },
+      { num: 3669, title: "fix: division-by-zero in broadcast progress metrics", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3669" },
+      { num: 3668, title: "fix: remove debug console.log statements", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3668" },
+      { num: 3667, title: "fix: accessibility improvements across components", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3667" },
+      { num: 3666, title: "fix: settings redirect navigating to wrong route", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3666" },
+      { num: 3664, title: "fix: chatbot description field not saving correctly", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3664" },
+      { num: 3663, title: "fix: campaign date picker not persisting selection", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3663" },
+      { num: 3662, title: "fix: campaign title field clearing on re-render", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3662" },
+      { num: 3661, title: "fix: cap DeltaDisplay percentage at ±999% to prevent implausible values", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3661" },
+      { num: 3660, title: "fix: published-by field not showing correct author", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3660" },
+      { num: 3659, title: "fix: tools redirect broken after nav refactor", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3659" },
+      { num: 3658, title: "fix: leave group separator showing incorrectly", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3658" },
+      { num: 3657, title: "fix: form date format inconsistency in contacts", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3657" },
+      { num: 3656, title: "fix: keyword reply not matching correct channel", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3656" },
+      { num: 3655, title: "fix: false unsaved changes warning on clean form", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3655" },
+      { num: 3654, title: "fix: template loading spinner not dismissing", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3654" },
+      { num: 3653, title: "fix: template rating not persisting after submit", author: "aseem", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3653" },
+      { num: 3624, title: "feat: refine download mobile pop-up design", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3624" },
+      { num: 3422, title: "feat: contacts special-character-only string validation", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3422" },
+      { num: 3702, title: "feat: pricing migrator (v2)", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3702" },
+      { num: 3742, title: "feat: enable download mobile popup for all users", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3742" },
+      { num: 3713, title: "fix: lint survey popup variants", author: "piyushmakad", url: "https://github.com/chatdaddy/frontend-dashboard/pull/3713" },
     ];
 
     function buildRecentPRs() {
@@ -1167,7 +2029,7 @@
         a.target = '_blank';
         a.rel = 'noopener';
         a.className = 'flex items-center gap-2 px-3 py-1.5 group hover:bg-white/[0.02] transition-colors';
-        const authorColor = pr.author === 'piyushmakad' ? 'text-blue-400/40' : pr.author === 'amrit2611' ? 'text-green-400/40' : pr.author === 'okarin1511' ? 'text-purple-400/40' : 'text-white/20';
+        const authorColor = pr.author === 'piyushmakad' ? 'text-blue-400/40' : pr.author === 'amrit2611' ? 'text-green-400/40' : pr.author === 'aseem' ? 'text-yellow-400/40' : pr.author === 'Ahay45' ? 'text-red-400/40' : 'text-white/20';
         a.innerHTML = `
           <span class="font-mono text-[9px] text-red-500/40 shrink-0">#${pr.num}</span>
           <span class="text-white/35 text-[11px] truncate flex-1 group-hover:text-white/60 transition-colors">${pr.title}</span>
@@ -1351,9 +2213,9 @@
     buildMobileHighlights();
     buildTicketHighlights();
     buildRecentPRs();
-    buildAIWorkflows();
     buildPipeline();
     buildDots();
+    buildSidebarNav();
     lucide.createIcons();
     updateNav();
     updateToggleUI();
