@@ -1601,31 +1601,49 @@
     <!-- ===== MODAL ===== -->
     <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
       <div class="absolute inset-0 modal-bg" id="modal-overlay"></div>
-      <div class="relative max-w-5xl w-full mx-4 max-h-[90vh] overflow-y-auto" id="modal-content" style="background:var(--void-mid);border:1px solid var(--border-mid);box-shadow:0 8px 40px rgba(8,12,20,0.8),0 0 60px var(--cyan-faint);border-radius:4px">
-        <button id="modal-close" class="absolute top-3 right-3 z-10 text-white/40 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center bg-black/80 backdrop-blur border border-white/10 hover:border-red-500" aria-label="Close">
+      <div class="relative w-full mx-4" id="modal-content" style="max-width:900px;background:var(--void-mid);border:1px solid var(--border-mid);box-shadow:0 8px 40px rgba(8,12,20,0.8),0 0 60px var(--cyan-faint);border-radius:6px;overflow:hidden">
+
+        <!-- Close -->
+        <button id="modal-close" class="absolute top-3 right-3 z-30 text-white/40 hover:text-red-500 transition-colors w-8 h-8 flex items-center justify-center bg-black/80 backdrop-blur border border-white/10 hover:border-red-500" aria-label="Close">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <!-- Carousel prev/next — only shown in carousel mode -->
-        <button id="modal-prev" class="hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/10 hover:border-white/30 text-white/50 hover:text-white transition-all" aria-label="Previous">
-          <i data-lucide="chevron-left" class="w-5 h-5"></i>
-        </button>
-        <button id="modal-next" class="hidden absolute right-12 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/10 hover:border-white/30 text-white/50 hover:text-white transition-all" aria-label="Next">
-          <i data-lucide="chevron-right" class="w-5 h-5"></i>
-        </button>
-        <!-- Large media area -->
-        <div class="relative w-full overflow-hidden bg-white/[0.02]" id="modal-media"></div>
-        <!-- Compact info bar below -->
-        <div class="p-5 md:p-6 border-t border-white/10">
-          <div class="flex items-start gap-4">
-            <div class="w-9 h-9 border border-white/15 flex items-center justify-center shrink-0" id="modal-icon"></div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-3 mb-1">
-                <h3 class="font-serif text-xl md:text-2xl font-black text-white leading-tight" id="modal-title"></h3>
-                <span id="modal-counter" class="hidden font-mono text-[10px] text-white/25 tracking-[0.15em] shrink-0"></span>
+
+        <!-- Side-by-side layout -->
+        <div class="flex" style="min-height:420px">
+
+          <!-- Left: fixed image -->
+          <div class="relative shrink-0 flex items-center justify-center bg-black/40" style="width:420px;min-height:420px">
+            <div id="modal-media" class="w-full h-full flex items-center justify-center" style="max-height:560px;overflow:hidden"></div>
+
+            <!-- Prev arrow — sits on left edge of image -->
+            <button id="modal-prev" class="hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/15 hover:border-white/40 text-white/50 hover:text-white transition-all rounded-sm" aria-label="Previous">
+              <i data-lucide="chevron-left" class="w-5 h-5"></i>
+            </button>
+            <!-- Next arrow — sits on right edge of image -->
+            <button id="modal-next" class="hidden absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 flex items-center justify-center bg-black/70 backdrop-blur border border-white/15 hover:border-white/40 text-white/50 hover:text-white transition-all rounded-sm" aria-label="Next">
+              <i data-lucide="chevron-right" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Right: info panel -->
+          <div class="flex-1 flex flex-col justify-between p-7 border-l border-white/[0.07]" style="min-width:0">
+            <div>
+              <!-- Counter badge -->
+              <span id="modal-counter" class="hidden inline-block font-mono text-[9px] tracking-[0.2em] uppercase text-white/25 border border-white/10 px-2 py-0.5 mb-4">1 / 11</span>
+
+              <!-- Icon + title -->
+              <div class="flex items-start gap-3 mb-4">
+                <div class="w-9 h-9 border border-white/15 flex items-center justify-center shrink-0 mt-0.5" id="modal-icon"></div>
+                <h3 class="font-serif text-xl font-black text-white leading-tight" id="modal-title"></h3>
               </div>
-              <p class="text-white/40 leading-relaxed text-sm" id="modal-desc"></p>
-              <!-- Dot indicators for carousel -->
-              <div id="modal-dots" class="hidden flex gap-1.5 mt-3 flex-wrap"></div>
+
+              <p class="text-white/50 text-sm leading-relaxed" id="modal-desc"></p>
+            </div>
+
+            <!-- Dot indicators + nav hint -->
+            <div class="mt-6">
+              <div id="modal-dots" class="hidden flex gap-2 flex-wrap mb-3"></div>
+              <p id="modal-nav-hint" class="hidden font-mono text-[9px] text-white/20 tracking-[0.15em]">← → ARROW KEYS TO NAVIGATE</p>
             </div>
           </div>
         </div>
@@ -2140,6 +2158,7 @@
       next.classList.remove('hidden');
       counter.classList.remove('hidden');
       dots.classList.remove('hidden');
+      document.getElementById('modal-nav-hint').classList.remove('hidden');
 
       prev.onclick = () => carouselGo(_carouselIdx - 1);
       next.onclick = () => carouselGo(_carouselIdx + 1);
@@ -2155,16 +2174,16 @@
       const icon = document.getElementById('modal-icon');
 
       if (item.media?.type === 'video') {
-        media.innerHTML = `<video src="${item.media.src}" class="w-full" autoplay loop muted playsinline></video>`;
+        media.innerHTML = `<video src="${item.media.src}" style="width:100%;height:420px;object-fit:cover;" autoplay loop muted playsinline></video>`;
       } else if (item.media?.type === 'image') {
-        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" class="w-full">`;
+        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" style="width:100%;height:420px;object-fit:cover;display:block;">`;
       } else {
-        media.innerHTML = '';
+        media.innerHTML = `<div style="width:100%;height:420px;display:flex;align-items:center;justify-content:center;"><i data-lucide="${item.icon}" style="width:48px;height:48px;color:var(--cyan);opacity:0.3"></i></div>`;
       }
 
       icon.innerHTML = `<i data-lucide="${item.icon}" class="w-4 h-4 text-red-500"></i>`;
       document.getElementById('modal-title').textContent = item.title;
-      document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${item.description}</p>`;
+      document.getElementById('modal-desc').textContent = item.description;
       document.getElementById('modal-counter').textContent = `${_carouselIdx + 1} / ${total}`;
 
       // dots
@@ -2172,14 +2191,14 @@
       dotsEl.innerHTML = '';
       _carouselItems.forEach((_, i) => {
         const d = document.createElement('button');
-        d.style.cssText = `width:6px;height:6px;border-radius:50%;border:none;cursor:pointer;transition:all 0.18s;background:${i === _carouselIdx ? 'var(--cyan)' : 'rgba(255,255,255,0.15)'}`;
+        d.style.cssText = `width:${i === _carouselIdx ? '18px' : '6px'};height:6px;border-radius:3px;border:none;cursor:pointer;transition:all 0.2s;background:${i === _carouselIdx ? 'var(--cyan)' : 'rgba(255,255,255,0.15)'}`;
         d.onclick = () => carouselGo(i);
         dotsEl.appendChild(d);
       });
 
       // prev/next opacity
-      document.getElementById('modal-prev').style.opacity = _carouselIdx === 0 ? '0.3' : '1';
-      document.getElementById('modal-next').style.opacity = _carouselIdx === total - 1 ? '0.3' : '1';
+      document.getElementById('modal-prev').style.opacity = _carouselIdx === 0 ? '0.25' : '1';
+      document.getElementById('modal-next').style.opacity = _carouselIdx === total - 1 ? '0.25' : '1';
 
       lucide.createIcons();
     }
@@ -2197,22 +2216,23 @@
       document.getElementById('modal-next').classList.add('hidden');
       document.getElementById('modal-counter').classList.add('hidden');
       document.getElementById('modal-dots').classList.add('hidden');
+      document.getElementById('modal-nav-hint').classList.add('hidden');
 
       const modal = document.getElementById('modal');
       const media = document.getElementById('modal-media');
       const icon = document.getElementById('modal-icon');
 
       if (item.media?.type === 'video') {
-        media.innerHTML = `<video src="${item.media.src}" class="w-full" autoplay loop muted playsinline></video>`;
+        media.innerHTML = `<video src="${item.media.src}" style="width:100%;height:420px;object-fit:cover;" autoplay loop muted playsinline></video>`;
       } else if (item.media?.type === 'image') {
-        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" class="w-full">`;
+        media.innerHTML = `<img src="${item.media.src}" alt="${item.title}" style="width:100%;height:420px;object-fit:cover;display:block;">`;
       } else {
-        media.innerHTML = '';
+        media.innerHTML = `<div style="width:100%;height:420px;"></div>`;
       }
 
       icon.innerHTML = `<i data-lucide="${item.icon}" class="w-4 h-4 text-red-500"></i>`;
       document.getElementById('modal-title').textContent = item.title;
-      document.getElementById('modal-desc').innerHTML = `<p class="text-white/40 text-sm leading-relaxed">${item.description}</p>`;
+      document.getElementById('modal-desc').textContent = item.description;
 
       modal.classList.remove('hidden');
       lucide.createIcons();
@@ -2233,6 +2253,7 @@
         document.getElementById('modal-next').classList.add('hidden');
         document.getElementById('modal-counter').classList.add('hidden');
         document.getElementById('modal-dots').classList.add('hidden');
+        document.getElementById('modal-nav-hint').classList.add('hidden');
         const v = modal.querySelector('video');
         if (v) v.pause();
       }, 160);
