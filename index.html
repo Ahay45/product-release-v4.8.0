@@ -265,7 +265,29 @@
     .dot.active { background: var(--cyan); border-color: var(--cyan); width:20px; border-radius:3px; box-shadow: 0 0 8px var(--cyan-glow); }
 
     /* Modal */
-    .modal-bg { background: rgba(8,12,20,0.90); backdrop-filter: blur(8px); }
+    /* ── MODAL OVERLAY & ENTRANCE ── */
+    @keyframes modalFadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalSlideUp { from { opacity: 0; transform: translateY(16px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    .modal-bg {
+      background: rgba(4, 6, 10, 0.88);
+      backdrop-filter: blur(14px) saturate(0.7);
+      -webkit-backdrop-filter: blur(14px) saturate(0.7);
+      animation: modalFadeIn 0.22s ease forwards;
+    }
+
+    #modal:not(.hidden) #modal-content {
+      animation: modalSlideUp 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Deep vignette shadow around the panel */
+    #modal-content {
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.07),
+        0 24px 80px rgba(0,0,0,0.85),
+        0 8px 32px rgba(0,0,0,0.6),
+        0 0 120px rgba(0,0,0,0.5) !important;
+    }
 
     /* Scrollbar */
     ::-webkit-scrollbar { width: 3px; }
@@ -2206,9 +2228,18 @@
     }
 
     function closeModal() {
-      document.getElementById('modal').classList.add('hidden');
-      const v = document.querySelector('#modal-media video');
-      if (v) v.pause();
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('modal-overlay');
+      const content = document.getElementById('modal-content');
+      overlay.style.animation = 'modalFadeIn 0.18s ease reverse forwards';
+      content.style.animation = 'modalSlideUp 0.18s cubic-bezier(0.22,1,0.36,1) reverse forwards';
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        overlay.style.animation = '';
+        content.style.animation = '';
+        const v = modal.querySelector('video');
+        if (v) v.pause();
+      }, 160);
     }
 
     // ── Events ──
