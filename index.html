@@ -1079,11 +1079,7 @@
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">PRs Merged</div>
             </button>
-            <button onclick="goToSlide(4)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">12</div>
-              <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
-              <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Mobile</div>
-            </button>
+
             <button onclick="goToSlide(8)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
               <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">→</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
@@ -1295,8 +1291,8 @@
       </div>
     </div>
 
-    <!-- ===== SLIDE 4: MOBILE UPDATE ===== -->
-    <div class="slide noise" id="slide-4">
+    <!-- slide-4 removed -->
+    <div class="slide noise" id="slide-4" style="display:none!important">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
         <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
@@ -1835,7 +1831,6 @@
       { id: 1, label: "Features", hideable: true, hidden: true },
       { id: 2, label: "Sprint Recap", hideable: false },
       { id: 3, label: "Tickets", hideable: false },
-      { id: 4, label: "Mobile", hideable: false },
       { id: 8, label: "Closing", hideable: false },
     ];
 
