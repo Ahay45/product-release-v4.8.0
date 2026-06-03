@@ -1147,7 +1147,7 @@
             <div class="flex items-center gap-3 mb-4">
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Featured This Sprint — frontend-dashboard</p>
               <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">6 PRs</span>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">7 updates</span>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="sprint-features-grid"></div>
           </div>
@@ -2770,6 +2770,15 @@
     // ── Sprint Recap — Featured This Sprint (frontend-dashboard PRs, 3 June) ──
     const SPRINT_FEATURES = [
       {
+        title: "Channel Watchdog — IG / Messenger / WABA",
+        badge: "WATCHDOG",
+        icon: "radar",
+        cover: "cursor-pr-images/3june/watchdog-1.jpeg",
+        description: "A system that automatically watches every customer's connected channel — Instagram, Messenger, and WhatsApp Business — and flags accounts that are silently broken, so we can fix them or reach out before the customer complains. Fixes shipped this cycle: (1) Messenger logout no longer wipes the shared Instagram webhook when both come from the same Facebook Page; (2) the Watchdog now reads Meta's separate 'data-access validity' window on every sweep and flags channels that lapse even while the token still reports valid; (3) Instagram webhook auto-recovery now resolves the correct Meta endpoint and successfully restores dropped subscriptions; (4) a 14-day safety gate prevents auto-reviving accounts a customer intentionally disconnected; (5) a 30-minute send/receive heartbeat on our Instagram bug-testing channel detects message outages before other clients are affected. The Watchdog surfaces revoked app access, expired Meta data-access windows, unlinked WhatsApp Business accounts, deleted Facebook Pages, Meta-locked businesses, and silently broken webhook subscriptions (auto-fixed when safe).",
+        impact: "Turns silent channel failures — previously invisible until messages stopped and customers churned — into proactive alerts. Both previously-pending pieces are now DONE: customer email notifications wire the failure hook to Postmark to auto-send reconnection instructions, and the internal admin UI (Channel Health panel) lists every failing channel with filters by team, channel type, and failure reason. The Watchdog has already identified a meaningful number of accounts needing customer action.",
+        images: ["cursor-pr-images/3june/watchdog-1.jpeg", "cursor-pr-images/3june/watchdog-2.png", "cursor-pr-images/3june/watchdog-3.png"]
+      },
+      {
         title: "Insufficient Credits Warning",
         pr: 3863,
         icon: "alert-triangle",
@@ -2837,7 +2846,7 @@
           <div>
             <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--void-light);border-bottom:1px solid var(--border);">
               <img src="${f.cover}" alt="${f.title}" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.45s ease;" class="group-hover:scale-105">
-              <span class="font-mono" style="position:absolute;top:8px;left:8px;font-size:9px;letter-spacing:0.06em;color:#fff;background:rgba(42,32,24,0.8);padding:3px 7px;border-radius:6px;">#${f.pr}</span>
+              <span class="font-mono" style="position:absolute;top:8px;left:8px;font-size:9px;letter-spacing:0.06em;color:#fff;background:rgba(42,32,24,0.8);padding:3px 7px;border-radius:6px;">${f.pr ? '#' + f.pr : f.badge}</span>
               ${count > 1 ? `<span class="font-mono" style="position:absolute;top:8px;right:8px;font-size:9px;color:#fff;background:rgba(194,65,12,0.92);padding:3px 7px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="images" style="width:11px;height:11px"></i>${count}</span>` : ''}
             </div>
             <div style="padding:14px 16px;">
