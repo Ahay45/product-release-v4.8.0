@@ -8,60 +8,60 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=DM+Sans:ital,opsz,wght@0,9..40,200..900;1,9..40,200..700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            display: ['Bricolage Grotesque', 'sans-serif'],
-            sans: ['DM Sans', 'sans-serif'],
-            mono: ['IBM Plex Mono', 'monospace']
+            display: ['Fraunces', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Space Mono', 'monospace']
           },
           colors: {
-            accent: '#7b9cff',
-            violet: '#a78bfa'
+            accent: '#c2410c',
+            violet: '#2f6f5f'
           }
         }
       }
     }
   </script>
   <style>
-    /* ── Soft Obsidian theme variables ── */
+    /* ── Solar Paper theme variables — warm editorial light ── */
     :root {
-      --void:        #0b0d11;
-      --void-light:  #101318;
-      --void-mid:    #161b23;
-      --void-card:   #13181f;
-      --glass:       rgba(255,255,255,0.035);
-      --glass-hover: rgba(255,255,255,0.065);
-      --cyan:        #7b9cff;
-      --cyan-dim:    rgba(123,156,255,0.65);
-      --cyan-glow:   rgba(123,156,255,0.20);
-      --cyan-faint:  rgba(123,156,255,0.07);
-      --violet:      #a78bfa;
-      --violet-dim:  rgba(167,139,250,0.55);
-      --emerald:     #34d399;
-      --amber:       #fbbf24;
-      --text:        #eef0f6;
-      --text-70:     rgba(238,240,246,0.72);
-      --text-50:     rgba(238,240,246,0.52);
-      --text-30:     rgba(238,240,246,0.38);
-      --text-15:     rgba(238,240,246,0.22);
-      --text-08:     rgba(238,240,246,0.12);
-      --text-muted:  rgba(238,240,246,0.56);
-      --border:      rgba(255,255,255,0.06);
-      --border-mid:  rgba(255,255,255,0.09);
-      --border-hi:   rgba(255,255,255,0.16);
-      --card-radius: 10px;
-      --card-shadow: 0 2px 16px rgba(0,0,0,0.45), 0 1px 3px rgba(0,0,0,0.3);
-      --card-shadow-hover: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(123,156,255,0.22);
+      --void:        #f3ecdf;
+      --void-light:  #faf4e9;
+      --void-mid:    #fffdf8;
+      --void-card:   #fffdf8;
+      --glass:       rgba(45,32,18,0.025);
+      --glass-hover: rgba(45,32,18,0.05);
+      --cyan:        #c2410c;
+      --cyan-dim:    rgba(194,65,12,0.78);
+      --cyan-glow:   rgba(194,65,12,0.20);
+      --cyan-faint:  rgba(194,65,12,0.08);
+      --violet:      #2f6f5f;
+      --violet-dim:  rgba(47,111,95,0.70);
+      --emerald:     #2f855a;
+      --amber:       #b45309;
+      --text:        #2a2018;
+      --text-70:     rgba(42,32,24,0.76);
+      --text-50:     rgba(42,32,24,0.58);
+      --text-30:     rgba(42,32,24,0.44);
+      --text-15:     rgba(42,32,24,0.28);
+      --text-08:     rgba(42,32,24,0.16);
+      --text-muted:  rgba(42,32,24,0.62);
+      --border:      rgba(42,32,24,0.13);
+      --border-mid:  rgba(42,32,24,0.18);
+      --border-hi:   rgba(42,32,24,0.30);
+      --card-radius: 18px;
+      --card-shadow: 0 1px 2px rgba(90,60,30,0.05), 0 12px 32px rgba(90,60,30,0.08);
+      --card-shadow-hover: 0 18px 48px rgba(90,60,30,0.15), 0 0 0 1px rgba(194,65,12,0.24);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       background: var(--void);
       color: var(--text);
       overflow: hidden;
@@ -131,33 +131,33 @@
 
     /* ── Neon divider rules ── */
     .editorial-rule        { height: 1px; background: var(--border-mid); opacity: 1; }
-    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.15) 70%, transparent 100%); box-shadow: 0 0 8px var(--cyan-glow); }
+    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(194,65,12,0.15) 70%, transparent 100%); box-shadow: 0 0 8px var(--cyan-glow); }
     .editorial-rule-thin   { height: 1px; background: var(--border); }
 
     /* ═══════════════════════════════════════════
-       TYPE SYSTEM — Bricolage + DM Sans + IBM Plex
+       TYPE SYSTEM — Fraunces + Inter + Space Mono
     ═══════════════════════════════════════════ */
 
-    /* Display headings — Bricolage Grotesque, optical size large */
+    /* Display headings — Fraunces, optical size large */
     .font-serif {
-      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-family: 'Fraunces', sans-serif !important;
       font-optical-sizing: auto;
       letter-spacing: -0.028em;
       line-height: 0.93;
       font-weight: 800;
     }
 
-    /* Monospace labels — IBM Plex Mono */
+    /* Monospace labels — Space Mono */
     .font-mono {
-      font-family: 'IBM Plex Mono', monospace !important;
+      font-family: 'Space Mono', monospace !important;
       font-feature-settings: 'zero' 1;
       letter-spacing: 0.01em;
       font-size: 11px;
     }
 
-    /* Body prose — DM Sans, open tracking */
+    /* Body prose — Inter, open tracking */
     p, li {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       line-height: 1.72;
       font-size: 13.5px;
       color: var(--text-70);
@@ -218,13 +218,13 @@
     }
 
     /* Contrast floors for muted text */
-    .text-white\/30 { color: rgba(238,240,246,0.55) !important; }
-    .text-white\/40 { color: rgba(238,240,246,0.65) !important; }
-    .text-white\/50 { color: rgba(238,240,246,0.74) !important; }
-    .text-white\/60 { color: rgba(238,240,246,0.82) !important; }
-    .text-white\/20 { color: rgba(238,240,246,0.40) !important; }
-    .text-white\/25 { color: rgba(238,240,246,0.48) !important; }
-    .text-white\/15 { color: rgba(238,240,246,0.36) !important; }
+    .text-white\/30 { color: rgba(42,32,24,0.55) !important; }
+    .text-white\/40 { color: rgba(42,32,24,0.65) !important; }
+    .text-white\/50 { color: rgba(42,32,24,0.74) !important; }
+    .text-white\/60 { color: rgba(42,32,24,0.82) !important; }
+    .text-white\/20 { color: rgba(42,32,24,0.40) !important; }
+    .text-white\/25 { color: rgba(42,32,24,0.48) !important; }
+    .text-white\/15 { color: rgba(42,32,24,0.36) !important; }
 
     /* Mobile phone frame */
     .mobile-phone-frame {
@@ -241,7 +241,7 @@
       position: absolute; bottom: 0; left: 0; right: 0;
       padding: 4px 8px;
       background: linear-gradient(transparent, rgba(8,12,20,0.92));
-      font-family: 'IBM Plex Mono', monospace; font-size: 8px;
+      font-family: 'Space Mono', monospace; font-size: 8px;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--cyan-dim); text-align: center;
     }
@@ -298,37 +298,37 @@
     /* Dot-grid background on slides */
     .noise {
       background-image:
-        radial-gradient(ellipse 70% 45% at 30% 0%, rgba(123,156,255,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 35% at 80% 90%, rgba(167,139,250,0.05) 0%, transparent 60%),
-        radial-gradient(circle, rgba(255,255,255,0.028) 1px, transparent 1px),
-        linear-gradient(180deg, var(--void) 0%, #0d1016 100%);
-      background-size: 100% 100%, 100% 100%, 24px 24px, 100% 100%;
+        radial-gradient(ellipse 72% 48% at 28% 0%, rgba(194,65,12,0.07) 0%, transparent 62%),
+        radial-gradient(ellipse 52% 38% at 82% 92%, rgba(47,111,95,0.06) 0%, transparent 58%),
+        radial-gradient(circle, rgba(42,32,24,0.045) 1px, transparent 1px),
+        linear-gradient(180deg, #faf4e9 0%, #ede3d2 100%);
+      background-size: 100% 100%, 100% 100%, 22px 22px, 100% 100%;
     }
 
     /* ── Tailwind colour overrides (neon noir) ── */
     /* Backgrounds */
     .bg-black               { background-color: var(--void-mid) !important; }
-    .bg-black\/95           { background-color: rgba(13,20,32,0.97) !important; }
-    .bg-white\/\[0\.02\]    { background-color: rgba(255,255,255,0.02) !important; }
-    .bg-white\/\[0\.03\]    { background-color: rgba(255,255,255,0.03) !important; }
-    .bg-white\/\[0\.04\]    { background-color: rgba(255,255,255,0.04) !important; }
-    .bg-white\/10           { background-color: rgba(255,255,255,0.06) !important; }
-    .bg-white\/15           { background-color: rgba(255,255,255,0.08) !important; }
-    .bg-white\/20           { background-color: rgba(255,255,255,0.10) !important; }
+    .bg-black\/95           { background-color: rgba(255,253,248,0.97) !important; }
+    .bg-white\/\[0\.02\]    { background-color: rgba(42,32,24,0.03) !important; }
+    .bg-white\/\[0\.03\]    { background-color: rgba(42,32,24,0.045) !important; }
+    .bg-white\/\[0\.04\]    { background-color: rgba(42,32,24,0.055) !important; }
+    .bg-white\/10           { background-color: rgba(42,32,24,0.10) !important; }
+    .bg-white\/15           { background-color: rgba(42,32,24,0.12) !important; }
+    .bg-white\/20           { background-color: rgba(42,32,24,0.14) !important; }
 
     /* Hover backgrounds */
-    .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(0,229,255,0.04) !important; }
-    .hover\:bg-white\/\[0\.04\]:hover { background-color: rgba(0,229,255,0.07) !important; }
+    .hover\:bg-white\/\[0\.03\]:hover { background-color: rgba(194,65,12,0.04) !important; }
+    .hover\:bg-white\/\[0\.04\]:hover { background-color: rgba(194,65,12,0.07) !important; }
 
     /* Text */
     .text-white             { color: var(--text) !important; }
     .text-white\/15         { color: var(--text-15) !important; }
-    .text-white\/20         { color: rgba(232,237,245,0.22) !important; }
-    .text-white\/25         { color: rgba(232,237,245,0.28) !important; }
+    .text-white\/20         { color: rgba(42,32,24,0.22) !important; }
+    .text-white\/25         { color: rgba(42,32,24,0.28) !important; }
     .text-white\/30         { color: var(--text-30) !important; }
-    .text-white\/40         { color: rgba(232,237,245,0.42) !important; }
+    .text-white\/40         { color: rgba(42,32,24,0.42) !important; }
     .text-white\/50         { color: var(--text-50) !important; }
-    .text-white\/60         { color: rgba(232,237,245,0.62) !important; }
+    .text-white\/60         { color: rgba(42,32,24,0.62) !important; }
     .text-white\/70         { color: var(--text-70) !important; }
 
     /* Indigo/violet accent replaces red */
@@ -337,9 +337,9 @@
     .bg-red-500             { background-color: var(--cyan) !important; }
     .bg-red-500\/5          { background-color: var(--cyan-faint) !important; }
     .hover\:text-red-500:hover { color: var(--cyan) !important; }
-    .hover\:border-red-500:hover { border-color: rgba(123,156,255,0.4) !important; }
-    .border-red-500         { border-color: rgba(123,156,255,0.35) !important; }
-    .divide-red-500         { border-color: rgba(123,156,255,0.25) !important; }
+    .hover\:border-red-500:hover { border-color: rgba(194,65,12,0.4) !important; }
+    .border-red-500         { border-color: rgba(194,65,12,0.35) !important; }
+    .divide-red-500         { border-color: rgba(194,65,12,0.25) !important; }
 
     /* Borders */
     .border-white\/10       { border-color: var(--border) !important; }
@@ -356,15 +356,15 @@
     /* Status colours */
     .text-green-400\/60     { color: rgba(52,211,153,0.80) !important; }
     .text-yellow-400\/60    { color: rgba(251,191,36,0.80) !important; }
-    .text-blue-400\/60      { color: rgba(123,156,255,0.80) !important; }
+    .text-blue-400\/60      { color: rgba(194,65,12,0.80) !important; }
     .text-green-400         { color: rgb(52,211,153) !important; }
-    .bg-black\/80           { background-color: rgba(11,13,17,0.92) !important; }
-    .bg-white\/\[0\.08\]    { background-color: rgba(255,255,255,0.05) !important; }
+    .bg-black\/80           { background-color: rgba(255,253,248,0.9) !important; }
+    .bg-white\/\[0\.08\]    { background-color: rgba(42,32,24,0.06) !important; }
 
     /* Top accent stripe — indigo → violet gradient */
     .slide .absolute.top-0.left-0.right-0.h-1 {
       background: linear-gradient(90deg, var(--cyan), var(--violet) 60%, transparent 100%) !important;
-      box-shadow: 0 1px 10px rgba(123,156,255,0.25);
+      box-shadow: 0 1px 10px rgba(194,65,12,0.25);
     }
 
     /* Grid bg dots — more visible */
@@ -414,7 +414,7 @@
     .text-indigo-300\/70    { color: rgba(165,180,252,0.75) !important; }
     .border-indigo-500\/25  { border-color: rgba(99,102,241,0.25) !important; }
     .text-indigo-400        { color: rgb(129,140,248) !important; }
-    .border-cyan-500\/20    { border-color: rgba(0,229,255,0.2) !important; }
+    .border-cyan-500\/20    { border-color: rgba(194,65,12,0.2) !important; }
     .bg-indigo-400          { background-color: rgb(129,140,248) !important; }
 
     /* ═══════════════════════════════════════════════════════
@@ -441,7 +441,7 @@
       position: absolute;
       inset: 0;
       border-radius: var(--card-radius);
-      background: linear-gradient(135deg, rgba(123,156,255,0.14) 0%, rgba(167,139,250,0.07) 50%, transparent 100%);
+      background: linear-gradient(135deg, rgba(194,65,12,0.14) 0%, rgba(47,111,95,0.07) 50%, transparent 100%);
       opacity: 0;
       transition: opacity 0.22s ease;
       z-index: 0;
@@ -460,7 +460,7 @@
       z-index: 3;
     }
     .noir-card:hover {
-      border-color: rgba(123,156,255,0.28) !important;
+      border-color: rgba(194,65,12,0.28) !important;
       box-shadow: var(--card-shadow-hover) !important;
       transform: translateY(-2px);
       filter: none !important;
@@ -478,7 +478,7 @@
       position: relative;
       transition: background 0.2s ease;
     }
-    .grid.gap-px > div:hover { background: rgba(123,156,255,0.05) !important; }
+    .grid.gap-px > div:hover { background: rgba(194,65,12,0.05) !important; }
 
     /* ── BORDER PANELS — elevated surfaces ── */
     .border.border-white\/10,
@@ -530,7 +530,7 @@
 
     /* Stat number highlight — cool indigo fade */
     .grid.gap-px > div .font-serif {
-      background: linear-gradient(135deg, var(--text) 20%, rgba(167,139,250,0.85));
+      background: linear-gradient(135deg, var(--text) 20%, rgba(47,111,95,0.85));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -557,14 +557,14 @@
     /* Section label spacing */
     p.font-mono.uppercase { margin-bottom: 10px !important; }
 
-    /* Hero title — Bricolage at max optical size, gradient fill */
+    /* Hero title — Fraunces at max optical size, gradient fill */
     #slide-0 h1 {
-      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-family: 'Fraunces', sans-serif !important;
       font-optical-sizing: auto;
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 0.88;
-      background: linear-gradient(150deg, #ffffff 25%, rgba(123,156,255,0.88) 58%, rgba(167,139,250,0.72) 100%);
+      background: linear-gradient(150deg, #2a2018 16%, var(--cyan) 62%, var(--violet) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -572,7 +572,7 @@
 
     /* Inner slide headings */
     h2.font-serif {
-      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-family: 'Fraunces', sans-serif !important;
       font-optical-sizing: auto;
       font-weight: 800;
       letter-spacing: -0.030em;
@@ -602,7 +602,7 @@
     }
     #slide-8 h2.font-serif::before { display: none; }
     #slide-8 p.font-serif {
-      font-family: 'DM Sans', sans-serif !important;
+      font-family: 'Inter', sans-serif !important;
       font-style: italic;
       font-weight: 300;
       color: var(--text-70) !important;
@@ -611,7 +611,7 @@
       letter-spacing: -0.005em;
     }
 
-    /* Hero subtitle eyebrow — IBM Plex Mono */
+    /* Hero subtitle eyebrow — Space Mono */
     #slide-0 span.font-mono.uppercase {
       letter-spacing: 0.25em;
       color: var(--cyan-dim) !important;
@@ -622,7 +622,7 @@
 
     /* Hero grid tile numbers */
     #hero-sections .font-serif {
-      font-family: 'Bricolage Grotesque', sans-serif !important;
+      font-family: 'Fraunces', sans-serif !important;
       font-optical-sizing: auto;
       font-weight: 800;
       letter-spacing: -0.028em;
@@ -643,7 +643,7 @@
     /* ── DIVIDER LINES — neon strokes ── */
     .editorial-rule        { height: 1px; background: var(--border-mid) !important; opacity: 1; position: relative; }
     .editorial-rule::after { display: none; }
-    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(0,229,255,0.15) 70%, transparent 100%) !important; box-shadow: 0 0 8px var(--cyan-glow); position: relative; }
+    .editorial-rule-accent { height: 1px; background: linear-gradient(90deg, var(--cyan), rgba(194,65,12,0.15) 70%, transparent 100%) !important; box-shadow: 0 0 8px var(--cyan-glow); position: relative; }
     .editorial-rule-accent::after { display: none; }
     .editorial-rule-thin   { height: 1px; background: var(--border) !important; position: relative; }
     .editorial-rule-thin::after { display: none; }
@@ -677,8 +677,8 @@
       border-radius: 0;
     }
     #hero-sections button:hover {
-      background: rgba(123,156,255,0.06) !important;
-      box-shadow: inset 0 0 20px rgba(123,156,255,0.04);
+      background: rgba(194,65,12,0.06) !important;
+      box-shadow: inset 0 0 20px rgba(194,65,12,0.04);
       filter: none !important;
       transform: none !important;
     }
@@ -695,8 +695,8 @@
       transition: border-color 0.25s ease, box-shadow 0.25s ease;
     }
     .pipeline-box:hover {
-      border-color: rgba(123,156,255,0.35) !important;
-      box-shadow: 0 0 18px rgba(123,156,255,0.14);
+      border-color: rgba(194,65,12,0.35) !important;
+      box-shadow: 0 0 18px rgba(194,65,12,0.14);
       filter: none !important;
       transform: none !important;
     }
@@ -722,8 +722,8 @@
       transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     }
     .mobile-phone-frame:hover {
-      border-color: rgba(123,156,255,0.35) !important;
-      box-shadow: 0 4px 24px rgba(123,156,255,0.14), 0 0 0 1px rgba(123,156,255,0.18) !important;
+      border-color: rgba(194,65,12,0.35) !important;
+      box-shadow: 0 4px 24px rgba(194,65,12,0.14), 0 0 0 1px rgba(194,65,12,0.18) !important;
       transform: translateY(-4px) !important;
       filter: none !important;
     }
@@ -804,81 +804,86 @@
     ════════════════════════════════════════════ */
     #sidebar {
       position: fixed;
-      left: 0; top: 0; bottom: 0;
-      width: 210px;
+      left: 0; right: 0; top: 0;
+      height: 62px;
       z-index: 30;
-      background: var(--void-light);
-      border-right: 1px solid var(--border-mid);
+      background: rgba(250,244,233,0.82);
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      border-bottom: 1px solid var(--border-mid);
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
+      align-items: center;
       overflow: hidden;
     }
     #sidebar::after {
       content: '';
       position: absolute;
-      top: 20%; bottom: 20%; right: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, var(--cyan), transparent);
-      opacity: 0.25;
+      left: 0; right: 0; bottom: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--cyan), transparent);
+      opacity: 0.32;
     }
     #sidebar-brand {
-      padding: 22px 18px 18px;
+      padding: 0 24px;
+      height: 100%;
       display: flex;
       align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid var(--border);
+      gap: 12px;
+      border-right: 1px solid var(--border);
       flex-shrink: 0;
     }
     .sidebar-logo {
       width: 30px; height: 30px;
       background: linear-gradient(135deg, var(--cyan), var(--violet));
       color: #fff;
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       font-weight: 700;
       font-size: 11px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
       letter-spacing: -0.02em;
       border-radius: 7px;
-      box-shadow: 0 2px 10px rgba(123,156,255,0.3);
+      box-shadow: 0 2px 10px rgba(194,65,12,0.3);
     }
     .sidebar-brand-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
     .sidebar-brand-name {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       font-weight: 600; font-size: 12px;
       color: var(--text); letter-spacing: -0.02em;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .sidebar-brand-version {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Space Mono', monospace;
       font-size: 9px; color: var(--cyan-dim); letter-spacing: 0.06em;
     }
     #sidebar-nav {
-      flex: 1; padding: 12px 0;
-      display: flex; flex-direction: column; gap: 1px;
-      overflow-y: auto;
+      flex: 1; padding: 0 14px;
+      display: flex; flex-direction: row; align-items: center; gap: 2px;
+      overflow-x: auto; overflow-y: hidden; height: 100%;
     }
+    #sidebar-nav::-webkit-scrollbar { height: 0; }
     .sidebar-nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 9px 18px; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 15px; height: 100%; cursor: pointer;
       transition: background 0.18s ease, color 0.18s ease;
-      position: relative; border: none; background: transparent; width: 100%; text-align: left;
+      position: relative; border: none; background: transparent; white-space: nowrap; text-align: left;
     }
     .sidebar-nav-item:hover { background: var(--glass-hover); }
     .sidebar-nav-item.active { background: var(--cyan-faint); }
     .sidebar-nav-item.active::before {
       content: '';
-      position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
-      background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow);
+      position: absolute; left: 11px; right: 11px; bottom: 0; height: 2px;
+      background: var(--cyan); border-radius: 2px 2px 0 0;
     }
     .sidebar-nav-num {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Space Mono', monospace;
       font-size: 9px; color: var(--text-30);
       width: 14px; flex-shrink: 0; letter-spacing: 0.05em;
     }
     .sidebar-nav-item.active .sidebar-nav-num { color: var(--cyan-dim); }
     .sidebar-nav-label {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 13px; font-weight: 500;
       color: var(--text-50); letter-spacing: -0.01em;
     }
@@ -891,20 +896,20 @@
     }
     .sidebar-nav-item.active .sidebar-nav-dot { opacity: 1; }
     #sidebar-footer {
-      padding: 14px 18px; border-top: 1px solid var(--border);
-      display: flex; flex-direction: column; gap: 3px; flex-shrink: 0;
+      padding: 0 64px 0 22px; border-left: 1px solid var(--border);
+      display: flex; align-items: center; gap: 3px; flex-shrink: 0; height: 100%;
     }
     #sidebar-footer span {
-      font-family: 'IBM Plex Mono', monospace;
+      font-family: 'Space Mono', monospace;
       font-size: 9px; color: var(--text-30);
       letter-spacing: 0.08em; text-transform: uppercase;
     }
 
-    /* Offset slides to start after sidebar */
-    .slide { left: 210px !important; }
+    /* Offset slides to start below the top bar */
+    .slide { left: 0 !important; top: 62px !important; }
 
-    /* Arrow nav — offset right of sidebar */
-    #btn-prev { left: 226px !important; }
+    /* Arrow nav */
+    #btn-prev { left: 16px !important; }
     #btn-next { right: 16px !important; }
 
     /* ════════════════════════════════════════════
@@ -1020,6 +1025,12 @@
     /* Keyboard hint */
     #slide-0 span:has(+ span + span) { display: none; }
 
+    /* ── Sprint featured cards — full-bleed image thumbnails ── */
+    .sprint-feature-card { padding: 0 !important; }
+    .sprint-feature-card > div { padding: 0 !important; }
+    .sprint-feature-card h3 { margin-bottom: 0 !important; }
+    .sprint-feature-card img { display: block; }
+
   </style>
 </head>
 <body>
@@ -1032,15 +1043,11 @@
         <div class="sidebar-logo">CD</div>
         <div class="sidebar-brand-text">
           <span class="sidebar-brand-name">ChatDaddy</span>
-          <span class="sidebar-brand-version">May 2026</span>
         </div>
       </div>
       <nav id="sidebar-nav">
         <!-- populated by JS -->
       </nav>
-      <div id="sidebar-footer">
-        <span>May 2026</span>
-      </div>
     </div>
 
     <!-- ===== SLIDE 0: HERO ===== -->
@@ -1049,11 +1056,11 @@
         <!-- Accent stripe top -->
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
         <!-- Thin grid lines -->
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
 
         <div class="relative z-10 text-center px-8 max-w-5xl">
           <div class="reveal r1">
-            <span class="font-mono text-xs tracking-[0.3em] uppercase text-white/40">22 May 2026</span>
+            <span class="font-mono text-xs tracking-[0.3em] uppercase text-white/40">3 June 2026</span>
           </div>
 
           <div class="editorial-rule-accent w-16 mx-auto my-6 reveal r2 line-reveal lr1"></div>
@@ -1064,7 +1071,7 @@
 
           <div class="editorial-rule w-32 mx-auto my-5 reveal r3 line-reveal lr2"></div>
 
-          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Sprint Overview — May 2026</p>
+          <p class="font-mono text-sm tracking-[0.2em] uppercase text-white/50 mb-14 reveal r3">Sprint Overview</p>
 
           <!-- Section overview grid -->
           <div class="grid grid-cols-3 md:grid-cols-6 gap-px bg-white/[0.06] mb-8 reveal r4" id="hero-sections">
@@ -1104,7 +1111,7 @@
     <div class="slide noise" id="slide-1">
       <div class="relative flex items-center justify-center h-full w-full">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Features</h2>
@@ -1127,52 +1134,22 @@
     <div class="slide noise" id="slide-2">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-12 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Sprint Recap</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">8 May – 22 May 2026</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block"></span>
           </div>
           <div class="editorial-rule-accent w-full mb-8 reveal r1 line-reveal lr1"></div>
 
-          <!-- Section: What We Shipped -->
+          <!-- Section: Featured This Sprint -->
           <div class="mb-8 reveal r2">
             <div class="flex items-center gap-3 mb-4">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Platform — What We Shipped</p>
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Featured This Sprint — frontend-dashboard</p>
               <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">6 items</span>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">6 PRs</span>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="shipped-grid"></div>
-          </div>
-
-          <!-- Section: Abdul -->
-          <div class="mb-8 reveal r2">
-            <div class="flex items-center gap-3 mb-4">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Abdul — Status Page</p>
-              <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">3 features</span>
-            </div>
-            <div class="editorial-grid grid-cols-2 md:grid-cols-3" id="cc-abdul-grid"></div>
-          </div>
-
-          <!-- Section: CD -->
-          <div class="mb-8 reveal r2">
-            <div class="flex items-center gap-3 mb-4">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">CD — ChatDaddy</p>
-              <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">4 features</span>
-            </div>
-            <div class="editorial-grid grid-cols-2 md:grid-cols-4" id="cc-cd-grid"></div>
-          </div>
-
-          <!-- Section: Theo -->
-          <div class="reveal r3">
-            <div class="flex items-center gap-3 mb-4">
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Theo — AI QA Agent</p>
-              <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">22 features</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3" id="cc-theo-grid"></div>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="sprint-features-grid"></div>
           </div>
 
           <div class="mt-6 reveal r5">
@@ -1186,11 +1163,11 @@
     <div class="slide noise" id="slide-3">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Tickets &amp; PRs</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">8 May – 22 May 2026</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block"></span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
@@ -1267,9 +1244,9 @@
                 <div class="flex items-center gap-3 mb-2">
                   <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">CD — frontend-dashboard</p>
                   <div class="flex-1 h-px bg-white/[0.06]"></div>
-                  <span class="font-mono text-[10px] text-white/20">8 May – 22 May</span>
+                  <span class="font-mono text-[10px] text-white/20"></span>
                 </div>
-                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[200px] overflow-y-auto" id="recent-prs" style="scrollbar-width: thin; scrollbar-color: rgba(123,156,255,0.3) transparent;">
+                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[200px] overflow-y-auto" id="recent-prs" style="scrollbar-width: thin; scrollbar-color: rgba(194,65,12,0.3) transparent;">
                   <!-- Generated by JS -->
                 </div>
               </div>
@@ -1278,9 +1255,9 @@
                 <div class="flex items-center gap-3 mb-2">
                   <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Theo — frontend-dashboard-v2</p>
                   <div class="flex-1 h-px bg-white/[0.06]"></div>
-                  <span class="font-mono text-[10px] text-white/20">8 May – 22 May</span>
+                  <span class="font-mono text-[10px] text-white/20"></span>
                 </div>
-                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[200px] overflow-y-auto" id="recent-v2-prs" style="scrollbar-width: thin; scrollbar-color: rgba(167,139,250,0.3) transparent;">
+                <div class="border border-white/10 divide-y divide-white/[0.04] max-h-[200px] overflow-y-auto" id="recent-v2-prs" style="scrollbar-width: thin; scrollbar-color: rgba(47,111,95,0.3) transparent;">
                   <!-- Generated by JS -->
                 </div>
               </div>
@@ -1294,7 +1271,7 @@
     <div class="slide noise" id="slide-4" style="display:none!important">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Mobile</h2>
@@ -1340,11 +1317,11 @@
     <div class="slide noise" id="slide-6">
       <div class="relative flex items-start justify-center h-full w-full overflow-y-auto">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-5xl font-black text-white tracking-tight">What We Shipped</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">8 May – 22 May 2026</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block"></span>
           </div>
           <div class="editorial-rule-accent w-full mb-6 reveal r1 line-reveal lr1"></div>
 
@@ -1539,7 +1516,7 @@
     <div class="slide noise" id="slide-8">
       <div class="relative flex items-center justify-center h-full w-full">
         <div class="absolute top-0 left-0 right-0 h-1 bg-red-500"></div>
-        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(42,32,24,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(42,32,24,0.5) 1px, transparent 1px); background-size: 80px 80px;"></div>
         <div class="relative z-10 text-center px-8 max-w-4xl">
           <div class="reveal r1">
             <div class="w-px h-16 bg-white/20 mx-auto mb-8"></div>
@@ -1554,7 +1531,7 @@
           </h2>
           <div class="reveal r5">
             <div class="w-px h-8 bg-red-500 mx-auto my-6"></div>
-            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25">8 May – 22 May 2026</span>
+            <span class="font-mono text-[10px] tracking-[0.3em] uppercase text-white/25"></span>
           </div>
         </div>
       </div>
@@ -2127,7 +2104,7 @@
             <div class="flex items-center gap-2 mb-3">
               <i data-lucide="${group.icon}" class="w-4 h-4 shrink-0" style="color:${group.accent}"></i>
               <span class="font-display text-sm font-bold text-white">${group.label}</span>
-              <span class="ml-auto font-mono text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(255,255,255,0.05);color:${group.accent}">${group.count} features</span>
+              <span class="ml-auto font-mono text-[10px] px-2 py-0.5 rounded-full" style="background:rgba(42,32,24,0.05);color:${group.accent}">${group.count} features</span>
             </div>
             <div class="flex flex-wrap gap-1.5">
               ${group.items.slice(0,4).map(i=>`<span class="font-mono text-[9px] text-white/30 bg-white/[0.04] px-2 py-0.5 rounded">${i.title.split(' ').slice(0,3).join(' ')}</span>`).join('')}
@@ -2199,7 +2176,7 @@
       dotsEl.innerHTML = '';
       _carouselItems.forEach((_, i) => {
         const d = document.createElement('button');
-        d.style.cssText = `width:${i === _carouselIdx ? '18px' : '6px'};height:6px;border-radius:3px;border:none;cursor:pointer;transition:all 0.2s;background:${i === _carouselIdx ? 'var(--cyan)' : 'rgba(255,255,255,0.15)'}`;
+        d.style.cssText = `width:${i === _carouselIdx ? '18px' : '6px'};height:6px;border-radius:3px;border:none;cursor:pointer;transition:all 0.2s;background:${i === _carouselIdx ? 'var(--cyan)' : 'rgba(42,32,24,0.18)'}`;
         d.onclick = () => carouselGo(i);
         dotsEl.appendChild(d);
       });
@@ -2790,18 +2767,115 @@
       if (!panel.contains(e.target) && !btn.contains(e.target)) panel.classList.add('hidden');
     });
 
+    // ── Sprint Recap — Featured This Sprint (frontend-dashboard PRs, 3 June) ──
+    const SPRINT_FEATURES = [
+      {
+        title: "Insufficient Credits Warning",
+        pr: 3863,
+        icon: "alert-triangle",
+        cover: "cursor-pr-images/3june/credit-warning-1.png",
+        description: "Channel connection now calculates the exact credit cost based on account type and current channel count, and surfaces an InsufficientCreditsDialog the moment a team runs out of credits before adding a channel. Credit cost is shown upfront and the shortfall is handled gracefully instead of failing silently. (PR #3863)",
+        impact: "Removes a confusing dead-end at channel setup — users see exactly why a connection is blocked and what it costs, cutting support tickets and recovering would-be-lost upgrades at the point of intent.",
+        images: ["cursor-pr-images/3june/credit-warning-1.png", "cursor-pr-images/3june/credit-warning-2.png"]
+      },
+      {
+        title: "Responsive Inbox Chat-Info Panel",
+        pr: 3862,
+        icon: "panel-right",
+        cover: "cursor-pr-images/3june/inbox-responsive.png",
+        description: "Refactored InboxDetail and ProfileView layout so the right-hand chat info panel responds fluidly to the conversation when expanded. Moved from absolute positioning to margin-based layout for smoother open/close transitions and better responsiveness. (PR #3862)",
+        impact: "A smoother, more polished inbox — the info panel no longer jumps or clips when expanded, keeping agents focused on the conversation.",
+        images: ["cursor-pr-images/3june/inbox-responsive.png"]
+      },
+      {
+        title: "What's New Announcement + Spotlight Tour",
+        pr: 3914,
+        icon: "megaphone",
+        cover: "cursor-pr-images/3june/whats-new-1.png",
+        description: "New FeatureUpdateAnnouncementPopup with an intro → carousel → list → detail flow, a standalone FeatureDetailPopup, and shared SpotlightOverlay primitives (card, portal, inline). Spotlights wired for Export Contacts (/contacts), WhatsApp Calling (InboxHeader, desktop + mobile), and the Analytics Funnel. BillingTour and AiChatbotTour refactored onto a shared Joyride TourTooltip, styled in ChatDaddy green. (PR #3914)",
+        impact: "Gives every new feature a guided, in-product moment of discovery instead of a changelog nobody reads — driving same-day adoption of Calling, Export, and Analytics.",
+        images: ["cursor-pr-images/3june/whats-new-1.png", "cursor-pr-images/3june/whats-new-2.png"]
+      },
+      {
+        title: "Analytics V2 Announcement",
+        pr: 3933,
+        icon: "bar-chart-3",
+        cover: "cursor-pr-images/3june/analytics-v2.png",
+        description: "In-app announcement introducing Analytics V2 and guiding existing users through the migration to the rebuilt analytics experience. (PR #3933)",
+        impact: "Eases the transition to Analytics V2 — existing users are introduced to the new dashboard in context rather than discovering the change cold.",
+        images: ["cursor-pr-images/3june/analytics-v2.png"]
+      },
+      {
+        title: "Message Flow Feedback Survey",
+        pr: 3399,
+        icon: "star",
+        cover: "cursor-pr-images/3june/flow-survey-1.jpeg",
+        description: "A survey popup that appears after a successful flow save — a 1–5 emoji rating with optional text feedback, a confetti success state on submit, and shown only once per team so it never nags. Captures product sentiment at the exact moment of success. (PR #3399)",
+        impact: "Collects high-signal feedback right after users complete a flow, when satisfaction is highest — feeding the roadmap without interrupting the workflow.",
+        images: ["cursor-pr-images/3june/flow-survey-1.jpeg", "cursor-pr-images/3june/flow-survey-2.png", "cursor-pr-images/3june/flow-survey-3.png"]
+      },
+      {
+        title: "CRM Bulk Action Bar",
+        pr: 3814,
+        icon: "check-square",
+        cover: "cursor-pr-images/3june/bulk-action-bar.jpeg",
+        description: "Bulk ticket operations on the CRM board — select multiple tickets then move or delete in one action. Adds a BulkActionBar with SelectionContext in BoardView, TicketCard selection state with collapsible details, and sorting options in CRMHeader. (PR #3814)",
+        impact: "Turns one-by-one ticket housekeeping into a single action — a major time saver for teams managing large CRM boards.",
+        images: ["cursor-pr-images/3june/bulk-action-bar.jpeg"]
+      }
+    ];
+
+    function buildSprintFeatures() {
+      const grid = document.getElementById('sprint-features-grid');
+      if (!grid) return;
+      SPRINT_FEATURES.forEach((f, i) => {
+        const count = f.images.length;
+        const card = document.createElement('button');
+        card.className = 'noir-card sprint-feature-card text-left cursor-pointer group card-reveal';
+        card.style.animationDelay = `${0.2 + i * 0.05}s`;
+        card.innerHTML = `
+          <div>
+            <div style="position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--void-light);border-bottom:1px solid var(--border);">
+              <img src="${f.cover}" alt="${f.title}" style="width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 0.45s ease;" class="group-hover:scale-105">
+              <span class="font-mono" style="position:absolute;top:8px;left:8px;font-size:9px;letter-spacing:0.06em;color:#fff;background:rgba(42,32,24,0.8);padding:3px 7px;border-radius:6px;">#${f.pr}</span>
+              ${count > 1 ? `<span class="font-mono" style="position:absolute;top:8px;right:8px;font-size:9px;color:#fff;background:rgba(194,65,12,0.92);padding:3px 7px;border-radius:6px;display:inline-flex;align-items:center;gap:4px;"><i data-lucide="images" style="width:11px;height:11px"></i>${count}</span>` : ''}
+            </div>
+            <div style="padding:14px 16px;">
+              <div class="flex items-center gap-2 mb-1.5">
+                <i data-lucide="${f.icon}" class="w-3.5 h-3.5 shrink-0" style="color:var(--cyan)"></i>
+                <h3 class="font-serif text-sm font-bold text-white leading-tight">${f.title}</h3>
+              </div>
+              <p class="text-[11px] text-white/30 line-clamp-2 leading-relaxed">${f.description}</p>
+              <div class="mt-2.5 flex items-center gap-1.5 text-white/20 group-hover:text-white/50 transition-colors">
+                <i data-lucide="arrow-right" style="width:11px;height:11px"></i>
+                <span class="font-mono text-[9px]">view ${count > 1 ? count + ' screenshots' : 'details'}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        card.addEventListener('click', () => {
+          if (count > 1) {
+            const items = f.images.map(src => ({
+              title: f.title, description: f.description, impact: f.impact,
+              icon: f.icon, media: { type: 'image', src }
+            }));
+            openCarousel(items, 0, f.title, 'var(--cyan)');
+          } else {
+            openModal({
+              title: f.title, description: f.description, impact: f.impact,
+              icon: f.icon, media: { type: 'image', src: f.images[0] }
+            });
+          }
+        });
+        grid.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
     // ── Init ──
+    buildSprintFeatures();
     buildCards('features-grid', FEATURES);
-    buildCards('cc-abdul-grid', CC_ABDUL);
-    buildCards('cc-cd-grid', CC_CD);
-    buildCarouselGroupCards('cc-theo-grid', [
-      { label: 'Broadcasts', icon: 'megaphone', count: CC_THEO_BROADCASTS.length, items: CC_THEO_BROADCASTS, accent: 'var(--cyan)' },
-      { label: 'Inbox', icon: 'inbox', count: CC_THEO_INBOX.length, items: CC_THEO_INBOX, accent: 'var(--violet)' },
-      { label: 'Other', icon: 'sparkles', count: CC_THEO_OTHER.length, items: CC_THEO_OTHER, accent: 'rgba(255,255,255,0.3)' },
-    ]);
-    buildMobileHighlights();
     buildTicketHighlights();
-    buildShipped();
     buildRecentPRs();
     buildRecentV2PRs();
     buildDots();
