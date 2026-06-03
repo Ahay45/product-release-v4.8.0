@@ -1115,7 +1115,7 @@
           <!-- Section overview grid -->
           <div class="grid grid-cols-3 md:grid-cols-6 gap-px bg-white/[0.06] mb-8 reveal r4" id="hero-sections">
             <button onclick="goToSlide(2)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">8</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">9</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Sprint Recap</div>
             </button>
@@ -1186,7 +1186,7 @@
             <div class="flex items-center gap-3 mb-4">
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40">Featured This Sprint — frontend-dashboard</p>
               <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">8 updates</span>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">9 updates</span>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="sprint-features-grid"></div>
           </div>
@@ -2890,6 +2890,43 @@
         description: "Bulk ticket operations on the CRM board — select multiple tickets then move or delete in one action. Adds a BulkActionBar with SelectionContext in BoardView, TicketCard selection state with collapsible details, and sorting options in CRMHeader. (PR #3814)",
         impact: "Turns one-by-one ticket housekeeping into a single action — a major time saver for teams managing large CRM boards.",
         images: ["cursor-pr-images/3june/bulk-action-bar.jpeg"]
+      },
+      {
+        title: "Broadcast Creation Enhancements",
+        badge: "BROADCASTS",
+        icon: "megaphone",
+        cover: "cursor-pr-images/3june/bc-tier-guide.png",
+        description: "Four upgrades to the broadcast creation page — Contact Health Filter, Audience Quality Summary, Messaging Tier Guide, and a Sending Speed explainer — that together let teams clean their audience, forecast the outcome, understand their WABA limits, and pick a safe send speed before launching. Open to step through each.",
+        subItems: [
+          {
+            title: "Contact Health Filter",
+            icon: "heart-pulse",
+            src: "cursor-pr-images/3june/bc-contact-health.png",
+            description: "Exclude contacts that may not engage or could increase costs before sending. Toggle filters for inactive 60+ days, no engagement history, opted-out contacts, and WhatsApp-invalid numbers — each with a live contact count. WhatsApp number validation checks each contact individually and can take a few minutes for large audiences.",
+            impact: "Stops teams burning credits on contacts that will never engage, while reducing delivery failures that hurt WhatsApp sender reputation."
+          },
+          {
+            title: "Audience Quality Summary",
+            icon: "clipboard-check",
+            src: "cursor-pr-images/3june/bc-audience-quality.png",
+            description: "A real-time scorecard of the selected audience — total contacts, active in last 30 days, inactive 90+ days, delivery failures, no-engagement, opted-out, invalid numbers, and estimated cost. A summary line gives an overall verdict (e.g. ‘Good engagement potential’) alongside an ‘Actions to make broadcast effective’ checklist: exclude delivery failures, send at the optimal time, personalize with merge fields, and keep the message concise with a clear call-to-action.",
+            impact: "Gives agents a confidence check, a cost forecast, and concrete next steps before sending — reducing wasted spend and low-delivery broadcasts."
+          },
+          {
+            title: "Messaging Tier Guide",
+            icon: "layers",
+            src: "cursor-pr-images/3june/bc-tier-guide.png",
+            description: "An in-app guide to growing the WhatsApp daily sending limit. Shows the current tier (e.g. 2,000 contacts/day) and quality rating, a tier-progression track (250 → 1K → 2K → 10K → 100K), and explains that Meta auto-upgrades the tier with no manual request. Lists the auto-upgrade requirements — send near your limit for 7 straight days and keep quality Green — plus Do / Avoid tips for protecting your quality rating. (PR #3629)",
+            impact: "Demystifies WABA tiers so teams actively grow their limit and avoid quality downgrades — fewer rate-limit surprises and more volume headroom."
+          },
+          {
+            title: "Sending Speed Explainer",
+            icon: "gauge",
+            src: "cursor-pr-images/3june/bc-sending-speed.png",
+            description: "A send-speed selector where every option explains its risk level and throughput, with an estimated completion time. Fast (12 msgs/min — moderate risk, for Tier 1K+ accounts), Normal (1 msg/min — recommended, safe for most accounts), and dashboard.safe (1 msg / 3 min — very safe, for Tier 250 or any account that has received a quality warning). (PR #3944)",
+            impact: "Lets teams trade speed against ban-risk knowingly, with plain-language guidance matched to their account tier — protecting sender reputation."
+          }
+        ]
       }
     ];
 
@@ -2897,7 +2934,7 @@
       const grid = document.getElementById('sprint-features-grid');
       if (!grid) return;
       SPRINT_FEATURES.forEach((f, i) => {
-        const count = f.images.length;
+        const count = f.subItems ? f.subItems.length : f.images.length;
         const card = document.createElement('button');
         card.className = 'noir-card sprint-feature-card text-left cursor-pointer group card-reveal';
         card.style.animationDelay = `${0.2 + i * 0.05}s`;
@@ -2922,7 +2959,13 @@
           </div>
         `;
         card.addEventListener('click', () => {
-          if (count > 1) {
+          if (f.subItems) {
+            const items = f.subItems.map(s => ({
+              title: s.title, description: s.description, impact: s.impact,
+              icon: s.icon || f.icon, media: { type: 'image', src: s.src }
+            }));
+            openCarousel(items, 0, f.title, 'var(--cyan)');
+          } else if (count > 1) {
             const items = f.images.map(src => ({
               title: f.title, description: f.description, impact: f.impact,
               icon: f.icon, media: { type: 'image', src }
