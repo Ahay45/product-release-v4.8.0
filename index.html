@@ -1062,7 +1062,7 @@
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">PRs Merged</div>
             </button>
             <button onclick="goToSlide(6)" class="bg-black hover:bg-white/[0.03] p-4 md:p-5 text-center transition-colors group cursor-pointer">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">9</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white group-hover:text-red-500 transition-colors">8</div>
               <div class="editorial-rule-thin w-8 mx-auto my-2"></div>
               <div class="font-mono text-[8px] md:text-[9px] tracking-[0.15em] uppercase text-white/30">Open PRs</div>
             </button>
@@ -1210,7 +1210,7 @@
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Dependabot</div>
             </div>
             <div class="bg-black p-4 text-center">
-              <div class="font-serif text-3xl md:text-4xl font-black text-white">9</div>
+              <div class="font-serif text-3xl md:text-4xl font-black text-white">8</div>
               <div class="font-mono text-[9px] tracking-[0.15em] uppercase text-white/30 mt-1">Open PRs</div>
             </div>
           </div>
@@ -1382,7 +1382,7 @@
         <div class="relative z-10 max-w-6xl mx-auto px-6 md:px-10 w-full pt-10 pb-20">
           <div class="flex items-baseline justify-between mb-1 reveal r1">
             <h2 class="font-serif text-4xl md:text-6xl font-black text-white tracking-tight">Open PRs</h2>
-            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">9 awaiting review &middot; 21 – 24 Jul</span>
+            <span class="font-mono text-xs text-white/30 tracking-[0.2em] uppercase hidden md:block">8 awaiting review &middot; 21 – 24 Jul</span>
           </div>
           <div class="editorial-rule-accent w-full mb-4 reveal r1 line-reveal lr1"></div>
 
@@ -1392,7 +1392,7 @@
               <span class="inline-block w-2 h-2" style="background:var(--amber, #B06A17)"></span>
               <p class="font-mono text-[10px] tracking-[0.25em] uppercase" style="color:#B06A17">Open &middot; github.com/chatdaddy/frontend-dashboard/pulls/Ahay45</p>
               <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">+13,123 / −875 across 127 files</span>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">+13,081 / −872 across 123 files</span>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="openpr-grid"></div>
           </div>
@@ -1748,13 +1748,6 @@
           { type: "embed", src: "embeds/copy-reduction-report.html", label: "Copy reduction report — every screen, before / after" },
           { type: "image", src: "cursor-pr-images/sprint-22jul/pr4177-pricing-after.png" }
         ]
-      },
-      {
-        title: "Mixpanel Analytics",
-        dir: "usage", dirNote: "Identity attached to events for the first time in v1 — the difference between counting actions and knowing who took them.",
-        badge: "ANALYTICS", stage: "OPEN", icon: "line-chart", pr: 4184,
-        description: "The Mixpanel token is repointed at a new project and identify() is called for the first time in v1 — ids only, no PII. Four files, +42 / −3.",
-        impact: "The smallest diff of the week and the one with the longest tail: repointing the token orphans the old project's history, and Mixpanel currently records 100% of sessions with no masking config and has never been audited. No user-facing UI, so there is nothing to screenshot. (#4184)"
       }
     ];
 
