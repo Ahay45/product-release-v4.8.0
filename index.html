@@ -1157,6 +1157,20 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="sprint-cd-grid"></div>
           </div>
 
+          <!-- Section: Coming Soon — production, staged rollout -->
+          <div class="mb-8 reveal r3">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="inline-block w-2 h-2" style="background:#2B5C7E"></span>
+              <p class="font-mono text-[10px] tracking-[0.25em] uppercase" style="color:#2B5C7E">Coming soon &middot; in this release, behind a staged rollout</p>
+              <div class="flex-1 h-px bg-white/[0.06]"></div>
+              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">6 surfaces &middot; measured before they widen</span>
+            </div>
+            <p class="text-white/25 text-xs leading-relaxed max-w-3xl mb-4">
+              These ship to production with this release, but not to everyone at once &mdash; each goes to a small slice of teams first, and the new product tracker decides whether it widens. Shipping and releasing stop being the same event.
+            </p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="comingsoon-grid"></div>
+          </div>
+
           <!-- Section: Pushed to Beta -->
           <div class="mb-2 reveal r4">
             <div class="flex items-center gap-3 mb-4">
@@ -1395,19 +1409,6 @@
               <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">+13,081 / −872 across 123 files</span>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="openpr-grid"></div>
-          </div>
-
-          <div class="mb-8 reveal r4">
-            <div class="flex items-center gap-3 mb-4">
-              <span class="inline-block w-2 h-2" style="background:#2B5C7E"></span>
-              <p class="font-mono text-[10px] tracking-[0.25em] uppercase" style="color:#2B5C7E">Coming soon &middot; in this release, behind a staged rollout</p>
-              <div class="flex-1 h-px bg-white/[0.06]"></div>
-              <span class="font-mono text-[10px] text-white/20 tracking-[0.1em]">6 surfaces &middot; measured before they widen</span>
-            </div>
-            <p class="text-white/25 text-xs leading-relaxed max-w-3xl mb-4">
-              These ship to production with this release, but not to everyone at once &mdash; each goes to a small slice of teams first, and the new product tracker decides whether it widens. Shipping and releasing stop being the same event.
-            </p>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4" id="comingsoon-grid"></div>
           </div>
 
           <p class="pt-4 border-t border-white/5 text-white/25 text-xs leading-relaxed max-w-3xl reveal r5">
@@ -2785,7 +2786,7 @@
         { cards: EMAILS_LIFECYCLE,  name: 'Email',       sub: 'sent',       state: 'live' },
         { cards: SPRINT_THEO,       name: 'Dashboard',   sub: 'beta',       state: 'beta' },
         { cards: OPEN_PRS,          name: 'Open PRs',    sub: 'in review',  state: 'open' },
-        { cards: COMING_SOON,       name: 'Coming Soon', sub: 'staged rollout', state: 'beta' }
+        { cards: COMING_SOON,       name: 'Coming Soon', sub: 'prod · staged rollout', state: 'beta' }
       ];
     }
 
