@@ -1,2 +1,19 @@
 .DS_Store
 **/.DS_Store
+
+# local theme/backup snapshots of the deck — clutter, and they hold stale copy
+index.html.bak-*
+index.html.*.bak
+index.html.cinema-backup
+
+# screen recordings — left out on request (104 MB)
+*.mp4
+*.mov
+*.webm
+*.m4v
+
+# HELD BACK: raw QA captures of the live Inbox/Contacts with unredacted customer
+# WhatsApp numbers, names and message text. 2 of 2 spot-checks leaked; the deck
+# references none of these. Move to a private repo to archive them.
+cursor-pr-images/12june/theo/
+cursor-pr-images/19june/Theo/
